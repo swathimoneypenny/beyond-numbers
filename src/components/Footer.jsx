@@ -75,7 +75,7 @@ export default function Footer() {
         </div>
 
         <div className="mt-14 flex flex-col items-start justify-between gap-3 border-t border-line pt-7 text-sm text-ink/50 sm:flex-row sm:items-center">
-          <p>© 2025 Beyond Numbers. All Rights Reserved.</p>
+          <p>© {new Date().getFullYear()} Beyond Numbers. All Rights Reserved.</p>
           <p className="flex items-center gap-1.5">
             Built by
             <span className="font-semibold text-teal">MoneyPenny</span>
