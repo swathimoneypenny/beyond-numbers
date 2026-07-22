@@ -142,7 +142,7 @@ export default function Home() {
         subtitle="Build a more strategic, scalable, and valuable accounting practice — and leave with a sequenced 90-day plan."
         primary={{ label: 'Register Now', href: REGISTER_URL, newTab: true }}
         secondary={{ label: 'View All Workshops', to: '/workshops', arrow: true }}
-        note="Sessions begin August 5, 2025"
+        note="Sessions begin August 5, 2026"
       />
     </>
   )

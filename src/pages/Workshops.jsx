@@ -118,7 +118,7 @@ export default function Workshops() {
         title="Ready to transform your practice?"
         subtitle="Register for the series and leave with a sequenced 90-day plan you can put to work."
         primary={{ label: 'Register Now', href: REGISTER_URL, newTab: true }}
-        note="Sessions begin August 5, 2025"
+        note="Sessions begin August 5, 2026"
       />
     </>
   )
