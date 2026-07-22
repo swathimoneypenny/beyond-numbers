@@ -1,0 +1,61 @@
+{
+  "series": "From Scorekeeper to Strategist",
+  "brand": {
+    "deepPurple": "#574A9E",
+    "gold": "#E6B450",
+    "teal": "#4ECDC4",
+    "gradient": [
+      "#667EEA",
+      "#764BA2"
+    ],
+    "font": "Calibri"
+  },
+  "schemaVersion": "1.0",
+  "exercises": [
+    {
+      "id": "s1-ex1-four-quadrants",
+      "session": 1,
+      "exercise": 1,
+      "title": "Four Quadrants Service Assessment",
+      "type": "assessment",
+      "file": "s1-ex1-four-quadrants.json",
+      "summary": "Plot current and prospective services across the four quadrants to see where the firm sits today and where advisory growth lies. Used in-session (Tabs 1-2) with Tabs 3-5 as pre-Session-2 homework."
+    },
+    {
+      "id": "s2-ex1-team-52-card-pickup",
+      "session": 2,
+      "exercise": 1,
+      "title": "52-Card Team Pickup",
+      "type": "cardsort",
+      "file": "s2-ex1-team-52-card-pickup.json",
+      "summary": "Team-building card exercise: sort responsibilities across the four roles (BOS / Admin / Analyst / Technical) to expose gaps and frame the next hire."
+    },
+    {
+      "id": "s2-ex2-client-portfolio-matrix",
+      "session": 2,
+      "exercise": 2,
+      "title": "Client Portfolio Evaluation",
+      "type": "matrix",
+      "file": "s2-ex2-client-portfolio-matrix.json",
+      "summary": "Map clients on a value-vs-effort matrix and assign Gold / Silver / Bronze / Fire tiers to guide who to grow, hold, or fire."
+    },
+    {
+      "id": "s3-ex1-tech-stack-calculator",
+      "session": 3,
+      "exercise": 1,
+      "title": "Tech Stack Cost Calculator",
+      "type": "calculator",
+      "file": "s3-ex1-tech-stack-calculator.json",
+      "summary": "Build an advisory tech stack for the Regional Distribution Co. case across seven app categories with 2026-verified pricing; live total and benchmark."
+    },
+    {
+      "id": "s3-ex2-ai-vendor-scorecard",
+      "session": 3,
+      "exercise": 2,
+      "title": "AI Vendor Due-Diligence Scorecard",
+      "type": "scorecard",
+      "file": "s3-ex2-ai-vendor-scorecard.json",
+      "summary": "Score one AI tool across six areas (three critical) before client data is involved; auto Go / Conditional / No-Go verdict, any critical Red forces No-Go."
+    }
+  ]
+}
