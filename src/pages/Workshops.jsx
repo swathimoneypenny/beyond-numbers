@@ -1,3 +1,4 @@
+import { Link } from 'react-router-dom'
 import { Clock, PencilRuler } from 'lucide-react'
 import Reveal from '../components/Reveal'
 import CTABand from '../components/CTABand'
@@ -9,9 +10,13 @@ const metaIcons = [Clock, PencilRuler]
 
 function SessionCard({ session, index }) {
   const isComingSoon = session.comingSoon
+  // Published sessions link straight to their page; "coming soon" tiles stay inert.
+  const Card = isComingSoon ? 'article' : Link
+  const cardProps = isComingSoon ? {} : { to: `/workshops/${session.slug}` }
   return (
     <Reveal delay={Math.min(index * 0.08, 0.3)}>
-      <article
+      <Card
+        {...cardProps}
         className={`group relative flex h-full flex-col rounded-2xl border bg-white p-7 transition-all duration-300 ${
           isComingSoon
             ? 'border-line opacity-75'
@@ -49,7 +54,7 @@ function SessionCard({ session, index }) {
             )
           })}
         </div>
-      </article>
+      </Card>
     </Reveal>
   )
 }

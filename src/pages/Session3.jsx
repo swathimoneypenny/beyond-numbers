@@ -570,9 +570,13 @@ export default function Session3() {
             <ArrowLeft size={16} className="transition-transform group-hover:-translate-x-1" />
             Previous: Session 2
           </Link>
-          <span className="inline-flex cursor-default items-center gap-2 rounded-full border border-line bg-sand px-6 py-3 text-sm font-semibold text-ink/45">
-            Session 4 — Coming soon
-          </span>
+          <Link
+            to="/workshops/session-4"
+            className="group inline-flex items-center gap-2 rounded-full bg-navy px-6 py-3 text-sm font-semibold text-white shadow-lg shadow-navy/20 transition-all hover:-translate-y-0.5 hover:bg-navy-deep"
+          >
+            Next: Session 4
+            <ArrowRight size={16} className="transition-transform group-hover:translate-x-1" />
+          </Link>
         </div>
       </section>
     </>

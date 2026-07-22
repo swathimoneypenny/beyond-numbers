@@ -56,6 +56,24 @@
       "type": "scorecard",
       "file": "s3-ex2-ai-vendor-scorecard.json",
       "summary": "Score one AI tool across six areas (three critical) before client data is involved; auto Go / Conditional / No-Go verdict, any critical Red forces No-Go."
+    },
+    {
+      "id": "s4-ex1-procedure-tech-stack",
+      "session": 4,
+      "exercise": 1,
+      "title": "Build Your Procedure Tech Stack",
+      "type": "calculator",
+      "file": "s4-ex1-procedure-tech-stack.json",
+      "summary": "Select one tool per category across six procedure/operations categories (Workflow, Documentation, Recording, Document Management, Communication, Source-Doc Capture). Team-size and client-count inputs drive the correct billing model per tool — per-user, flat, per-client, or bundled — with 2026-verified pricing. Live monthly total, annual, and per-seat cost, plus overlap and cost-driver warnings."
+    },
+    {
+      "id": "s4-ex2-month-end-procedure",
+      "session": 4,
+      "exercise": 2,
+      "title": "Build a Month-End Reconciliation Procedure",
+      "type": "builder",
+      "file": "s4-ex2-month-end-procedure.json",
+      "summary": "Write the month-end reconciliation POLICY (the why), then assemble the PROCEDURE (the how) from a six-category checklist (Document Gathering, Transaction Processing, Reconciliation, Documentation & Filing, Reporting, Review & Handoff). Live preview composes a finished, peer-runnable procedure document."
     }
   ]
 }

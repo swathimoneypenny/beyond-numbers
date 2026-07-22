@@ -6,6 +6,7 @@ import Workshops from './pages/Workshops'
 import Session1 from './pages/Session1'
 import Session2 from './pages/Session2'
 import Session3 from './pages/Session3'
+import Session4 from './pages/Session4'
 import SessionPage from './pages/SessionPage'
 import Videos from './pages/Videos'
 import Login from './pages/Login'
@@ -24,6 +25,7 @@ export default function App() {
         <Route path="/workshops/session-1" element={<Session1 />} />
         <Route path="/workshops/session-2" element={<Session2 />} />
         <Route path="/workshops/session-3" element={<Session3 />} />
+        <Route path="/workshops/session-4" element={<Session4 />} />
         <Route path="/workshops/:slug" element={<SessionPage />} />
         <Route path="/videos" element={<Videos />} />
         <Route path="/login" element={<Login />} />

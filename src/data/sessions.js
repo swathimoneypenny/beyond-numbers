@@ -32,12 +32,11 @@ export const sessions = [
   {
     number: '04',
     slug: 'session-4',
-    title: 'Procedures & Implementation Roadmap',
-    subtitle: 'How will the work actually get done and scale?',
+    title: 'Procedures & Implementation',
+    subtitle: 'How do I make the work run — without me?',
     description:
-      'Document workflows and playbooks, then sequence everything into a single 90-day implementation roadmap.',
+      'Two working blocks, two hands-on exercises, one firm that runs without you.',
     meta: ['90 min', '2 exercises'],
-    comingSoon: true,
   },
 ]
 
