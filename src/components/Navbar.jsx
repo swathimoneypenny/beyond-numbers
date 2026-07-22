@@ -1,9 +1,10 @@
 import { useEffect, useState } from 'react'
-import { Link, NavLink } from 'react-router-dom'
+import { Link, NavLink, useNavigate } from 'react-router-dom'
 import { motion, AnimatePresence } from 'framer-motion'
-import { Menu, X } from 'lucide-react'
+import { Menu, X, LogOut, UserRound } from 'lucide-react'
 import Logo from './Logo'
 import { REGISTER_URL } from '../data/content'
+import { useAuth } from '../context/AuthContext'
 
 // Trimmed for launch — Games, Workshops, Checklists routes still exist; just hidden
 // from the top nav for now. Re-add here to bring them back.
@@ -22,6 +23,17 @@ const visibleLinks = navLinks.filter((link) => link.enabled !== false)
 export default function Navbar() {
   const [scrolled, setScrolled] = useState(false)
   const [open, setOpen] = useState(false)
+  const { user, isAuthenticated, logout } = useAuth()
+  const navigate = useNavigate()
+
+  // Signed-in users don't need the "Login" item; they get their email + Log out.
+  const links = visibleLinks.filter((l) => !(isAuthenticated && l.to === '/login'))
+
+  const onLogout = () => {
+    logout()
+    setOpen(false)
+    navigate('/', { replace: true })
+  }
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 8)
@@ -50,7 +62,7 @@ export default function Navbar() {
 
         {/* Desktop links */}
         <ul className="hidden items-center gap-5 lg:flex xl:gap-7">
-          {visibleLinks.map((link) => (
+          {links.map((link) => (
             <li key={link.label}>
               <NavLink
                 to={link.to}
@@ -77,6 +89,28 @@ export default function Navbar() {
         </ul>
 
         <div className="flex items-center gap-2">
+          {/* Signed-in identity + logout. Distinct from "Register", which is
+              workshop (GoToWebinar) registration, not an account action. */}
+          {isAuthenticated && (
+            <div className="mr-1 hidden items-center gap-2 lg:flex">
+              <span
+                title={user?.email ?? ''}
+                className="inline-flex max-w-[16rem] items-center gap-2 rounded-full border border-white/15 bg-white/[0.07] px-3.5 py-2 text-sm font-medium text-white/85 backdrop-blur"
+              >
+                <UserRound size={15} className="shrink-0 text-teal" />
+                <span className="truncate">{user?.email}</span>
+              </span>
+              <button
+                type="button"
+                onClick={onLogout}
+                className="inline-flex items-center gap-1.5 rounded-full border border-white/20 px-4 py-2 text-sm font-semibold text-white/80 transition-all hover:-translate-y-0.5 hover:border-white/40 hover:text-white"
+              >
+                <LogOut size={15} />
+                Log out
+              </button>
+            </div>
+          )}
+
           <a
             href={REGISTER_URL}
             target="_blank"
@@ -109,7 +143,7 @@ export default function Navbar() {
             className="overflow-hidden border-t border-white/10 bg-navy-deep/97 backdrop-blur-xl lg:hidden"
           >
             <ul className="flex flex-col gap-1 px-5 py-4">
-              {visibleLinks.map((link) => (
+              {links.map((link) => (
                 <li key={link.label}>
                   <NavLink
                     to={link.to}
@@ -127,6 +161,22 @@ export default function Navbar() {
                   </NavLink>
                 </li>
               ))}
+              {isAuthenticated && (
+                <li className="mt-2 border-t border-white/10 pt-3">
+                  <p className="flex items-center gap-2 px-3 py-1.5 text-sm text-white/70">
+                    <UserRound size={15} className="shrink-0 text-teal" />
+                    <span className="truncate">{user?.email}</span>
+                  </p>
+                  <button
+                    type="button"
+                    onClick={onLogout}
+                    className="mt-1 flex w-full items-center gap-2 rounded-lg px-3 py-2.5 font-medium text-white/70 transition-colors hover:bg-white/10 hover:text-white"
+                  >
+                    <LogOut size={16} />
+                    Log out
+                  </button>
+                </li>
+              )}
               <li className="mt-2">
                 <a
                   href={REGISTER_URL}

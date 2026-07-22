@@ -1,33 +1,40 @@
 import { useState } from 'react'
-import { Link, useLocation, useNavigate, Navigate } from 'react-router-dom'
-import { Lock, Mail, ArrowRight, Loader2 } from 'lucide-react'
+import { Link, useNavigate, Navigate } from 'react-router-dom'
+import { Lock, Mail, ShieldCheck, ArrowRight, Loader2 } from 'lucide-react'
 import Reveal from '../components/Reveal'
 import Logo from '../components/Logo'
 import { useAuth } from '../context/AuthContext'
 import { AFTER_AUTH_REDIRECT } from '../lib/authRoutes'
-import { BrandPanel, Field, FormError, validateEmail } from '../components/authUI'
+import {
+  BrandPanel,
+  Field,
+  FormError,
+  MIN_PASSWORD,
+  validateEmail,
+  validatePassword,
+} from '../components/authUI'
 
-export default function Login() {
-  const { login, isAuthenticated, booting } = useAuth()
+export default function Signup() {
+  const { signup, isAuthenticated, booting } = useAuth()
   const navigate = useNavigate()
-  const location = useLocation()
 
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
+  const [confirm, setConfirm] = useState('')
   const [fieldErrors, setFieldErrors] = useState({})
   const [formError, setFormError] = useState('')
   const [busy, setBusy] = useState(false)
 
-  // Where to land after a successful sign-in (honours a redirect origin).
-  const dest = location.state?.from?.pathname ?? AFTER_AUTH_REDIRECT
-
-  if (!booting && isAuthenticated) return <Navigate to={dest} replace />
+  if (!booting && isAuthenticated) return <Navigate to={AFTER_AUTH_REDIRECT} replace />
 
   const validate = () => {
     const errs = {}
     const e = validateEmail(email)
     if (e) errs.email = e
-    if (!password) errs.password = 'Enter your password.'
+    const p = validatePassword(password)
+    if (p) errs.password = p
+    if (!confirm) errs.confirm = 'Re-enter your password.'
+    else if (password !== confirm) errs.confirm = 'Passwords do not match.'
     setFieldErrors(errs)
     return Object.keys(errs).length === 0
   }
@@ -40,11 +47,21 @@ export default function Login() {
 
     setBusy(true)
     try {
-      await login(email.trim(), password)
-      navigate(dest, { replace: true })
+      await signup(email.trim(), password)
+      navigate(AFTER_AUTH_REDIRECT, { replace: true })
     } catch (err) {
-      setFormError(err?.message || 'Could not sign you in. Please try again.')
+      // 409 means the email is taken - surface it on the field it belongs to.
+      if (err?.status === 409) {
+        setFieldErrors((prev) => ({
+          ...prev,
+          email: 'An account with that email already exists.',
+        }))
+        setFormError('That email is already registered. Try signing in instead.')
+      } else {
+        setFormError(err?.message || 'Could not create your account. Please try again.')
+      }
       setPassword('')
+      setConfirm('')
     } finally {
       setBusy(false)
     }
@@ -55,9 +72,9 @@ export default function Login() {
       {/* Brand panel */}
       <Reveal className="relative hidden overflow-hidden rounded-3xl bg-cta-gradient p-12 lg:flex lg:flex-col lg:justify-between">
         <BrandPanel
-          eyebrow="Member access"
-          title="Welcome back to Beyond Numbers."
-          blurb="Sign in to access your workshop materials, checklists, and your firm’s 90-day roadmap."
+          eyebrow="Create your account"
+          title="Join Beyond Numbers."
+          blurb="Create an account to access your workshop materials, checklists, and your firm’s 90-day roadmap."
         />
       </Reveal>
 
@@ -67,9 +84,9 @@ export default function Login() {
           <Logo variant="horizontal" className="mb-10 h-8 w-auto lg:hidden" />
 
           <h1 className="font-display text-3xl font-semibold tracking-tight text-ink sm:text-4xl">
-            Sign in
+            Sign up
           </h1>
-          <p className="mt-3 text-ink/60">Enter your details to access your account.</p>
+          <p className="mt-3 text-ink/60">Create your Beyond Numbers account.</p>
 
           <FormError>{formError}</FormError>
 
@@ -97,12 +114,25 @@ export default function Login() {
               onChange={(e) => setPassword(e.target.value)}
               error={fieldErrors.password}
               disabled={busy}
-              autoComplete="current-password"
-              right={
-                <a href="#" className="text-sm font-medium text-teal hover:underline">
-                  Forgot?
-                </a>
-              }
+              autoComplete="new-password"
+            />
+            {!fieldErrors.password && (
+              <p className="-mt-3 text-sm text-ink/50">
+                At least {MIN_PASSWORD} characters.
+              </p>
+            )}
+
+            <Field
+              id="confirm"
+              label="Confirm password"
+              type="password"
+              placeholder="••••••••"
+              icon={ShieldCheck}
+              value={confirm}
+              onChange={(e) => setConfirm(e.target.value)}
+              error={fieldErrors.confirm}
+              disabled={busy}
+              autoComplete="new-password"
             />
 
             <button
@@ -113,11 +143,11 @@ export default function Login() {
               {busy ? (
                 <>
                   <Loader2 size={18} className="animate-spin" />
-                  Signing in…
+                  Creating account…
                 </>
               ) : (
                 <>
-                  Sign in
+                  Create account
                   <ArrowRight size={18} className="transition-transform group-hover:translate-x-1" />
                 </>
               )}
@@ -125,9 +155,9 @@ export default function Login() {
           </form>
 
           <p className="mt-8 text-sm text-ink/60">
-            Don’t have an account?{' '}
-            <Link to="/signup" className="font-semibold text-navy hover:text-teal">
-              Sign up today!
+            Already have an account?{' '}
+            <Link to="/login" className="font-semibold text-navy hover:text-teal">
+              Sign in
             </Link>
           </p>
         </div>

@@ -7,9 +7,15 @@ dist-ssr/
 *.local
 
 # --- Environment / secrets ---
+# .env and *.local hold machine-specific values and secrets - never commit.
+# .env.development / .env.production hold only the public API base URL and MUST
+# be committed, or `npm run build` produces a bundle with no backend URL.
 .env
-.env.*
+.env.local
+.env.*.local
 !.env.example
+!.env.development
+!.env.production
 *.pem
 *.key
 *.ppk
