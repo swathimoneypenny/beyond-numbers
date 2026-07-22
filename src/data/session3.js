@@ -100,7 +100,7 @@ export const session3 = {
       { k: 'Vertical-Specific', v: 'Katana, MarginEdge, Practice Gauge' },
     ],
     proTip:
-      'start with the vertical: if you niche, choose the industry-specific app first, then the GL it integrates with — not the other way round.',
+      'start with the vertical: if you niche, choose the industry-specific app first, then the GL it integrates with — not the other way around.',
   },
 
   // 7

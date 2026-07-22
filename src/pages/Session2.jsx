@@ -3,7 +3,15 @@ import { ArrowRight, ArrowLeft, Check, X, Users, Target, Handshake } from 'lucid
 import SessionHero from '../components/SessionHero'
 import SectionProgress from '../components/SectionProgress'
 import Reveal from '../components/Reveal'
-import { INK, Band, Head, Callout, ExerciseCard } from '../components/sessionUI'
+import {
+  INK,
+  Band,
+  Head,
+  Callout,
+  ExerciseCard,
+  ExerciseJumpBar,
+  EXERCISE_ANCHORS,
+} from '../components/sessionUI'
 import CountUp from '../components/CountUp'
 import { getSession } from '../data/sessions'
 import { session2 as c } from '../data/session2'
@@ -29,6 +37,8 @@ export default function Session2() {
           “{c.tagline}” <span className="not-italic text-white/70">{c.taglineBy}</span>
         </p>
       </SessionHero>
+
+      <ExerciseJumpBar count={2} />
 
       {/* 1 — Welcome back */}
       <Band bg="sand">
@@ -167,7 +177,7 @@ export default function Session2() {
       </Band>
 
       {/* 6 — Exercise 1 (live embed) */}
-      <Band bg="white">
+      <Band bg="white" id={EXERCISE_ANCHORS[0]}>
         <ExerciseCard data={c.exercise1} embedId="s2-ex1-team-52-card-pickup" />
       </Band>
 
@@ -311,7 +321,7 @@ export default function Session2() {
       </Band>
 
       {/* 11 — Exercise 2 (live embed) */}
-      <Band bg="sand">
+      <Band bg="sand" id={EXERCISE_ANCHORS[1]}>
         <ExerciseCard data={c.exercise2} embedId="s2-ex2-client-portfolio-matrix" />
       </Band>
 

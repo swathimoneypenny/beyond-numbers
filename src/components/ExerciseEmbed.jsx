@@ -53,6 +53,70 @@ function withCharset(html) {
   return `<!doctype html><html><head><meta charset="utf-8"></head><body>${html}</body></html>`
 }
 
+/* ---- bottom action bar ------------------------------------------------- */
+
+/* Users save often and scrolling back to the top toolbar is painful, so we
+   mirror the exercise's own state buttons at the bottom of the embed.
+
+   The iframe is a srcDoc document, which is same-origin, so we can reach into
+   it (the auto-resize below already does). Rather than reimplementing any
+   behaviour, each bottom button is a clone of a real top button whose click
+   handler calls `original.click()`. That means it runs the exact same code
+   path, however the handler was attached, and it cannot drift out of sync.
+   Cloning also carries the exercise's own CSS classes across, so the bottom
+   bar is styled identically to the top one in every exercise. */
+
+const BOTTOM_BAR_ID = 'bn-bottom-actions'
+
+// Buttons worth repeating: save / load / clear / reset state actions.
+const STATE_ACTION_RE = /\b(save|load|clear|reset)\b/i
+// Timer controls look like "Reset" but only affect the countdown widget.
+const TIMER_RE = /timer/i
+
+function mountBottomActions(doc) {
+  if (!doc?.body || doc.getElementById(BOTTOM_BAR_ID)) return
+
+  const originals = Array.from(doc.querySelectorAll('button')).filter((btn) => {
+    if (btn.closest(`#${BOTTOM_BAR_ID}`)) return false
+    const label = (btn.textContent || '').replace(/\s+/g, ' ').trim()
+    if (!label || !STATE_ACTION_RE.test(label)) return false
+    const onclick = btn.getAttribute('onclick') || ''
+    if (TIMER_RE.test(onclick)) return false
+    return true
+  })
+
+  if (!originals.length) return
+
+  const bar = doc.createElement('div')
+  bar.id = BOTTOM_BAR_ID
+  bar.setAttribute('role', 'group')
+  bar.setAttribute('aria-label', 'Exercise actions')
+  bar.style.cssText = [
+    'display:flex',
+    'flex-wrap:wrap',
+    'gap:10px',
+    'align-items:center',
+    'justify-content:center',
+    'margin:32px 16px 24px',
+    'padding:20px 16px 4px',
+    'border-top:1px solid rgba(0,0,0,0.12)',
+  ].join(';')
+
+  originals.forEach((original) => {
+    const clone = original.cloneNode(true)
+    clone.removeAttribute('id') // ids must stay unique
+    clone.removeAttribute('onclick') // delegate instead of re-running inline JS
+    clone.disabled = false
+    clone.addEventListener('click', (e) => {
+      e.preventDefault()
+      original.click()
+    })
+    bar.appendChild(clone)
+  })
+
+  doc.body.appendChild(bar)
+}
+
 export default function ExerciseEmbed({ exerciseId, title = 'Interactive exercise', minHeight = 640 }) {
   const [status, setStatus] = useState('loading') // loading | ready | error
   const [markup, setMarkup] = useState('')
@@ -94,6 +158,7 @@ export default function ExerciseEmbed({ exerciseId, title = 'Interactive exercis
     if (!ifr) return
     try {
       const doc = ifr.contentWindow.document
+      mountBottomActions(doc)
       const resize = () => {
         const h = Math.max(doc.documentElement.scrollHeight, doc.body.scrollHeight, minHeight)
         ifr.style.height = `${h}px`

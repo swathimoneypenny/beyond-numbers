@@ -1,10 +1,49 @@
-import { Quote, Lightbulb, Sparkles, ExternalLink } from 'lucide-react'
+import { Quote, Lightbulb, Sparkles, ExternalLink, ArrowDown } from 'lucide-react'
 import Reveal from './Reveal'
 import ExerciseEmbed from './ExerciseEmbed'
 
 /* Shared building blocks for the long-form session pages (Session 1, 2, 3…). */
 
 export const INK = 'text-[#1A1A1A]' // strong near-black body text on light cards
+
+/* Anchor ids for the exercise sections, shared by the jump bar and the Bands. */
+export const EXERCISE_ANCHORS = ['exercise-1', 'exercise-2']
+
+/* Slim "jump to exercise" strip that sits directly under the session header, so
+   the hands-on parts are reachable without scrolling the whole session.
+   Smooth scrolling comes from `html { scroll-behavior: smooth }` in index.css,
+   and `[id] { scroll-margin-top: 100px }` clears the fixed navbar.
+
+   Deliberately has no <h2>, so SectionProgress does not pick it up as a section. */
+export function ExerciseJumpBar({ count = 2 }) {
+  const single = count === 1
+  const items = single
+    ? [{ id: EXERCISE_ANCHORS[0], label: 'Jump to Exercise' }]
+    : Array.from({ length: count }, (_, i) => ({
+        id: EXERCISE_ANCHORS[i],
+        label: `Exercise ${i + 1}`,
+      }))
+
+  return (
+    <section aria-label="Jump to exercises" className="border-b border-line bg-cream">
+      <div className="mx-auto flex max-w-[1100px] flex-wrap items-center gap-x-3 gap-y-2 px-5 py-4 sm:px-8">
+        <span className="text-[0.78rem] font-bold uppercase tracking-[0.16em] text-navy/55">
+          Hands-on
+        </span>
+        {items.map((it) => (
+          <a
+            key={it.id}
+            href={`#${it.id}`}
+            className="group inline-flex items-center gap-1.5 rounded-full border border-teal/30 bg-white px-4 py-1.5 text-sm font-semibold text-teal transition-all hover:-translate-y-0.5 hover:border-teal/60 hover:bg-teal/[0.06]"
+          >
+            {it.label}
+            <ArrowDown size={14} className="transition-transform group-hover:translate-y-0.5" />
+          </a>
+        ))}
+      </div>
+    </section>
+  )
+}
 
 export function Band({ bg = 'white', children, id, glow = false }) {
   const map = {

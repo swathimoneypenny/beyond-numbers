@@ -4,7 +4,7 @@ import SessionHero from '../components/SessionHero'
 import SectionProgress from '../components/SectionProgress'
 import Reveal from '../components/Reveal'
 import ExerciseEmbed from '../components/ExerciseEmbed'
-import { INK, Band, Head, Callout } from '../components/sessionUI'
+import { INK, Band, Head, Callout, ExerciseJumpBar, EXERCISE_ANCHORS } from '../components/sessionUI'
 import { getSession } from '../data/sessions'
 import { session4 as c } from '../data/session4'
 
@@ -129,6 +129,8 @@ export default function Session4() {
         </p>
         <p className="mt-4 text-sm font-semibold text-white/70">{c.presenters}</p>
       </SessionHero>
+
+      <ExerciseJumpBar count={2} />
 
       {/* 1 — The Capstone */}
       <Band bg="sand">
@@ -482,7 +484,7 @@ export default function Session4() {
       <Poll eyebrow={c.poll2.eyebrow} q={c.poll2.q} />
 
       {/* 19 — Exercise 1 (live embed) */}
-      <Band bg="sand">
+      <Band bg="sand" id={EXERCISE_ANCHORS[0]}>
         <ExerciseShell
           tag={c.exercise1.tag}
           title={c.exercise1.title}
@@ -581,7 +583,7 @@ export default function Session4() {
       </Band>
 
       {/* 22 — Exercise 2 (live embed) */}
-      <Band bg="white">
+      <Band bg="white" id={EXERCISE_ANCHORS[1]}>
         <ExerciseShell
           tag={c.exercise2.tag}
           title={c.exercise2.title}

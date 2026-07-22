@@ -19,6 +19,7 @@ import SessionHero from '../components/SessionHero'
 import SectionProgress from '../components/SectionProgress'
 import Reveal from '../components/Reveal'
 import ExerciseEmbed from '../components/ExerciseEmbed'
+import { ExerciseJumpBar, EXERCISE_ANCHORS } from '../components/sessionUI'
 import { getSession } from '../data/sessions'
 import { session1 as c } from '../data/session1'
 
@@ -211,6 +212,8 @@ export default function Session1() {
         </p>
       </SessionHero>
 
+      <ExerciseJumpBar count={2} />
+
       {/* 1 — The day everything changed */}
       <Band bg="sand">
         <Head title={c.changed.eyebrow} subtitle={c.changed.subtitle} />
@@ -393,7 +396,7 @@ export default function Session1() {
       </Band>
 
       {/* 7 — Exercise 1 (live interactive embed) */}
-      <Band bg="sand">
+      <Band bg="sand" id={EXERCISE_ANCHORS[0]}>
         <ExerciseCard data={c.exercise1} embedId="s1-ex1-four-quadrants" />
       </Band>
 
@@ -462,7 +465,7 @@ export default function Session1() {
       </Band>
 
       {/* 10 — Exercise 2 (placeholder until JSON is provided) */}
-      <Band bg="white">
+      <Band bg="white" id={EXERCISE_ANCHORS[1]}>
         <ExerciseCard data={c.exercise2} comingSoon />
       </Band>
 
