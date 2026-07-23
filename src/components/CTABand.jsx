@@ -2,9 +2,10 @@ import Reveal from './Reveal'
 import Button from './Button'
 import ParticleBackground from './ParticleBackground'
 import TextShimmer from './TextShimmer'
+import GooeyText from './GooeyText'
 
 /* Reusable closing CTA band on the warm navy→teal gradient. */
-export default function CTABand({ id = 'register', title, subtitle, primary, secondary, note }) {
+export default function CTABand({ id = 'register', title, subtitle, primary, secondary, note, morphTexts }) {
   return (
     <section id={id} className="relative overflow-hidden bg-cta-gradient">
       <div className="pointer-events-none absolute inset-0">
@@ -31,6 +32,17 @@ export default function CTABand({ id = 'register', title, subtitle, primary, sec
           </h2>
           {subtitle && (
             <p className="mx-auto mt-6 max-w-xl text-lg leading-relaxed text-white/80">{subtitle}</p>
+          )}
+
+          {morphTexts?.length > 0 && (
+            <div className="mt-8">
+              <GooeyText
+                texts={morphTexts}
+                align="center"
+                textClassName="text-yellow"
+                heightClassName="h-11 sm:h-12"
+              />
+            </div>
           )}
 
           <div className="mt-10 flex flex-col items-center justify-center gap-4 sm:flex-row">

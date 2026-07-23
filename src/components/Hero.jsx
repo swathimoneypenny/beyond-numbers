@@ -2,6 +2,7 @@ import { motion } from 'framer-motion'
 import { Check, TrendingUp, SlidersHorizontal, Users, Route } from 'lucide-react'
 import Button from './Button'
 import TextShimmer from './TextShimmer'
+import GooeyText from './GooeyText'
 
 /* Meaningful icons for the "Built for firm owners" bullets, matched to the copy
    by order. Falls back to Check if the list grows. Text is unchanged. */
@@ -45,7 +46,7 @@ function HeroImage() {
   )
 }
 
-export default function Hero({ eyebrow, title, description, box, primary, secondary }) {
+export default function Hero({ eyebrow, title, description, box, primary, secondary, morphTexts }) {
   return (
     <section id="home" className="relative overflow-hidden bg-hero-dark text-white">
       {/* depth: lighter-purple + teal + yellow glows for dimension */}
@@ -100,6 +101,18 @@ export default function Hero({ eyebrow, title, description, box, primary, second
             <span className="h-1.5 w-16 rounded-full bg-yellow" />
             <span className="h-1.5 w-9 rounded-full bg-teal" />
           </motion.div>
+
+          {/* Secondary morphing accent below the H1 (the H1 itself stays static). */}
+          {morphTexts?.length > 0 && (
+            <motion.div {...fade(0.32)} className="mt-6">
+              <GooeyText
+                texts={morphTexts}
+                align="left"
+                textClassName="text-yellow"
+                heightClassName="h-11 sm:h-12"
+              />
+            </motion.div>
+          )}
 
           {description && (
             <motion.p
