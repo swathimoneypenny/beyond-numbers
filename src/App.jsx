@@ -26,10 +26,10 @@ export default function App() {
         <Route path="/" element={<Home />} />
         <Route path="/games" element={<Games />} />
 
-        {/* Workshop content is gated: signed-in users only. Marketing pages
-            (Home, Resources, Contact, Register, auth) stay public. */}
+        {/* The Workshops overview is public marketing (session tiles). The
+            session content itself is gated: signed-in users only. */}
+        <Route path="/workshops" element={<Workshops />} />
         <Route element={<ProtectedRoute />}>
-          <Route path="/workshops" element={<Workshops />} />
           <Route path="/workshops/session-1" element={<Session1 />} />
           <Route path="/workshops/session-2" element={<Session2 />} />
           <Route path="/workshops/session-3" element={<Session3 />} />

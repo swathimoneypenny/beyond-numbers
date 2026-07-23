@@ -34,7 +34,7 @@ export default function ProtectedRoute() {
         replace
         state={{
           from: location,
-          notice: 'Please sign in to access the workshop content.',
+          notice: 'Please sign in to access the session content.',
         }}
       />
     )
