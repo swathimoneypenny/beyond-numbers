@@ -1,14 +1,24 @@
 import { useEffect, useRef, useState } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
-import { X, Mail, CheckCircle2, ArrowRight } from 'lucide-react'
+import { X, Mail, ArrowRight } from 'lucide-react'
+import { CONTACT_EMAIL, buildContactMailto } from '../lib/contact'
 
 const SHOWN_KEY = 'bn:promoShown' // once-per-session flag (only popup on the site)
 const DELAY_MS = 7000
 
 export default function ContactPopup() {
   const [open, setOpen] = useState(false)
-  const [sent, setSent] = useState(false)
+  const [opened, setOpened] = useState(false) // mail draft opened (not "sent")
+  const [form, setForm] = useState({ name: '', email: '', message: '' })
+  const set = (k) => (e) => setForm((f) => ({ ...f, [k]: e.target.value }))
   const dialogRef = useRef(null)
+
+  const onSubmit = (e) => {
+    e.preventDefault()
+    // Open the visitor's email app with a pre-filled draft — nothing auto-sends.
+    window.location.href = buildContactMailto(form)
+    setOpened(true)
+  }
 
   // Auto-open after the delay — only once per browser session.
   useEffect(() => {
@@ -97,17 +107,19 @@ export default function ContactPopup() {
             </button>
 
             <div className="p-7 sm:p-8">
-              {sent ? (
+              {opened ? (
                 <div className="flex min-h-[280px] flex-col items-center justify-center text-center">
-                  <CheckCircle2 size={48} className="text-teal" strokeWidth={1.5} />
+                  <Mail size={48} className="text-teal" strokeWidth={1.5} />
                   <h2
                     id="contact-popup-title"
                     className="mt-5 font-display text-2xl font-bold text-navy"
                   >
-                    Thanks! We’ll be in touch.
+                    Your email is ready to send.
                   </h2>
-                  <p className="mt-3 text-sm text-ink/60">
-                    This is a demo, so nothing was actually sent.
+                  <p className="mt-3 text-sm leading-relaxed text-ink/60">
+                    We’ve opened a pre-filled message to{' '}
+                    <span className="font-semibold text-ink">{CONTACT_EMAIL}</span> in your email
+                    app — just review it and hit send.
                   </p>
                 </div>
               ) : (
@@ -127,19 +139,23 @@ export default function ContactPopup() {
                     from you.
                   </p>
 
-                  <form
-                    className="mt-6 space-y-3.5"
-                    onSubmit={(e) => {
-                      e.preventDefault()
-                      setSent(true)
-                    }}
-                  >
-                    <input type="text" required placeholder="Name" aria-label="Name" className={inputCls} />
+                  <form className="mt-6 space-y-3.5" onSubmit={onSubmit}>
+                    <input
+                      type="text"
+                      required
+                      placeholder="Name"
+                      aria-label="Name"
+                      value={form.name}
+                      onChange={set('name')}
+                      className={inputCls}
+                    />
                     <input
                       type="email"
                       required
                       placeholder="Email"
                       aria-label="Email"
+                      value={form.email}
+                      onChange={set('email')}
                       className={inputCls}
                     />
                     <textarea
@@ -147,6 +163,8 @@ export default function ContactPopup() {
                       required
                       placeholder="Message"
                       aria-label="Message"
+                      value={form.message}
+                      onChange={set('message')}
                       className={`${inputCls} resize-none`}
                     />
                     <button

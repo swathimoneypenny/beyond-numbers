@@ -1,6 +1,7 @@
 import { useState } from 'react'
-import { Mail, MapPin, Clock, ArrowRight, CheckCircle2 } from 'lucide-react'
+import { Mail, MapPin, Clock, ArrowRight } from 'lucide-react'
 import Reveal from '../components/Reveal'
+import { CONTACT_EMAIL, buildContactMailto } from '../lib/contact'
 
 const details = [
   {
@@ -17,7 +18,7 @@ const details = [
    turns teal on focus or once the field has a value. Focus adds a teal glow
    ring. The example placeholder is transparent until focus, so it never
    collides with the resting label. */
-function Field({ id, label, type = 'text', placeholder, required, textarea }) {
+function Field({ id, label, type = 'text', placeholder, required, textarea, value, onChange }) {
   const base =
     'peer w-full rounded-xl border border-line bg-white px-4 text-ink outline-none transition-all placeholder:text-transparent focus:placeholder:text-ink/35 focus:border-teal focus:ring-4 focus:ring-teal/20 focus:shadow-[0_0_0_4px_rgba(37,168,140,0.10)]'
   // Floated by default (covers the filled state); peer-placeholder-shown drops it
@@ -32,6 +33,9 @@ function Field({ id, label, type = 'text', placeholder, required, textarea }) {
         <textarea
           id={id}
           rows={5}
+          required={required}
+          value={value}
+          onChange={onChange}
           placeholder={placeholder || ' '}
           className={`${base} resize-none pb-3 pt-7`}
         />
@@ -39,6 +43,9 @@ function Field({ id, label, type = 'text', placeholder, required, textarea }) {
         <input
           id={id}
           type={type}
+          required={required}
+          value={value}
+          onChange={onChange}
           placeholder={placeholder || ' '}
           className={`${base} pb-2.5 pt-7`}
         />
@@ -51,7 +58,17 @@ function Field({ id, label, type = 'text', placeholder, required, textarea }) {
 }
 
 export default function Contact() {
-  const [sent, setSent] = useState(false)
+  const [form, setForm] = useState({ name: '', email: '', firm: '', message: '' })
+  const [opened, setOpened] = useState(false)
+  const set = (k) => (e) => setForm((f) => ({ ...f, [k]: e.target.value }))
+
+  const onSubmit = (e) => {
+    e.preventDefault()
+    // Open the visitor's email app with a pre-filled draft to us. Nothing is
+    // auto-sent; they review and hit send in their own mail client.
+    window.location.href = buildContactMailto(form)
+    setOpened(true)
+  }
 
   return (
     <section className="relative overflow-hidden">
@@ -110,42 +127,49 @@ export default function Contact() {
 
           {/* Right: form card */}
           <Reveal className="rounded-3xl border border-line bg-white p-7 shadow-[0_30px_70px_-40px_rgba(29,51,61,0.4)] sm:p-10">
-            {sent ? (
+            {opened ? (
               <div className="flex min-h-[420px] flex-col items-center justify-center text-center">
-                <CheckCircle2 size={52} className="text-teal" strokeWidth={1.5} />
+                <Mail size={52} className="text-teal" strokeWidth={1.5} />
                 <h2 className="mt-6 font-display text-2xl font-semibold text-ink">
-                  Thanks — we’ve got your message.
+                  Your email is ready to send.
                 </h2>
                 <p className="mt-3 max-w-sm text-ink/60">
-                  This is a demo, so nothing was actually sent. We’d normally reply within 1–2
-                  business days.
+                  We’ve opened a pre-filled message to{' '}
+                  <span className="font-semibold text-ink">{CONTACT_EMAIL}</span> in your email app —
+                  review it and hit send. We’ll reply within 1–2 business days.
+                </p>
+                <p className="mt-4 max-w-sm text-sm text-ink/50">
+                  Nothing opened?{' '}
+                  <a
+                    href={buildContactMailto(form)}
+                    className="font-semibold text-teal hover:underline"
+                  >
+                    Open it again
+                  </a>{' '}
+                  or email us directly.
                 </p>
                 <button
-                  onClick={() => setSent(false)}
+                  onClick={() => setOpened(false)}
                   className="mt-8 rounded-full border border-navy/20 px-6 py-2.5 text-sm font-semibold text-navy transition-colors hover:border-teal/50"
                 >
-                  Send another
+                  Back to form
                 </button>
               </div>
             ) : (
-              <form
-                className="space-y-5"
-                onSubmit={(e) => {
-                  e.preventDefault()
-                  setSent(true)
-                }}
-              >
+              <form className="space-y-5" onSubmit={onSubmit}>
                 <div className="grid gap-5 sm:grid-cols-2">
-                  <Field id="name" label="Name" placeholder="Jane Doe" required />
-                  <Field id="email" label="Email" type="email" placeholder="you@firm.com" required />
+                  <Field id="name" label="Name" placeholder="Jane Doe" required value={form.name} onChange={set('name')} />
+                  <Field id="email" label="Email" type="email" placeholder="you@firm.com" required value={form.email} onChange={set('email')} />
                 </div>
-                <Field id="firm" label="Firm name" placeholder="Doe & Associates CPA" />
+                <Field id="firm" label="Firm name" placeholder="Doe & Associates CPA" value={form.firm} onChange={set('firm')} />
                 <Field
                   id="message"
                   label="Message"
                   placeholder="Tell us a little about your firm and what you're looking for…"
                   textarea
                   required
+                  value={form.message}
+                  onChange={set('message')}
                 />
 
                 <button
