@@ -1,6 +1,7 @@
 import { motion } from 'framer-motion'
 import { Check, TrendingUp, SlidersHorizontal, Users, Route } from 'lucide-react'
 import Button from './Button'
+import TextShimmer from './TextShimmer'
 
 /* Meaningful icons for the "Built for firm owners" bullets, matched to the copy
    by order. Falls back to Check if the list grows. Text is unchanged. */
@@ -70,7 +71,9 @@ export default function Hero({ eyebrow, title, description, box, primary, second
               className="inline-flex items-center gap-2.5 rounded-full border border-white/15 bg-white/[0.07] px-4 py-1.5 text-[0.8rem] font-semibold uppercase tracking-[0.18em] text-white/85 backdrop-blur"
             >
               <span className="h-1.5 w-1.5 rounded-full bg-yellow" />
-              {eyebrow}
+              <TextShimmer as="span" duration={3.5} base="rgba(255,255,255,0.85)" shine="var(--color-yellow)">
+                {eyebrow}
+              </TextShimmer>
             </motion.span>
           )}
 

@@ -1,5 +1,7 @@
 import Reveal from './Reveal'
 import Button from './Button'
+import ParticleBackground from './ParticleBackground'
+import TextShimmer from './TextShimmer'
 
 /* Reusable closing CTA band on the warm navy→teal gradient. */
 export default function CTABand({ id = 'register', title, subtitle, primary, secondary, note }) {
@@ -18,10 +20,14 @@ export default function CTABand({ id = 'register', title, subtitle, primary, sec
         />
       </div>
 
-      <div className="relative mx-auto max-w-[1240px] px-5 py-24 text-center sm:px-8 sm:py-28">
+      <ParticleBackground count={2400} />
+
+      <div className="relative z-10 mx-auto max-w-[1240px] px-5 py-24 text-center sm:px-8 sm:py-28">
         <Reveal className="mx-auto max-w-3xl">
           <h2 className="font-display text-[2.2rem] font-bold leading-[1.08] tracking-tight text-white sm:text-[3rem]">
-            {title}
+            <TextShimmer as="span" duration={3.5} base="#ffffff" shine="var(--color-yellow)">
+              {title}
+            </TextShimmer>
           </h2>
           {subtitle && (
             <p className="mx-auto mt-6 max-w-xl text-lg leading-relaxed text-white/80">{subtitle}</p>

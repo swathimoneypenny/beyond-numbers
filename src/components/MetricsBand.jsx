@@ -1,5 +1,6 @@
 import Reveal from './Reveal'
 import CountUp from './CountUp'
+import ParticleBackground from './ParticleBackground'
 
 /* Reusable stats band on deep navy. Each item: { value, suffix?, label }. */
 export default function MetricsBand({ id, eyebrow, title, items }) {
@@ -12,7 +13,9 @@ export default function MetricsBand({ id, eyebrow, title, items }) {
         <div className="absolute left-1/2 top-1/2 h-72 w-72 -translate-x-1/2 -translate-y-1/2 rounded-full bg-purple/20 blur-3xl" />
       </div>
 
-      <div className="relative mx-auto max-w-[1240px] px-5 py-20 sm:px-8 sm:py-24">
+      <ParticleBackground count={2200} />
+
+      <div className="relative z-10 mx-auto max-w-[1240px] px-5 py-20 sm:px-8 sm:py-24">
         {(eyebrow || title) && (
           <Reveal className="mx-auto mb-14 max-w-2xl text-center">
             {eyebrow && (

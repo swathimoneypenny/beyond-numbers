@@ -70,7 +70,7 @@ export function BrandPanel({ eyebrow, title, blurb }) {
         <div className="absolute -left-20 -top-16 h-72 w-72 rounded-full bg-yellow/25 blur-3xl" />
         <div className="absolute -bottom-16 right-0 h-80 w-80 rounded-full bg-teal/30 blur-3xl" />
       </div>
-      <div className="relative">
+      <div className="relative z-10">
         <span className="text-sm font-semibold uppercase tracking-[0.18em] text-white/80">
           {eyebrow}
         </span>
@@ -79,7 +79,7 @@ export function BrandPanel({ eyebrow, title, blurb }) {
         </h2>
         <p className="mt-5 max-w-sm text-white/65">{blurb}</p>
       </div>
-      <p className="relative font-display text-lg italic text-white/70">
+      <p className="relative z-10 font-display text-lg italic text-white/70">
         “It’s not just the numbers.”
       </p>
     </>

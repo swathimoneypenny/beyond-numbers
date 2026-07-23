@@ -3,6 +3,7 @@ import { Link, useLocation, useNavigate, Navigate } from 'react-router-dom'
 import { Lock, Mail, ArrowRight, Loader2 } from 'lucide-react'
 import Reveal from '../components/Reveal'
 import Logo from '../components/Logo'
+import ParticleBackground from '../components/ParticleBackground'
 import { useAuth } from '../context/AuthContext'
 import { AFTER_AUTH_REDIRECT } from '../lib/authRoutes'
 import { BrandPanel, Field, FormError, validateEmail } from '../components/authUI'
@@ -52,8 +53,11 @@ export default function Login() {
 
   return (
     <section className="mx-auto grid min-h-[88vh] max-w-[1240px] items-stretch gap-0 px-5 py-28 sm:px-8 lg:grid-cols-2 lg:gap-16">
-      {/* Brand panel */}
+      {/* Brand panel — particles contained strictly inside this card via the
+          card's own overflow-hidden; the form side stays clean. BrandPanel's
+          content carries z-10 so it sits above the particle layer. */}
       <Reveal className="relative hidden overflow-hidden rounded-3xl bg-cta-gradient p-12 lg:flex lg:flex-col lg:justify-between">
+        <ParticleBackground count={1200} />
         <BrandPanel
           eyebrow="Member access"
           title="Welcome back to Beyond Numbers."

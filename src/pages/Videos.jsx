@@ -3,6 +3,7 @@ import { motion, AnimatePresence } from 'framer-motion'
 import { Play, Youtube, X, ArrowRight } from 'lucide-react'
 import Button from '../components/Button'
 import Reveal from '../components/Reveal'
+import ParticleBackground from '../components/ParticleBackground'
 
 /* Real Beyond Numbers channel + featured video. */
 const FEATURED_ID = 'TqTmJd_Tsiw'
@@ -78,7 +79,9 @@ export default function Videos() {
           />
         </div>
 
-        <div className="relative mx-auto max-w-[1240px] px-5 pb-16 pt-36 text-center sm:px-8 sm:pt-44">
+        <ParticleBackground count={2200} />
+
+        <div className="relative z-10 mx-auto max-w-[1240px] px-5 pb-16 pt-36 text-center sm:px-8 sm:pt-44">
           <Reveal>
             <span className="inline-flex items-center gap-2.5 rounded-full border border-white/15 bg-white/[0.07] px-4 py-1.5 text-[0.8rem] font-semibold uppercase tracking-[0.2em] text-yellow backdrop-blur">
               <span className="h-1.5 w-1.5 rounded-full bg-yellow" />

@@ -2,6 +2,7 @@ import { Link } from 'react-router-dom'
 import { Clock, PencilRuler } from 'lucide-react'
 import Reveal from '../components/Reveal'
 import CTABand from '../components/CTABand'
+import ParticleBackground from '../components/ParticleBackground'
 import SessionSchedule from '../components/SessionSchedule'
 import { sessions } from '../data/sessions'
 import { REGISTER_URL } from '../data/content'
@@ -77,7 +78,9 @@ export default function Workshops() {
           />
         </div>
 
-        <div className="relative mx-auto max-w-[1240px] px-5 pb-16 pt-36 sm:px-8 sm:pt-44">
+        <ParticleBackground count={2200} />
+
+        <div className="relative z-10 mx-auto max-w-[1240px] px-5 pb-16 pt-36 sm:px-8 sm:pt-44">
           <Reveal className="max-w-3xl">
             <span className="inline-flex items-center gap-2.5 rounded-full border border-white/15 bg-white/[0.07] px-4 py-1.5 text-[0.8rem] font-semibold uppercase tracking-[0.2em] text-yellow backdrop-blur">
               <span className="h-1.5 w-1.5 rounded-full bg-yellow" />
