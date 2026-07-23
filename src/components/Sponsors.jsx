@@ -3,19 +3,24 @@ import Reveal from './Reveal'
 import moneypennyLogo from '../assets/sponsors/MoneyPenny-trimmed.png'
 import twineappsLogo from '../assets/sponsors/twineapps-trimmed.png'
 import xcelLabsLogo from '../assets/sponsors/XcelLabs-trimmed.png'
+import cpaTrendlinesLogo from '../assets/sponsors/cpa-trendlines-trimmed.png'
 
 /* Sponsors & partners logo wall.
 
-   The source logos have very different artwork-to-canvas ratios, so they are
-   pre-trimmed to their actual artwork bounds (see *-trimmed.png; the raw files
-   had huge transparent / white margins that made matching heights shrink them
-   to nothing). After trimming they fall into two shapes:
-     - wide wordmarks  (MoneyPenny 5.66:1, twineapps 5.34:1)
+   Every source logo is pre-trimmed to its actual artwork bounds (see
+   *-trimmed.png; the raw files had large transparent / white margins that made
+   matching heights shrink them to nothing). After trimming they fall into two
+   shapes:
+     - wide wordmarks  (MoneyPenny 5.66:1, twineapps 5.34:1, CPA Trendlines 4.66:1)
      - a near-square badge (XcelLabs 1.35:1)
 
    They are sized for OPTICAL balance, not equal height: the wordmarks render at
    a readable ~50px, and the compact badge ~1.75x taller so their cap heights /
    visual weight match rather than their bounding boxes.
+
+   Four logos lay out as a centered 2x2 grid on desktop (a single row can't hold
+   four wordmarks at this height inside the container without shrinking them),
+   collapsing to one column on small screens.
 
    TO ADD A SPONSOR: trim it to its artwork bounds, import it, add an entry with
    an `h` chosen for its shape (wordmark ~50, square mark ~88). */
@@ -23,6 +28,12 @@ const sponsors = [
   { name: 'MoneyPenny', logo: moneypennyLogo, href: 'https://moneypennyllc.com', h: 50 },
   { name: 'twineapps', logo: twineappsLogo, href: 'https://twineapps.co', h: 50 },
   { name: 'XcelLabs', logo: xcelLabsLogo, href: 'https://www.xcellabsacademy.com/', h: 88 },
+  {
+    name: 'CPA Trendlines Academy',
+    logo: cpaTrendlinesLogo,
+    href: 'https://cpatrendlines-academy.com/',
+    h: 50,
+  },
 ]
 
 function Tile({ sponsor }) {
@@ -66,10 +77,12 @@ export default function Sponsors() {
       eyebrow="Sponsors & Partners"
       title="Thanks to our sponsors & partners"
     >
-      {/* Centered wrapping row: 3 across on desktop, extra logos wrap centered. */}
-      <div className="mt-14 flex flex-wrap justify-center gap-6">
+      {/* Centered 2x2 on desktop, one column on small screens. The max-width
+          keeps the two-up cards from stretching so wide the logos float in a
+          sea of white. */}
+      <div className="mx-auto mt-14 grid max-w-[900px] grid-cols-1 gap-6 md:grid-cols-2">
         {sponsors.map((s, i) => (
-          <Reveal key={s.name} delay={Math.min(i * 0.08, 0.32)} className="w-[370px] max-w-full">
+          <Reveal key={s.name} delay={Math.min(i * 0.08, 0.32)}>
             <Tile sponsor={s} />
           </Reveal>
         ))}
