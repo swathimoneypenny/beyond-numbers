@@ -1,4 +1,4 @@
-import { Link, useParams } from 'react-router-dom'
+import { Link, Navigate, useParams } from 'react-router-dom'
 import { Check, Sparkles, Lock, ArrowRight, ListChecks, Loader2 } from 'lucide-react'
 import SessionHero from '../components/SessionHero'
 import Reveal from '../components/Reveal'
@@ -22,6 +22,21 @@ export default function SessionOverview() {
 
   const contentPath = `/workshops/${slug}/content`
 
+  // Wait for the session to finish restoring before deciding, so a returning
+  // signed-in user never flashes the overview on reload.
+  if (booting) {
+    return (
+      <div className="flex min-h-[70vh] items-center justify-center text-teal">
+        <Loader2 size={26} className="animate-spin" />
+        <span className="sr-only">Loading…</span>
+      </div>
+    )
+  }
+
+  // Signed-in users skip the overview and go straight to the full content.
+  if (isAuthenticated) return <Navigate to={contentPath} replace />
+
+  // From here down the visitor is signed out — the public marketing overview.
   return (
     <>
       {/* Header — number, title, guiding question, meta (from sessions.js) */}
@@ -100,63 +115,40 @@ export default function SessionOverview() {
       {/* CTA — auth aware. While the session is being restored, show a neutral
           state so returning signed-in users don't see a "sign in" flash. */}
       <Band bg="deep" glow>
-        {booting ? (
-          <div className="flex min-h-[9rem] items-center justify-center text-white/70">
-            <Loader2 size={24} className="animate-spin text-teal" />
-          </div>
-        ) : isAuthenticated ? (
-          <Reveal className="mx-auto max-w-2xl text-center">
-            <span className="inline-flex items-center gap-2 rounded-full border border-white/15 bg-white/[0.07] px-4 py-1.5 text-[0.8rem] font-bold uppercase tracking-[0.18em] text-yellow">
-              You’re signed in
-            </span>
-            <h2 className="mt-6 font-display text-[1.9rem] font-bold leading-[1.12] tracking-tight text-white sm:text-[2.4rem]">
-              Ready when you are.
-            </h2>
-            <p className="mx-auto mt-4 max-w-xl text-lg leading-relaxed text-white/75">
-              Open the full session — every slide and both interactive exercises.
-            </p>
+        {/* Signed-out CTA only — signed-in users are redirected above and never
+            render this page. */}
+        <Reveal className="mx-auto max-w-2xl text-center">
+          <span className="inline-flex items-center gap-2 rounded-full border border-white/15 bg-white/[0.07] px-4 py-1.5 text-[0.8rem] font-bold uppercase tracking-[0.18em] text-yellow">
+            <Lock size={13} />
+            Registered attendees
+          </span>
+          <h2 className="mt-6 font-display text-[1.9rem] font-bold leading-[1.12] tracking-tight text-white sm:text-[2.4rem]">
+            Sign in to view this session.
+          </h2>
+          <p className="mx-auto mt-4 max-w-xl text-lg leading-relaxed text-white/75">
+            The full slides and interactive exercises are available to registered
+            attendees. Sign in to pick up where this overview leaves off.
+          </p>
+          <div className="mt-8 flex flex-col items-center justify-center gap-4 sm:flex-row">
             <Link
-              to={contentPath}
-              className="btn-premium group mt-8 inline-flex items-center justify-center gap-2 rounded-full bg-teal px-7 py-3.5 text-base font-semibold text-white shadow-lg shadow-teal/30 transition-colors hover:bg-teal-deep"
+              to="/login"
+              state={{
+                from: { pathname: contentPath },
+                notice: 'Please sign in to access the session content.',
+              }}
+              className="btn-premium group inline-flex items-center justify-center gap-2 rounded-full bg-teal px-7 py-3.5 text-base font-semibold text-white shadow-lg shadow-teal/30 transition-colors hover:bg-teal-deep"
             >
-              View full session
+              Sign in to view this session
               <ArrowRight size={18} className="transition-transform group-hover:translate-x-1" />
             </Link>
-          </Reveal>
-        ) : (
-          <Reveal className="mx-auto max-w-2xl text-center">
-            <span className="inline-flex items-center gap-2 rounded-full border border-white/15 bg-white/[0.07] px-4 py-1.5 text-[0.8rem] font-bold uppercase tracking-[0.18em] text-yellow">
-              <Lock size={13} />
-              Registered attendees
-            </span>
-            <h2 className="mt-6 font-display text-[1.9rem] font-bold leading-[1.12] tracking-tight text-white sm:text-[2.4rem]">
-              Sign in to view this session.
-            </h2>
-            <p className="mx-auto mt-4 max-w-xl text-lg leading-relaxed text-white/75">
-              The full slides and interactive exercises are available to registered
-              attendees. Sign in to pick up where this overview leaves off.
-            </p>
-            <div className="mt-8 flex flex-col items-center justify-center gap-4 sm:flex-row">
-              <Link
-                to="/login"
-                state={{
-                  from: { pathname: contentPath },
-                  notice: 'Please sign in to access the session content.',
-                }}
-                className="btn-premium group inline-flex items-center justify-center gap-2 rounded-full bg-teal px-7 py-3.5 text-base font-semibold text-white shadow-lg shadow-teal/30 transition-colors hover:bg-teal-deep"
-              >
-                Sign in to view this session
-                <ArrowRight size={18} className="transition-transform group-hover:translate-x-1" />
-              </Link>
-            </div>
-            <p className="mt-6 text-sm text-white/70">
-              Don’t have an account?{' '}
-              <Link to="/signup" className="font-semibold text-yellow hover:underline">
-                Sign up
-              </Link>
-            </p>
-          </Reveal>
-        )}
+          </div>
+          <p className="mt-6 text-sm text-white/70">
+            Don’t have an account?{' '}
+            <Link to="/signup" className="font-semibold text-yellow hover:underline">
+              Sign up
+            </Link>
+          </p>
+        </Reveal>
       </Band>
 
       {/* Back to all sessions */}
