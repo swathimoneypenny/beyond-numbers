@@ -13,19 +13,39 @@ const details = [
   { icon: MapPin, label: 'Workshops', value: 'Delivered virtually & in person' },
 ]
 
+/* Floating-label field: the label rests inside the field, then floats up and
+   turns teal on focus or once the field has a value. Focus adds a teal glow
+   ring. The example placeholder is transparent until focus, so it never
+   collides with the resting label. */
 function Field({ id, label, type = 'text', placeholder, required, textarea }) {
   const base =
-    'w-full rounded-xl border border-line bg-white px-4 py-3 text-ink outline-none transition-colors placeholder:text-ink/35 focus:border-navy/40 focus:ring-4 focus:ring-navy/10'
+    'peer w-full rounded-xl border border-line bg-white px-4 text-ink outline-none transition-all placeholder:text-transparent focus:placeholder:text-ink/35 focus:border-teal focus:ring-4 focus:ring-teal/20 focus:shadow-[0_0_0_4px_rgba(37,168,140,0.10)]'
+  // Floated by default (covers the filled state); peer-placeholder-shown drops it
+  // back to resting when empty; peer-focus re-floats it and tints it teal.
+  const labelCls =
+    'pointer-events-none absolute left-4 top-2 z-10 text-xs font-semibold text-teal transition-all ' +
+    'peer-placeholder-shown:top-3.5 peer-placeholder-shown:text-sm peer-placeholder-shown:font-medium peer-placeholder-shown:text-ink/45 ' +
+    'peer-focus:top-2 peer-focus:text-xs peer-focus:font-semibold peer-focus:text-teal'
   return (
-    <div>
-      <label htmlFor={id} className="mb-1.5 block text-sm font-semibold text-ink">
+    <div className="relative">
+      {textarea ? (
+        <textarea
+          id={id}
+          rows={5}
+          placeholder={placeholder || ' '}
+          className={`${base} resize-none pb-3 pt-7`}
+        />
+      ) : (
+        <input
+          id={id}
+          type={type}
+          placeholder={placeholder || ' '}
+          className={`${base} pb-2.5 pt-7`}
+        />
+      )}
+      <label htmlFor={id} className={labelCls}>
         {label} {required && <span className="text-teal">*</span>}
       </label>
-      {textarea ? (
-        <textarea id={id} rows={5} placeholder={placeholder} className={`${base} resize-none`} />
-      ) : (
-        <input id={id} type={type} placeholder={placeholder} className={base} />
-      )}
     </div>
   )
 }
@@ -35,8 +55,12 @@ export default function Contact() {
 
   return (
     <section className="relative overflow-hidden">
+      {/* Soft aurora glow (brand purple / teal / yellow) behind the form,
+          echoing the hero. Sits behind everything and ignores pointer events. */}
       <div className="pointer-events-none absolute inset-0 -z-10">
-        <div className="absolute -right-40 -top-32 h-[30rem] w-[30rem] rounded-full bg-gradient-to-br from-yellow/10 to-transparent blur-3xl" />
+        <div className="absolute -right-40 -top-32 h-[32rem] w-[32rem] rounded-full bg-purple/15 blur-3xl" />
+        <div className="absolute right-10 top-1/3 h-[26rem] w-[26rem] rounded-full bg-teal/12 blur-3xl" />
+        <div className="absolute -right-20 bottom-0 h-[24rem] w-[24rem] rounded-full bg-yellow/10 blur-3xl" />
       </div>
 
       <div className="mx-auto max-w-[1240px] px-5 py-32 sm:px-8">
@@ -126,7 +150,7 @@ export default function Contact() {
 
                 <button
                   type="submit"
-                  className="group inline-flex w-full items-center justify-center gap-2 rounded-xl bg-navy px-6 py-4 font-semibold text-white shadow-lg shadow-navy/20 transition-all hover:bg-navy-deep"
+                  className="btn-premium group inline-flex w-full items-center justify-center gap-2 rounded-xl bg-navy px-6 py-4 font-semibold text-white shadow-lg shadow-navy/20 transition-colors hover:bg-navy-deep"
                 >
                   Send message
                   <ArrowRight size={18} className="transition-transform group-hover:translate-x-1" />

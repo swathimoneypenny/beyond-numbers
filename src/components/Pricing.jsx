@@ -2,6 +2,7 @@ import { Check, Users } from 'lucide-react'
 import Section from './Section'
 import Reveal from './Reveal'
 import Button from './Button'
+import CountUp from './CountUp'
 import { pricing, REGISTER_URL } from '../data/content'
 
 /* Premium pricing panel: standard + featured Early Bird cards, then the group
@@ -17,11 +18,11 @@ export default function Pricing() {
     >
       <div className="mx-auto mt-14 grid max-w-3xl gap-6 sm:grid-cols-2">
         {pricing.tiers.map((tier, i) => (
-          <Reveal key={tier.name} delay={i * 0.1}>
+          <Reveal key={tier.name} delay={i * 0.12}>
             <article
-              className={`relative flex h-full flex-col rounded-2xl border p-8 ${
+              className={`bn-card relative flex h-full flex-col rounded-2xl border p-8 ${
                 tier.featured
-                  ? 'border-transparent bg-navy text-white shadow-[0_30px_70px_-30px_rgba(31,12,46,0.7)] ring-2 ring-yellow/60'
+                  ? 'animate-pulse-glow border-transparent bg-navy text-white'
                   : 'border-line bg-white'
               }`}
             >
@@ -38,13 +39,13 @@ export default function Pricing() {
                 {tier.name}
               </span>
               <div className="mt-4 flex items-baseline gap-2">
-                <span
+                <CountUp
                   className={`font-display text-5xl font-bold tracking-tight ${
                     tier.featured ? 'text-white' : 'text-navy'
                   }`}
                 >
                   {tier.price}
-                </span>
+                </CountUp>
                 <span className={tier.featured ? 'text-white/65' : 'text-[#1A1A1A]'}>
                   {tier.unit}
                 </span>

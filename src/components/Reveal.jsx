@@ -1,66 +1,76 @@
 import { useEffect, useRef } from 'react'
+import { motion, useAnimation, useReducedMotion } from 'framer-motion'
 
-/* Shared scroll reveal used site-wide: pure-CSS bounce toggled by a plain
-   IntersectionObserver (no framer-motion) so it runs reliably in the production
-   build.
-   - The element carries the `.reveal` class (hidden: opacity 0, translateY 70px).
-     When it scrolls into view the observer adds `.is-visible`, which animates it
-     up with a cubic-bezier overshoot bounce (see index.css).
-   - Resets to hidden when it leaves the viewport, so it replays on scroll DOWN
-     and UP (threshold 0.15 + a bottom rootMargin for edge hysteresis).
-   - Optional `delay` (or an auto sibling-index stagger ~0.1s) is applied as
-     transition-delay so grid items pop one after another.
-   - Honors prefers-reduced-motion (static, no transform). */
-export default function Reveal({
-  children,
-  delay,
-  className = '',
-  once = false,
-  as: Tag = 'div',
-}) {
+/* Shared scroll reveal used site-wide.
+
+   Elements start at opacity 0 / translateY(60px) and spring up into place when
+   they scroll into view. The spring is intentionally under-damped (stiffness
+   220, damping 11) so it visibly overshoots and settles.
+
+   Driven by a real IntersectionObserver + framer-motion `useAnimation` rather
+   than `whileInView`, which has been unreliable in production builds here.
+   Re-triggers every time the element enters the viewport — scrolling DOWN and
+   back UP — by animating back out when it leaves.
+
+   Stagger: pass an explicit `delay`, otherwise it derives ~0.1s per sibling
+   index so grid items pop one after another.
+
+   Honors prefers-reduced-motion: renders static, no transform, no observer. */
+
+const SPRING = { type: 'spring', stiffness: 220, damping: 11 }
+const HIDDEN = { opacity: 0, y: 60 }
+const SHOWN = { opacity: 1, y: 0 }
+
+export default function Reveal({ children, delay, className = '', once = false, as = 'div', ...rest }) {
   const ref = useRef(null)
+  const controls = useAnimation()
+  const reduce = useReducedMotion()
+  const MotionTag = motion[as] || motion.div
 
   useEffect(() => {
     const el = ref.current
     if (!el) return
 
-    // Stagger: explicit delay, else derive from sibling index (~0.1s apart).
+    // Stagger: explicit delay wins, else derive from sibling index (~0.1s apart,
+    // capped so long lists don't drift too far).
     let d = delay
     if (d == null && el.parentElement) {
       const idx = Math.max(0, Array.from(el.parentElement.children).indexOf(el))
       d = Math.min(idx, 5) * 0.1
     }
-    if (d) el.style.transitionDelay = `${d}s`
+    d = d || 0
 
-    const reduce =
-      typeof window !== 'undefined' &&
-      window.matchMedia &&
-      window.matchMedia('(prefers-reduced-motion: reduce)').matches
-
-    // Reduced motion or no observer support: just show it, no animation.
+    // Reduced motion or no observer: show immediately, no animation.
     if (reduce || typeof IntersectionObserver === 'undefined') {
-      el.classList.add('is-visible')
+      controls.set(SHOWN)
       return
     }
 
     const io = new IntersectionObserver(
       ([entry]) => {
         if (entry.isIntersecting) {
-          el.classList.add('is-visible')
+          controls.start({ ...SHOWN, transition: { ...SPRING, delay: d } })
           if (once) io.unobserve(el)
         } else if (!once) {
-          el.classList.remove('is-visible')
+          // Ease back out so it replays on the next entry (down or up).
+          controls.start({ ...HIDDEN, transition: { duration: 0.2, ease: 'easeOut' } })
         }
       },
       { threshold: 0.15, rootMargin: '0px 0px -10% 0px' },
     )
     io.observe(el)
     return () => io.disconnect()
-  }, [delay, once])
+  }, [controls, delay, once, reduce])
 
   return (
-    <Tag ref={ref} className={`reveal ${className}`}>
+    <MotionTag
+      ref={ref}
+      className={className}
+      initial={reduce ? false : HIDDEN}
+      animate={controls}
+      {...rest}
+    >
       {children}
-    </Tag>
+    </MotionTag>
   )
 }

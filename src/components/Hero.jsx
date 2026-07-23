@@ -1,6 +1,10 @@
 import { motion } from 'framer-motion'
-import { Check } from 'lucide-react'
+import { Check, TrendingUp, SlidersHorizontal, Users, Route } from 'lucide-react'
 import Button from './Button'
+
+/* Meaningful icons for the "Built for firm owners" bullets, matched to the copy
+   by order. Falls back to Check if the list grows. Text is unchanged. */
+const boxIcons = [TrendingUp, SlidersHorizontal, Users, Route]
 
 const ease = [0.22, 1, 0.36, 1]
 const fade = (delay = 0) => ({
@@ -9,14 +13,16 @@ const fade = (delay = 0) => ({
   transition: { duration: 0.7, delay, ease },
 })
 
-/* Professional advisory image, framed and blended into the brand. */
+/* Professional advisory image, framed and blended into the brand.
+   Scales + fades in on load, then floats very gently and continuously
+   (~6px loop via the .animate-float class; disabled for reduced motion). */
 function HeroImage() {
   return (
     <motion.div
       initial={{ opacity: 0, scale: 0.96, y: 18 }}
       animate={{ opacity: 1, scale: 1, y: 0 }}
       transition={{ duration: 0.9, ease }}
-      className="relative mx-auto w-full max-w-md lg:max-w-none"
+      className="animate-float relative mx-auto w-full max-w-md lg:max-w-none"
     >
       {/* soft brand glow + accent shapes behind the image */}
       <div className="absolute -inset-5 -z-10 rounded-[2.75rem] bg-gradient-to-tr from-teal/35 via-transparent to-yellow/25 blur-2xl" />
@@ -68,22 +74,33 @@ export default function Hero({ eyebrow, title, description, box, primary, second
             </motion.span>
           )}
 
-          <motion.h1
-            {...fade(0.08)}
-            className="mt-7 font-display text-[2.9rem] font-bold leading-[1.03] tracking-tight text-white sm:text-6xl lg:text-[4.3rem]"
-          >
-            {title}
-          </motion.h1>
+          <div className="relative">
+            {/* Soft brand radial glow behind the title so it stands out. */}
+            <div
+              aria-hidden="true"
+              className="pointer-events-none absolute -inset-x-10 -top-10 bottom-0 -z-10"
+              style={{
+                background:
+                  'radial-gradient(60% 70% at 30% 40%, rgba(245,196,0,0.22), rgba(37,168,140,0.14) 45%, transparent 72%)',
+              }}
+            />
+            <motion.h1
+              {...fade(0.15)}
+              className="mt-7 font-display text-[2.9rem] font-bold leading-[1.03] tracking-tight text-white sm:text-6xl lg:text-[4.3rem]"
+            >
+              {title}
+            </motion.h1>
+          </div>
 
           {/* thin yellow + teal accent underline */}
-          <motion.div {...fade(0.16)} className="mt-5 flex items-center gap-1.5">
+          <motion.div {...fade(0.24)} className="mt-5 flex items-center gap-1.5">
             <span className="h-1.5 w-16 rounded-full bg-yellow" />
             <span className="h-1.5 w-9 rounded-full bg-teal" />
           </motion.div>
 
           {description && (
             <motion.p
-              {...fade(0.22)}
+              {...fade(0.3)}
               className="mt-7 max-w-xl text-lg leading-relaxed text-white/70 sm:text-xl"
             >
               {description}
@@ -92,26 +109,29 @@ export default function Hero({ eyebrow, title, description, box, primary, second
 
           {box && (
             <motion.div
-              {...fade(0.3)}
+              {...fade(0.45)}
               className="mt-8 max-w-xl rounded-2xl border border-white/10 bg-white p-6 shadow-[0_30px_60px_-30px_rgba(0,0,0,0.6)]"
             >
               <p className="font-display text-base font-semibold tracking-tight text-navy">
                 {box.title}
               </p>
               <ul className="mt-4 grid gap-3 sm:grid-cols-2">
-                {box.items.map((it) => (
-                  <li key={it} className="flex gap-2.5">
-                    <span className="mt-0.5 flex h-5 w-5 shrink-0 items-center justify-center rounded-full bg-teal/15 text-teal">
-                      <Check size={13} strokeWidth={3} />
-                    </span>
-                    <span className="text-[0.92rem] leading-snug text-ink/80">{it}</span>
-                  </li>
-                ))}
+                {box.items.map((it, i) => {
+                  const BulletIcon = boxIcons[i] || Check
+                  return (
+                    <li key={it} className="flex gap-2.5">
+                      <span className="mt-0.5 flex h-6 w-6 shrink-0 items-center justify-center rounded-lg bg-teal/12 text-teal">
+                        <BulletIcon size={14} strokeWidth={2.25} />
+                      </span>
+                      <span className="self-center text-[0.92rem] leading-snug text-ink/80">{it}</span>
+                    </li>
+                  )
+                })}
               </ul>
             </motion.div>
           )}
 
-          <motion.div {...fade(0.38)} className="mt-8 flex flex-col gap-3.5 sm:flex-row sm:items-center">
+          <motion.div {...fade(0.6)} className="mt-8 flex flex-col gap-3.5 sm:flex-row sm:items-center">
             {primary && (
               <Button
                 href={primary.href}

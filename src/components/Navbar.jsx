@@ -44,12 +44,22 @@ export default function Navbar() {
 
   return (
     <header
-      className={`fixed inset-x-0 top-0 z-50 border-b transition-all duration-300 ${
-        scrolled
-          ? 'border-white/10 bg-navy-deep/95 shadow-[0_10px_30px_-16px_rgba(0,0,0,0.8)] backdrop-blur-xl'
-          : 'border-white/5 bg-navy-deep/80 backdrop-blur-md'
+      className={`fixed inset-x-0 top-0 z-50 border-b transition-colors duration-300 ${
+        scrolled ? 'border-white/10' : 'border-white/5'
       }`}
     >
+      {/* Frosted-glass background lives on this NON-fixed child, not the fixed
+          <header>. backdrop-filter on a position:fixed element breaks the fixed
+          positioning on iOS Safari, so the header stays plain and this absolute
+          layer carries the blur + shadow. */}
+      <div
+        className={`pointer-events-none absolute inset-0 -z-10 transition-all duration-300 ${
+          scrolled
+            ? 'bg-navy-deep/80 shadow-[0_10px_30px_-16px_rgba(0,0,0,0.8)] backdrop-blur-xl backdrop-saturate-150'
+            : 'bg-navy-deep/80 backdrop-blur-md'
+        }`}
+      />
+
       <nav className="mx-auto flex h-[80px] max-w-[1240px] items-center justify-between px-5 sm:px-8">
         {/* Logo on a clean white pill so the full navy wordmark stays visible on the dark nav */}
         <Link
@@ -76,11 +86,9 @@ export default function Navbar() {
                 {({ isActive }) => (
                   <>
                     {link.label}
-                    <span
-                      className={`absolute -bottom-1.5 left-0 h-[2px] rounded-full bg-teal transition-all duration-300 ${
-                        isActive ? 'w-full' : 'w-0 group-hover:w-full'
-                      }`}
-                    />
+                    {/* Brand-gradient underline: grows from the left on hover,
+                        and stays shown for the active link (see .nav-underline). */}
+                    <span className="nav-underline" data-active={isActive ? 'true' : 'false'} />
                   </>
                 )}
               </NavLink>
@@ -115,7 +123,7 @@ export default function Navbar() {
             href={REGISTER_URL}
             target="_blank"
             rel="noopener noreferrer"
-            className="hidden rounded-full bg-teal px-5 py-2.5 text-sm font-semibold text-white shadow-lg shadow-teal/30 transition-all hover:-translate-y-0.5 hover:bg-teal-deep sm:inline-flex"
+            className="btn-premium hidden rounded-full bg-teal px-5 py-2.5 text-sm font-semibold text-white shadow-lg shadow-teal/30 transition-colors hover:bg-teal-deep sm:inline-flex"
           >
             Register
           </a>
