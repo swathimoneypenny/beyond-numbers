@@ -9,6 +9,8 @@ import Session3 from './pages/Session3'
 import Session4 from './pages/Session4'
 import SessionPage from './pages/SessionPage'
 import Videos from './pages/Videos'
+import Blog from './pages/Blog'
+import Podcast from './pages/Podcast'
 import Login from './pages/Login'
 import Signup from './pages/Signup'
 import Checklists from './pages/Checklists'
@@ -29,6 +31,8 @@ export default function App() {
         <Route path="/workshops/session-4" element={<Session4 />} />
         <Route path="/workshops/:slug" element={<SessionPage />} />
         <Route path="/videos" element={<Videos />} />
+        <Route path="/blog" element={<Blog />} />
+        <Route path="/podcast" element={<Podcast />} />
         <Route path="/login" element={<Login />} />
         <Route path="/signup" element={<Signup />} />
         <Route path="/checklists" element={<Checklists />} />

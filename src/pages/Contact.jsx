@@ -10,7 +10,7 @@ const details = [
     href: 'mailto:contact@beyond-numbers.com',
   },
   { icon: Clock, label: 'Response time', value: 'Within 1–2 business days' },
-  { icon: MapPin, label: 'Workshops', value: 'Delivered virtually & in person' },
+  { icon: MapPin, label: 'Workshops', value: 'Delivered virtually' },
 ]
 
 /* Floating-label field: the label rests inside the field, then floats up and
