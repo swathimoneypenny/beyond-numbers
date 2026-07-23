@@ -8,7 +8,7 @@ import Session1 from './pages/Session1'
 import Session2 from './pages/Session2'
 import Session3 from './pages/Session3'
 import Session4 from './pages/Session4'
-import SessionPage from './pages/SessionPage'
+import SessionOverview from './pages/SessionOverview'
 import Videos from './pages/Videos'
 import Blog from './pages/Blog'
 import Podcast from './pages/Podcast'
@@ -26,15 +26,16 @@ export default function App() {
         <Route path="/" element={<Home />} />
         <Route path="/games" element={<Games />} />
 
-        {/* The Workshops overview is public marketing (session tiles). The
-            session content itself is gated: signed-in users only. */}
+        {/* The Workshops tiles and the per-session overview pages are public
+            marketing. The full session content is gated: signed-in users only,
+            at /workshops/session-N/content. */}
         <Route path="/workshops" element={<Workshops />} />
+        <Route path="/workshops/:slug" element={<SessionOverview />} />
         <Route element={<ProtectedRoute />}>
-          <Route path="/workshops/session-1" element={<Session1 />} />
-          <Route path="/workshops/session-2" element={<Session2 />} />
-          <Route path="/workshops/session-3" element={<Session3 />} />
-          <Route path="/workshops/session-4" element={<Session4 />} />
-          <Route path="/workshops/:slug" element={<SessionPage />} />
+          <Route path="/workshops/session-1/content" element={<Session1 />} />
+          <Route path="/workshops/session-2/content" element={<Session2 />} />
+          <Route path="/workshops/session-3/content" element={<Session3 />} />
+          <Route path="/workshops/session-4/content" element={<Session4 />} />
         </Route>
 
         <Route path="/videos" element={<Videos />} />

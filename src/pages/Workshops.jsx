@@ -1,28 +1,24 @@
 import { Link } from 'react-router-dom'
-import { Clock, PencilRuler, Lock } from 'lucide-react'
+import { Clock, PencilRuler } from 'lucide-react'
 import Reveal from '../components/Reveal'
 import CTABand from '../components/CTABand'
 import ParticleBackground from '../components/ParticleBackground'
 import SessionSchedule from '../components/SessionSchedule'
-import { useAuth } from '../context/AuthContext'
 import { sessions } from '../data/sessions'
 import { REGISTER_URL } from '../data/content'
 
 const metaIcons = [Clock, PencilRuler]
 
-function SessionCard({ session, index, locked }) {
+function SessionCard({ session, index }) {
   const isComingSoon = session.comingSoon
-  // Published sessions link straight to their page; "coming soon" tiles stay inert.
-  // Locked (signed-out) tiles still link — the click routes through the guard,
-  // which sends the visitor to /login and returns them here after sign-in.
+  // Published tiles link to the public session overview; "coming soon" tiles
+  // stay inert. The overview itself handles the sign-in gate for full content.
   const Card = isComingSoon ? 'article' : Link
   const cardProps = isComingSoon ? {} : { to: `/workshops/${session.slug}` }
-  const showLock = locked && !isComingSoon
   return (
     <Reveal delay={Math.min(index * 0.08, 0.3)}>
       <Card
         {...cardProps}
-        aria-label={showLock ? `${session.title} — sign in to view` : undefined}
         className={`group relative flex h-full flex-col rounded-2xl border bg-white p-7 transition-all duration-300 ${
           isComingSoon
             ? 'border-line opacity-75'
@@ -37,17 +33,10 @@ function SessionCard({ session, index, locked }) {
           >
             {session.number}
           </span>
-          {isComingSoon ? (
+          {isComingSoon && (
             <span className="rounded-full border border-yellow/50 bg-yellow/15 px-3 py-1 text-[0.7rem] font-semibold uppercase tracking-wide text-navy">
               Coming soon
             </span>
-          ) : (
-            showLock && (
-              <span className="inline-flex items-center gap-1.5 rounded-full border border-teal/40 bg-teal/[0.08] px-3 py-1 text-[0.7rem] font-semibold uppercase tracking-wide text-teal-deep">
-                <Lock size={12} />
-                Sign in to view
-              </span>
-            )
           )}
         </div>
 
@@ -73,11 +62,6 @@ function SessionCard({ session, index, locked }) {
 }
 
 export default function Workshops() {
-  const { isAuthenticated, booting } = useAuth()
-  // Only show the lock cue once we know the visitor is signed out, so signed-in
-  // users never see a flash of "Sign in to view" during session restore.
-  const locked = !booting && !isAuthenticated
-
   return (
     <>
       {/* ===== Hero ===== */}
@@ -124,7 +108,7 @@ export default function Workshops() {
         <div className="mx-auto max-w-[1240px] px-5 sm:px-8">
           <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
             {sessions.map((s, i) => (
-              <SessionCard key={s.slug} session={s} index={i} locked={locked} />
+              <SessionCard key={s.slug} session={s} index={i} />
             ))}
           </div>
         </div>
