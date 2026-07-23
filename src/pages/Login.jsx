@@ -21,6 +21,8 @@ export default function Login() {
 
   // Where to land after a successful sign-in (honours a redirect origin).
   const dest = location.state?.from?.pathname ?? AFTER_AUTH_REDIRECT
+  // Optional message from a protected route that redirected here.
+  const notice = location.state?.notice
 
   if (!booting && isAuthenticated) return <Navigate to={dest} replace />
 
@@ -74,6 +76,15 @@ export default function Login() {
             Sign in
           </h1>
           <p className="mt-3 text-ink/60">Enter your details to access your account.</p>
+
+          {/* Shown when a protected route (e.g. the workshop content) sent the
+              user here to sign in first. */}
+          {notice && (
+            <div className="mt-6 flex items-start gap-3 rounded-xl border border-teal/30 bg-teal/[0.08] px-4 py-3">
+              <Lock size={18} className="mt-0.5 shrink-0 text-teal" />
+              <p className="text-sm font-medium text-teal-deep">{notice}</p>
+            </div>
+          )}
 
           <FormError>{formError}</FormError>
 

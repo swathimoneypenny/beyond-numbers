@@ -1,5 +1,6 @@
 import { Routes, Route } from 'react-router-dom'
 import Layout from './components/Layout'
+import ProtectedRoute from './components/ProtectedRoute'
 import Home from './pages/Home'
 import Games from './pages/Games'
 import Workshops from './pages/Workshops'
@@ -24,12 +25,18 @@ export default function App() {
       <Route element={<Layout />}>
         <Route path="/" element={<Home />} />
         <Route path="/games" element={<Games />} />
-        <Route path="/workshops" element={<Workshops />} />
-        <Route path="/workshops/session-1" element={<Session1 />} />
-        <Route path="/workshops/session-2" element={<Session2 />} />
-        <Route path="/workshops/session-3" element={<Session3 />} />
-        <Route path="/workshops/session-4" element={<Session4 />} />
-        <Route path="/workshops/:slug" element={<SessionPage />} />
+
+        {/* Workshop content is gated: signed-in users only. Marketing pages
+            (Home, Resources, Contact, Register, auth) stay public. */}
+        <Route element={<ProtectedRoute />}>
+          <Route path="/workshops" element={<Workshops />} />
+          <Route path="/workshops/session-1" element={<Session1 />} />
+          <Route path="/workshops/session-2" element={<Session2 />} />
+          <Route path="/workshops/session-3" element={<Session3 />} />
+          <Route path="/workshops/session-4" element={<Session4 />} />
+          <Route path="/workshops/:slug" element={<SessionPage />} />
+        </Route>
+
         <Route path="/videos" element={<Videos />} />
         <Route path="/blog" element={<Blog />} />
         <Route path="/podcast" element={<Podcast />} />
