@@ -187,6 +187,23 @@ export async function me({ signal } = {}) {
   return request('/api/auth/me', { auth: true, signal })
 }
 
+/* Request a password-reset email. The backend always responds the same way
+   whether or not the address is registered, so the caller shows one message. */
+export async function forgotPassword(email) {
+  return request('/api/auth/forgot-password', {
+    method: 'POST',
+    body: { email },
+  })
+}
+
+/* Set a new password using the token from the emailed link. */
+export async function resetPassword(token, password) {
+  return request('/api/auth/reset-password', {
+    method: 'POST',
+    body: { token, password },
+  })
+}
+
 export function logout() {
   clearToken()
 }

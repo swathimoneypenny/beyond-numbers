@@ -114,9 +114,9 @@ export default function Login() {
               disabled={busy}
               autoComplete="current-password"
               right={
-                <a href="#" className="text-sm font-medium text-teal hover:underline">
+                <Link to="/forgot-password" className="text-sm font-medium text-teal hover:underline">
                   Forgot?
-                </a>
+                </Link>
               }
             />
 

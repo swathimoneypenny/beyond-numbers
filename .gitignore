@@ -1,6 +1,14 @@
 # --- Dependencies ---
 node_modules/
 
+# --- Python backend (backend/) ---
+.venv/
+__pycache__/
+*.pyc
+# SQLite databases hold real user data (password hashes) — never commit them.
+*.db
+*.sqlite3
+
 # --- Build output ---
 dist/
 dist-ssr/

@@ -1,0 +1,27 @@
+# Beyond Numbers — auth backend (Stage 1)
+# Install with:  pip install -r requirements.txt
+
+fastapi==0.115.6
+uvicorn[standard]==0.34.0
+
+# Database
+SQLAlchemy==2.0.36
+
+# Settings + validation
+pydantic==2.10.4
+pydantic-settings==2.7.0
+email-validator==2.2.0
+
+# Password hashing
+passlib==1.7.4
+# Pinned: bcrypt 4.1+ removed __about__, which passlib 1.7.4 probes and warns about.
+bcrypt==4.0.1
+
+# JWT
+python-jose[cryptography]==3.3.0
+
+# Form parsing for OAuth2-style login (optional but used by /docs "Authorize")
+python-multipart==0.0.20
+
+# Transactional email via AWS SES (password reset)
+boto3>=1.34,<2
