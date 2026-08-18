@@ -42,20 +42,22 @@ export default function Home() {
       {/* 1 — Hero (single H1) */}
       <Hero
         eyebrow="Workshops · From Scorekeeper to Strategist"
-        title="CAS Playbook: From Scorekeeper to Strategist"
+        title="From Scorekeeper to Strategist"
+        tagline="Make the decisions your 2027 firm needs."
         description={
           <>
-            Build a more{' '}
-            <strong className="font-semibold text-white">
-              valuable, scalable, and advisory-focused
-            </strong>{' '}
-            accounting practice. Transformation doesn’t happen by adding more apps or working
-            harder — <strong className="font-semibold text-white">it starts with clarity.</strong>
+            You already know advisory matters. The harder question is what it should mean for
+            your firm—and what needs to change first. Join Penny Breslin and Damien Greathead for
+            four live, 90-minute working sessions. Bring the reality of your own practice. Use
+            practical Beyond Numbers tools to make decisions about services, people, clients,
+            technology, AI and procedures. Leave with work completed and clear next actions—not
+            another set of webinar notes.
           </>
         }
+        meta="November 5–December 3, 2026 · Four live sessions · 6 CPE credits · US$199"
         box={heroBox}
         morphTexts={MORPH_WORDS}
-        primary={{ label: 'Register Now', href: REGISTER_URL, newTab: true }}
+        primary={{ label: 'Reserve my place — US$199', href: REGISTER_URL, newTab: true }}
         secondary={{ label: 'View Sessions', href: '#sessions', arrow: true }}
       />
 
@@ -147,7 +149,7 @@ export default function Home() {
         morphTexts={MORPH_WORDS}
         primary={{ label: 'Register Now', href: REGISTER_URL, newTab: true }}
         secondary={{ label: 'View All Workshops', to: '/workshops', arrow: true }}
-        note="Sessions begin August 5, 2026"
+        note="Sessions begin November 5, 2026"
       />
     </>
   )

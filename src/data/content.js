@@ -5,22 +5,21 @@
 export const REGISTER_URL =
   'https://register.gotowebinar.com/register/5675019771835943003?source=Academy'
 
-/* Pricing tiers. */
+/* Pricing tiers (November 2026 relaunch). */
 export const pricing = {
   tiers: [
     {
       name: 'Standard',
-      price: '$599',
+      price: 'US$199',
       unit: 'per person',
-      note: 'Standard price',
+      note: 'Full series — four live sessions',
       featured: false,
     },
     {
       name: 'Early Bird',
-      price: '$449',
+      price: 'US$149',
       unit: 'per person',
-      note: 'Register by July 26 and save $150',
-      badge: 'Save $150',
+      note: 'Register by September 30, 2026',
       featured: true,
     },
   ],
@@ -28,12 +27,20 @@ export const pricing = {
   group: 'Save $100 per person when multiple people from the same firm register',
 }
 
-/* Session schedule (real dates). Titles come from the session data. */
+/* Session schedule (November–December 2026). Five weeks: three sessions, an
+   application-week break over Thanksgiving, then the final session. The `break`
+   entry is rendered as a non-session pause, not a numbered session. */
 export const schedule = [
-  { n: '1', title: 'Foundation & Service Portfolio', date: 'August 5', time: '2:00pm – 3:30pm EST' },
-  { n: '2', title: 'People: Team & Clients', date: 'August 12', time: '2:00pm – 3:30pm EST' },
-  { n: '3', title: 'Technology & AI', date: 'August 19', time: '2:00pm – 3:30pm EST' },
-  { n: '4', title: 'Procedures & Implementation Roadmap', date: 'August 26', time: '2:00pm – 3:30pm EST' },
+  { n: '1', title: 'Foundation & Service Portfolio', date: 'Thursday, November 5, 2026', time: '2:00pm – 3:30pm EST' },
+  { n: '2', title: 'People: Team & Clients', date: 'Thursday, November 12, 2026', time: '2:00pm – 3:30pm EST' },
+  { n: '3', title: 'Technology & AI', date: 'Thursday, November 19, 2026', time: '2:00pm – 3:30pm EST' },
+  {
+    kind: 'break',
+    title: 'Application Week',
+    date: 'Thanksgiving week · November 26',
+    note: 'No live session — catch up and test',
+  },
+  { n: '4', title: 'Procedures & Implementation Roadmap', date: 'Thursday, December 3, 2026', time: '2:00pm – 3:30pm EST' },
 ]
 
 export const cpe = 'This workshop series is eligible for 6 CPE credits.'
@@ -151,11 +158,11 @@ export const faqs = [
   },
   {
     q: 'When are the sessions and how long are they?',
-    a: 'Four 90-minute sessions on August 5, 12, 19, and 26, from 2:00–3:30pm EST. Each session builds on the last.',
+    a: 'Four 90-minute live sessions on November 5, 12, 19, and December 3, 2026, from 2:00–3:30pm EST. Thanksgiving week (November 26) is an application week with no live session — time to catch up and apply what you’ve learned. Each session builds on the last.',
   },
   {
     q: 'What does it cost?',
-    a: '$599 per person, or $449 with the Early Bird rate if you register by July 26. Groups save $100 per person when multiple people from the same firm register.',
+    a: 'US$199 per person for the full series, or US$149 with the Early Bird rate if you register by September 30, 2026. Groups save $100 per person when multiple people from the same firm register.',
   },
   {
     q: 'Do I earn CPE credits?',

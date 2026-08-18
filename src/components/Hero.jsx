@@ -46,7 +46,7 @@ function HeroImage() {
   )
 }
 
-export default function Hero({ eyebrow, title, description, box, primary, secondary, morphTexts }) {
+export default function Hero({ eyebrow, title, tagline, description, meta, box, primary, secondary, morphTexts }) {
   return (
     <section id="home" className="relative overflow-hidden bg-hero-dark text-white">
       {/* depth: lighter-purple + teal + yellow glows for dimension */}
@@ -102,6 +102,15 @@ export default function Hero({ eyebrow, title, description, box, primary, second
             <span className="h-1.5 w-9 rounded-full bg-teal" />
           </motion.div>
 
+          {tagline && (
+            <motion.p
+              {...fade(0.28)}
+              className="mt-6 max-w-xl font-display text-xl font-semibold leading-snug text-yellow sm:text-2xl"
+            >
+              {tagline}
+            </motion.p>
+          )}
+
           {/* Secondary morphing accent below the H1 (the H1 itself stays static). */}
           {morphTexts?.length > 0 && (
             <motion.div {...fade(0.32)} className="mt-6">
@@ -120,6 +129,15 @@ export default function Hero({ eyebrow, title, description, box, primary, second
               className="mt-7 max-w-xl text-lg leading-relaxed text-white/70 sm:text-xl"
             >
               {description}
+            </motion.p>
+          )}
+
+          {meta && (
+            <motion.p
+              {...fade(0.4)}
+              className="mt-6 max-w-xl text-sm font-semibold leading-relaxed text-white/75"
+            >
+              {meta}
             </motion.p>
           )}
 
