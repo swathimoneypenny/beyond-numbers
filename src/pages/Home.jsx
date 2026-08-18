@@ -1,7 +1,6 @@
 import Hero from '../components/Hero'
 import Section from '../components/Section'
-import CardGrid from '../components/CardGrid'
-import MetricsBand from '../components/MetricsBand'
+import Reveal from '../components/Reveal'
 import Accordion from '../components/Accordion'
 import RichBody from '../components/RichBody'
 import CTABand from '../components/CTABand'
@@ -10,10 +9,10 @@ import Pricing from '../components/Pricing'
 import Sponsors from '../components/Sponsors'
 import {
   heroBox,
-  challenges,
-  workThrough,
-  helps,
-  metrics,
+  decisionsSection,
+  workOnSection,
+  methodSection,
+  formatSection,
   accordions,
   faqs,
   REGISTER_URL,
@@ -61,49 +60,91 @@ export default function Home() {
         secondary={{ label: 'View Sessions', href: '#sessions', arrow: true }}
       />
 
-      {/* 2 — Why this transformation matters */}
-      <Section
-        id="why"
-        bg="white"
-        accent="teal"
-        eyebrow="The Challenge"
-        title="Why This Transformation Matters"
-        intro="The profession is shifting. These are the pressures pushing firms to rethink how they work — and why clarity comes before tools."
-      >
-        <CardGrid items={challenges} columns={3} />
+      {/* 2 — The unresolved decisions */}
+      <Section id="decisions" bg="white" accent="teal" title={decisionsSection.title} intro={decisionsSection.subhead}>
+        <Reveal>
+          <p className="mx-auto mt-8 max-w-2xl text-center text-[1.05rem] leading-relaxed text-ink/70">
+            {decisionsSection.body}
+          </p>
+        </Reveal>
+        <div className="mt-10 grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
+          {decisionsSection.points.map((p, i) => (
+            <Reveal key={p} delay={Math.min(i * 0.06, 0.3)}>
+              <article className="flex h-full items-start gap-3.5 rounded-2xl border border-line bg-white p-6 shadow-[0_14px_34px_-22px_rgba(61,15,82,0.25)]">
+                <span className="mt-2 h-2 w-2 shrink-0 rounded-full bg-teal" />
+                <p className="text-[0.98rem] leading-relaxed text-ink/80">{p}</p>
+              </article>
+            </Reveal>
+          ))}
+        </div>
+        <Reveal>
+          <div className="mx-auto mt-10 max-w-3xl rounded-2xl border border-yellow/40 bg-yellow/[0.1] p-6 text-center sm:p-7">
+            <p className="text-[1.05rem] font-semibold leading-relaxed text-ink/85">
+              {decisionsSection.closing}
+            </p>
+          </div>
+        </Reveal>
       </Section>
 
-      {/* 3 — What you'll work through */}
-      <Section
-        id="work-through"
-        bg="sand"
-        accent="yellow"
-        eyebrow="The Curriculum"
-        title="What You'll Work Through"
-        intro="Four connected working sessions that move you from strategy to a concrete, sequenced plan."
-      >
-        <CardGrid items={workThrough} columns={4} />
+      {/* 3 — What you will actually work on */}
+      <Section id="work-on" bg="sand" accent="yellow" title={workOnSection.title} intro={workOnSection.subhead}>
+        <div className="mt-12 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+          {workOnSection.items.map((item, i) => (
+            <Reveal key={item} delay={Math.min(i * 0.06, 0.3)}>
+              <article className="flex h-full flex-col rounded-2xl border border-line bg-white p-7 shadow-[0_14px_34px_-18px_rgba(61,15,82,0.3)]">
+                <span className="flex h-10 w-10 items-center justify-center rounded-xl bg-navy font-display text-base font-bold text-white">
+                  {i + 1}
+                </span>
+                <p className="mt-4 text-[0.97rem] leading-relaxed text-ink/75">{item}</p>
+              </article>
+            </Reveal>
+          ))}
+        </div>
       </Section>
 
-      {/* 4 — How the series helps */}
-      <Section
-        id="how-it-helps"
-        bg="white"
-        accent="teal"
-        eyebrow="The Outcomes"
-        title="How the Series Helps You"
-        intro="Tangible outputs you'll walk away with — practical tools, not theory."
-      >
-        <CardGrid items={helps} columns={4} />
+      {/* 4 — The Practice Decisions Method */}
+      <Section id="method" bg="white" accent="teal" title={methodSection.title} intro={methodSection.subhead}>
+        <div className="mt-12 grid gap-5 sm:grid-cols-2 lg:grid-cols-4">
+          {methodSection.steps.map((s, i) => (
+            <Reveal key={s.label} delay={i * 0.08}>
+              <article className="flex h-full flex-col rounded-2xl border border-line bg-cream p-6">
+                <span className="font-display text-3xl font-bold text-teal/40">0{i + 1}</span>
+                <h3 className="mt-2 font-display text-lg font-bold text-navy">{s.label}</h3>
+                <p className="mt-2 text-[0.95rem] leading-relaxed text-ink/70">{s.text}</p>
+              </article>
+            </Reveal>
+          ))}
+        </div>
+        <Reveal>
+          <div className="mx-auto mt-10 max-w-3xl rounded-2xl border border-navy/15 bg-navy p-7 text-center sm:p-8">
+            <p className="text-[1.05rem] font-semibold leading-relaxed text-white">
+              {methodSection.closing}
+            </p>
+          </div>
+        </Reveal>
       </Section>
 
-      {/* 5 — Metrics band */}
-      <MetricsBand
-        id="at-a-glance"
-        eyebrow="By the numbers"
-        title="The Program at a Glance"
-        items={metrics}
-      />
+      {/* 5 — How the live format works */}
+      <Section id="format" bg="sand" accent="yellow" title={formatSection.title} intro={formatSection.subhead}>
+        <Reveal>
+          <p className="mx-auto mt-8 max-w-2xl text-center text-[1.05rem] font-medium text-ink/70">
+            {formatSection.intro}
+          </p>
+        </Reveal>
+        <div className="mt-10 grid gap-5 sm:grid-cols-2 lg:grid-cols-4">
+          {formatSection.steps.map((s, i) => (
+            <Reveal key={s.label} delay={i * 0.08}>
+              <article className="flex h-full flex-col rounded-2xl border border-line bg-white p-6">
+                <span className="flex h-9 w-9 items-center justify-center rounded-full bg-teal font-display text-sm font-bold text-white">
+                  {i + 1}
+                </span>
+                <h3 className="mt-4 font-display text-base font-bold text-navy">{s.label}</h3>
+                <p className="mt-2 text-[0.93rem] leading-relaxed text-ink/70">{s.text}</p>
+              </article>
+            </Reveal>
+          ))}
+        </div>
+      </Section>
 
       {/* 6 — Inside the series (accordion) */}
       <Section

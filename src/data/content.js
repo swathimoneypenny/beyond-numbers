@@ -150,6 +150,80 @@ export const metrics = [
   { value: '48', suffix: 'hrs', label: 'To your first action' },
 ]
 
+/* ===== November 2026 relaunch — landing sections (batch 2a) =====
+   Exact approved copy; rendered by src/pages/Home.jsx between the hero and
+   the "Inside the Series" accordion. */
+
+/* Section 1 — the unresolved decisions. */
+export const decisionsSection = {
+  title: 'You do not need another explanation of why advisory matters',
+  subhead: 'The problem is not another shortage of ideas.',
+  body: 'Most firm leaders already know the practice cannot keep operating exactly as it does today. What remains unresolved are the decisions:',
+  points: [
+    'Which services deserve more capacity—and which should stop consuming it?',
+    'Is senior talent doing work that belongs in another role?',
+    'Which client relationships should the firm grow, change or reconsider?',
+    'Which applications belong in the core stack—and which are simply adding complexity?',
+    'What evidence should an AI vendor provide before its tool touches client work?',
+    "Which critical processes still live in somebody's head?",
+  ],
+  closing:
+    'Those decisions rarely get made between deadlines, client work and day-to-day questions. This program creates the time, structure and experienced guidance to make them.',
+}
+
+/* Section 2 — what you will actually work on. */
+export const workOnSection = {
+  title: 'What you will actually work on',
+  subhead: 'Bring the firm you have. Work ON the firm you want.',
+  items: [
+    'Bring your service list. Apply the Traffic Light Revolution and the $100K Question. Leave with a Stop / Outsource / Automate / Focus decision set and one dated 30-day move.',
+    'Bring a clear picture of who does what. Use the 52-Card Team Pickup to move recurring work into the role that should own it. Leave with a sharper view of the role that could unlock capacity next.',
+    'Bring your client list. Score real relationships by value and effort. Leave with a client portfolio map, three Gold relationships to approach and one wrong-fit relationship to review for transition.',
+    'Bring your current technology questions. Define the shape of your Little Black Dress—a limited core stack your team can know deeply—and apply practical selection criteria. Cost a sample advisory stack so tool choices connect to delivery economics.',
+    'Bring one AI tool you are considering. Apply a vendor due-diligence scorecard across client-data exposure, training risk, review controls, audit trail, contract terms and security evidence. Leave with a Go / Conditional / No-Go decision and a safer next step.',
+    'Bring one process that depends too heavily on memory. Learn what belongs in a policy and a procedure, then draft and peer-test a real month-end reconciliation procedure.',
+  ],
+}
+
+/* Section 3 — the method. */
+export const methodSection = {
+  title: 'The Beyond Numbers Practice Decisions Method',
+  subhead: 'Four connected sessions. One clearer operating direction.',
+  steps: [
+    { label: 'Choose the work', text: 'What should the firm stop, shift, automate and focus on?' },
+    {
+      label: 'Align the capacity',
+      text: "Who should own the work—and which clients should receive the firm's best capacity?",
+    },
+    {
+      label: 'Enable the delivery',
+      text: 'Which technology earns a place in the core stack, and under what rules may AI be used?',
+    },
+    {
+      label: 'Make it repeatable',
+      text: 'What must be documented, owned and tested so the work does not depend on memory?',
+    },
+  ],
+  closing:
+    'Across the series, you convert those decisions into 48-hour and 30-day commitments. In the capstone, you select and sequence your priorities in a focused 90-day Practice Decisions Roadmap.',
+}
+
+/* Section 4 — how the live format works. */
+export const formatSection = {
+  title: 'How the live format works',
+  subhead: 'A working room, not a webinar audience.',
+  intro: 'Each 90-minute session follows a practical rhythm:',
+  steps: [
+    {
+      label: 'Frame the decision',
+      text: 'Penny and Damien introduce the minimum context and a usable framework.',
+    },
+    { label: 'Apply it', text: 'You work with a worksheet or interactive tool—not a blank page.' },
+    { label: 'Decide', text: 'You turn observations into a constrained choice about your own firm.' },
+    { label: 'Commit', text: 'You name a next action, date or owner before the session closes.' },
+  ],
+}
+
 /* Section 7 — "Frequently Asked Questions". */
 export const faqs = [
   {
