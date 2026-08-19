@@ -1,7 +1,8 @@
 import { useEffect, useState } from 'react'
+import { Link } from 'react-router-dom'
 import { motion, AnimatePresence, useReducedMotion } from 'framer-motion'
 import { ArrowRight } from 'lucide-react'
-import { REGISTER_URL } from '../data/content'
+import { REGISTER_HREF, REGISTER_IS_EXTERNAL } from '../data/content'
 
 /* Floating Register CTA — appears mid-scroll, hides near the top and near the
    footer. Sits above the Back-to-top button (bottom-right stack) so neither
@@ -51,15 +52,25 @@ export default function FloatingRegister() {
     <AnimatePresence>
       {show && modalCount === 0 && (
         <motion.div {...motionProps} className="fixed bottom-[5.25rem] right-6 z-50">
-          <a
-            href={REGISTER_URL}
-            target="_blank"
-            rel="noopener noreferrer"
-            className="group inline-flex items-center gap-2 rounded-full bg-navy px-5 py-3 text-sm font-semibold text-white shadow-[0_16px_34px_-10px_rgba(0,0,0,0.6)] ring-1 ring-white/10 transition-all hover:-translate-y-0.5 hover:bg-navy-deep"
-          >
-            Register
-            <ArrowRight size={16} className="transition-transform group-hover:translate-x-1" />
-          </a>
+          {REGISTER_IS_EXTERNAL ? (
+            <a
+              href={REGISTER_HREF}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="group inline-flex items-center gap-2 rounded-full bg-navy px-5 py-3 text-sm font-semibold text-white shadow-[0_16px_34px_-10px_rgba(0,0,0,0.6)] ring-1 ring-white/10 transition-all hover:-translate-y-0.5 hover:bg-navy-deep"
+            >
+              Register
+              <ArrowRight size={16} className="transition-transform group-hover:translate-x-1" />
+            </a>
+          ) : (
+            <Link
+              to={REGISTER_HREF}
+              className="group inline-flex items-center gap-2 rounded-full bg-navy px-5 py-3 text-sm font-semibold text-white shadow-[0_16px_34px_-10px_rgba(0,0,0,0.6)] ring-1 ring-white/10 transition-all hover:-translate-y-0.5 hover:bg-navy-deep"
+            >
+              Register
+              <ArrowRight size={16} className="transition-transform group-hover:translate-x-1" />
+            </Link>
+          )}
         </motion.div>
       )}
     </AnimatePresence>

@@ -1,7 +1,7 @@
 import { Link } from 'react-router-dom'
 import { Mail, ArrowUpRight } from 'lucide-react'
 import Logo from './Logo'
-import { REGISTER_URL } from '../data/content'
+import { REGISTER_HREF, REGISTER_IS_EXTERNAL } from '../data/content'
 
 const footerLinks = [
   { label: 'Home', to: '/' },
@@ -58,18 +58,31 @@ export default function Footer() {
               contact@beyond-numbers.com
             </a>
             <div className="mt-6">
-              <a
-                href={REGISTER_URL}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="group inline-flex items-center gap-1.5 rounded-full bg-navy px-5 py-2.5 text-sm font-semibold text-white shadow-lg shadow-navy/20 transition-all hover:-translate-y-0.5 hover:bg-navy-deep"
-              >
-                Register for the series
-                <ArrowUpRight
-                  size={16}
-                  className="transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5"
-                />
-              </a>
+              {REGISTER_IS_EXTERNAL ? (
+                <a
+                  href={REGISTER_HREF}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="group inline-flex items-center gap-1.5 rounded-full bg-navy px-5 py-2.5 text-sm font-semibold text-white shadow-lg shadow-navy/20 transition-all hover:-translate-y-0.5 hover:bg-navy-deep"
+                >
+                  Register for the series
+                  <ArrowUpRight
+                    size={16}
+                    className="transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5"
+                  />
+                </a>
+              ) : (
+                <Link
+                  to={REGISTER_HREF}
+                  className="group inline-flex items-center gap-1.5 rounded-full bg-navy px-5 py-2.5 text-sm font-semibold text-white shadow-lg shadow-navy/20 transition-all hover:-translate-y-0.5 hover:bg-navy-deep"
+                >
+                  Register for the series
+                  <ArrowUpRight
+                    size={16}
+                    className="transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5"
+                  />
+                </Link>
+              )}
             </div>
           </div>
         </div>

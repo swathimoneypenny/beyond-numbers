@@ -20,11 +20,20 @@ import {
   offerSection,
   accordions,
   faqs,
-  REGISTER_URL,
+  REGISTER_HREF,
+  REGISTER_IS_EXTERNAL,
+  REGISTRATION_NOTE,
 } from '../data/content'
 
 // Words the GooeyText accent morphs through, in the hero and the final CTA.
 const MORPH_WORDS = ['Scalable', 'Advisory-focused', 'Profitable', 'Strategic']
+
+// A Register CTA points at the webinar (new tab) when registration is open, or
+// the contact page (internal) while it isn't. One helper, used by every CTA.
+const registerPrimary = (label) =>
+  REGISTER_IS_EXTERNAL
+    ? { label, href: REGISTER_HREF, newTab: true }
+    : { label, to: REGISTER_HREF }
 
 export default function Home() {
   const seriesItems = accordions.map((a) => ({
@@ -61,8 +70,9 @@ export default function Home() {
         meta="November 5–December 3, 2026 · Four live sessions · 6 CPE credits · US$199"
         box={heroBox}
         morphTexts={MORPH_WORDS}
-        primary={{ label: 'Reserve my place — US$199', href: REGISTER_URL, newTab: true }}
+        primary={registerPrimary('Reserve my place — US$199')}
         secondary={{ label: 'View Sessions', href: '#sessions', arrow: true }}
+        note={REGISTER_IS_EXTERNAL ? undefined : REGISTRATION_NOTE}
       />
 
       {/* 2 — The unresolved decisions */}
@@ -269,7 +279,7 @@ export default function Home() {
         title="Ready to move from scorekeeper to strategist?"
         subtitle="Build a more strategic, scalable, and valuable accounting practice — and leave with a sequenced 90-day plan."
         morphTexts={MORPH_WORDS}
-        primary={{ label: 'Register Now', href: REGISTER_URL, newTab: true }}
+        primary={registerPrimary('Register Now')}
         secondary={{ label: 'View All Workshops', to: '/workshops', arrow: true }}
         note="Sessions begin November 5, 2026"
       />

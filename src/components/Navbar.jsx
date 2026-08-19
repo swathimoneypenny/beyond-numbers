@@ -3,7 +3,7 @@ import { Link, NavLink, useNavigate, useLocation } from 'react-router-dom'
 import { motion, AnimatePresence } from 'framer-motion'
 import { Menu, X, LogOut, UserRound, ChevronDown } from 'lucide-react'
 import Logo from './Logo'
-import { REGISTER_URL } from '../data/content'
+import { REGISTER_HREF, REGISTER_IS_EXTERNAL } from '../data/content'
 import { useAuth } from '../context/AuthContext'
 
 // Trimmed for launch — Games, Workshops, Checklists routes still exist; just hidden
@@ -216,14 +216,23 @@ export default function Navbar() {
             </div>
           )}
 
-          <a
-            href={REGISTER_URL}
-            target="_blank"
-            rel="noopener noreferrer"
-            className="btn-premium hidden rounded-full bg-teal px-5 py-2.5 text-sm font-semibold text-white shadow-lg shadow-teal/30 transition-colors hover:bg-teal-deep sm:inline-flex"
-          >
-            Register
-          </a>
+          {REGISTER_IS_EXTERNAL ? (
+            <a
+              href={REGISTER_HREF}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="btn-premium hidden rounded-full bg-teal px-5 py-2.5 text-sm font-semibold text-white shadow-lg shadow-teal/30 transition-colors hover:bg-teal-deep sm:inline-flex"
+            >
+              Register
+            </a>
+          ) : (
+            <Link
+              to={REGISTER_HREF}
+              className="btn-premium hidden rounded-full bg-teal px-5 py-2.5 text-sm font-semibold text-white shadow-lg shadow-teal/30 transition-colors hover:bg-teal-deep sm:inline-flex"
+            >
+              Register
+            </Link>
+          )}
 
           <button
             type="button"
@@ -335,15 +344,25 @@ export default function Navbar() {
                 </li>
               )}
               <li className="mt-2">
-                <a
-                  href={REGISTER_URL}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  onClick={() => setOpen(false)}
-                  className="block rounded-full bg-teal px-5 py-3 text-center font-semibold text-white"
-                >
-                  Register
-                </a>
+                {REGISTER_IS_EXTERNAL ? (
+                  <a
+                    href={REGISTER_HREF}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    onClick={() => setOpen(false)}
+                    className="block rounded-full bg-teal px-5 py-3 text-center font-semibold text-white"
+                  >
+                    Register
+                  </a>
+                ) : (
+                  <Link
+                    to={REGISTER_HREF}
+                    onClick={() => setOpen(false)}
+                    className="block rounded-full bg-teal px-5 py-3 text-center font-semibold text-white"
+                  >
+                    Register
+                  </Link>
+                )}
               </li>
             </ul>
           </motion.div>

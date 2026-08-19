@@ -46,7 +46,7 @@ function HeroImage() {
   )
 }
 
-export default function Hero({ eyebrow, title, tagline, description, meta, box, primary, secondary, morphTexts }) {
+export default function Hero({ eyebrow, title, tagline, description, meta, box, primary, secondary, morphTexts, note }) {
   return (
     <section id="home" className="relative overflow-hidden bg-hero-dark text-white">
       {/* depth: lighter-purple + teal + yellow glows for dimension */}
@@ -189,6 +189,12 @@ export default function Hero({ eyebrow, title, tagline, description, meta, box, 
               </Button>
             )}
           </motion.div>
+
+          {note && (
+            <motion.p {...fade(0.66)} className="mt-4 text-sm font-medium text-white/60">
+              {note}
+            </motion.p>
+          )}
         </div>
 
         <div className="flex justify-center lg:justify-end">

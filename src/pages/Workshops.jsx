@@ -5,7 +5,7 @@ import CTABand from '../components/CTABand'
 import ParticleBackground from '../components/ParticleBackground'
 import SessionSchedule from '../components/SessionSchedule'
 import { sessions } from '../data/sessions'
-import { REGISTER_URL } from '../data/content'
+import { REGISTER_HREF, REGISTER_IS_EXTERNAL } from '../data/content'
 
 const metaIcons = [Clock, PencilRuler]
 
@@ -121,7 +121,11 @@ export default function Workshops() {
       <CTABand
         title="Ready to transform your practice?"
         subtitle="Register for the series and leave with a sequenced 90-day plan you can put to work."
-        primary={{ label: 'Register Now', href: REGISTER_URL, newTab: true }}
+        primary={
+          REGISTER_IS_EXTERNAL
+            ? { label: 'Register Now', href: REGISTER_HREF, newTab: true }
+            : { label: 'Register Now', to: REGISTER_HREF }
+        }
         note="Sessions begin November 5, 2026"
       />
     </>

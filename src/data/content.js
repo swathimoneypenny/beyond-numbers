@@ -1,9 +1,23 @@
 /* Centralized copy for the workshop site. */
 
-/* External registration (GoToWebinar). Every Register button opens this in a
-   new tab. Update in one place if the webinar link changes. */
+/* External registration (GoToWebinar). Update this one line when the new link
+   arrives — then flip REGISTRATION_OPEN to true and every Register CTA points
+   back at the webinar automatically. */
 export const REGISTER_URL =
   'https://register.gotowebinar.com/register/5675019771835943003?source=Academy'
+
+/* TEMPORARY (Nov 2026 relaunch): the old GoToWebinar event was removed and the
+   new registration link isn't ready yet. While this is false, every Register /
+   "Reserve my place" CTA routes to the contact page instead of the dead webinar
+   and shows REGISTRATION_NOTE. Set REGISTER_URL above and flip this to true when
+   the new link lands — nothing else needs to change. */
+export const REGISTRATION_OPEN = false
+export const REGISTRATION_NOTE = 'Registration opening soon — check back shortly'
+
+/* Single source of truth for where a Register CTA points and whether it's an
+   external link (new tab) or an internal route. All CTAs read these. */
+export const REGISTER_HREF = REGISTRATION_OPEN ? REGISTER_URL : '/contact'
+export const REGISTER_IS_EXTERNAL = REGISTRATION_OPEN
 
 /* Pricing tiers (November 2026 relaunch). */
 export const pricing = {

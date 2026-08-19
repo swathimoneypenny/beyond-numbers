@@ -3,7 +3,12 @@ import Section from './Section'
 import Reveal from './Reveal'
 import Button from './Button'
 import CountUp from './CountUp'
-import { pricing, REGISTER_URL } from '../data/content'
+import {
+  pricing,
+  REGISTER_HREF,
+  REGISTER_IS_EXTERNAL,
+  REGISTRATION_NOTE,
+} from '../data/content'
 
 /* Premium pricing panel: standard + featured Early Bird cards, then the group
    discount banner and a Register CTA. */
@@ -80,10 +85,19 @@ export default function Pricing() {
         </div>
       </Reveal>
 
-      <Reveal delay={0.2} className="mt-10 flex justify-center">
-        <Button href={REGISTER_URL} target="_blank" variant="primary" arrow>
+      <Reveal delay={0.2} className="mt-10 flex flex-col items-center gap-4">
+        <Button
+          {...(REGISTER_IS_EXTERNAL
+            ? { href: REGISTER_HREF, target: '_blank' }
+            : { to: REGISTER_HREF })}
+          variant="primary"
+          arrow
+        >
           Register Now
         </Button>
+        {!REGISTER_IS_EXTERNAL && (
+          <p className="text-sm font-medium text-ink/55">{REGISTRATION_NOTE}</p>
+        )}
       </Reveal>
     </Section>
   )
