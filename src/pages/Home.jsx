@@ -1,3 +1,4 @@
+import { Check, X } from 'lucide-react'
 import Hero from '../components/Hero'
 import Section from '../components/Section'
 import Reveal from '../components/Reveal'
@@ -13,6 +14,10 @@ import {
   workOnSection,
   methodSection,
   formatSection,
+  toolsSection,
+  whyNovemberSection,
+  audienceSection,
+  offerSection,
   accordions,
   faqs,
   REGISTER_URL,
@@ -163,7 +168,83 @@ export default function Home() {
       {/* 6b — Session schedule + CPE */}
       <SessionSchedule />
 
-      {/* 6c — Pricing */}
+      {/* 6c — The tools behind the work */}
+      <Section id="tools" bg="sand" accent="teal" title={toolsSection.title} intro={toolsSection.subhead}>
+        <Reveal>
+          <p className="mx-auto mt-8 max-w-2xl text-center text-[1.05rem] leading-relaxed text-ink/70">
+            {toolsSection.intro}
+          </p>
+        </Reveal>
+        <div className="mx-auto mt-10 grid max-w-4xl gap-4 sm:grid-cols-2">
+          {toolsSection.items.map((item, i) => (
+            <Reveal key={item} delay={Math.min(i * 0.05, 0.3)}>
+              <div className="flex h-full items-start gap-3 rounded-xl border border-line bg-white p-4">
+                <Check size={18} strokeWidth={3} className="mt-0.5 shrink-0 text-teal" />
+                <span className="text-[0.97rem] leading-relaxed text-ink/80">{item}</span>
+              </div>
+            </Reveal>
+          ))}
+        </div>
+        <Reveal>
+          <p className="mx-auto mt-10 max-w-2xl text-center font-display text-lg font-semibold italic text-navy">
+            {toolsSection.closing}
+          </p>
+        </Reveal>
+      </Section>
+
+      {/* 6d — Why November */}
+      <Section id="why-november" bg="white" accent="teal" title={whyNovemberSection.title}>
+        <Reveal>
+          <p className="mx-auto mt-8 max-w-3xl text-center text-[1.1rem] leading-relaxed text-ink/75">
+            {whyNovemberSection.body}
+          </p>
+        </Reveal>
+      </Section>
+
+      {/* 6e — Who should attend, and who should not */}
+      <Section id="audience" bg="sand" accent="teal" title={audienceSection.title}>
+        <div className="mt-12 grid gap-6 md:grid-cols-2">
+          <Reveal>
+            <article className="h-full rounded-2xl border border-teal/30 bg-teal/[0.06] p-7 sm:p-8">
+              <h3 className="font-display text-lg font-bold text-navy">{audienceSection.forLabel}</h3>
+              <ul className="mt-5 space-y-3.5">
+                {audienceSection.forItems.map((it) => (
+                  <li key={it} className="flex items-start gap-3">
+                    <Check size={18} strokeWidth={3} className="mt-0.5 shrink-0 text-teal" />
+                    <span className="text-[0.97rem] leading-relaxed text-ink/80">{it}</span>
+                  </li>
+                ))}
+              </ul>
+            </article>
+          </Reveal>
+          <Reveal delay={0.1}>
+            <article className="h-full rounded-2xl border border-line bg-white p-7 sm:p-8">
+              <h3 className="font-display text-lg font-bold text-navy">{audienceSection.notLabel}</h3>
+              <ul className="mt-5 space-y-3.5">
+                {audienceSection.notItems.map((it) => (
+                  <li key={it} className="flex items-start gap-3">
+                    <X size={18} strokeWidth={3} className="mt-0.5 shrink-0 text-ink/40" />
+                    <span className="text-[0.97rem] leading-relaxed text-ink/70">{it}</span>
+                  </li>
+                ))}
+              </ul>
+            </article>
+          </Reveal>
+        </div>
+      </Section>
+
+      {/* 6f — The offer (directly above pricing) */}
+      <Section id="offer" bg="white" accent="yellow" title={offerSection.title}>
+        <Reveal>
+          <div className="mx-auto mt-8 max-w-3xl rounded-2xl border border-navy/12 bg-navy p-8 text-center sm:p-10">
+            <p className="text-[1.12rem] font-medium leading-relaxed text-white sm:text-[1.2rem]">
+              {offerSection.body}
+            </p>
+          </div>
+        </Reveal>
+      </Section>
+
+      {/* 6g — Pricing */}
       <Pricing />
 
       {/* 6d — Sponsors & partners */}

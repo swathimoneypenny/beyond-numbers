@@ -224,6 +224,53 @@ export const formatSection = {
   ],
 }
 
+/* Section — the tools behind the work. */
+export const toolsSection = {
+  title: 'The tools behind the work',
+  subhead: 'Frameworks you will actually use in the room.',
+  intro:
+    'The sessions are built around practical Beyond Numbers tools and worksheets, including:',
+  items: [
+    'The Traffic Light Revolution and the $100K Question for service decisions',
+    'The 52-Card Team Pickup for capacity and role clarity',
+    'The Client Portfolio Map for relationship decisions',
+    'The Little Black Dress technology approach and a sample stack costing',
+    'An AI vendor due-diligence scorecard',
+    'A month-end reconciliation procedure template',
+    'A one-page Practice Decisions Roadmap to bring it together',
+  ],
+  closing: 'You leave each session with completed work, not just notes.',
+}
+
+/* Section — why November. */
+export const whyNovemberSection = {
+  title: 'Why November',
+  body: 'November is when many firms start planning the year ahead. Rather than adding to the noise of a busy season, this program uses that natural planning window to help you make deliberate decisions about how your firm will operate in 2027—before the next compliance cycle takes over. You finish the series with a clear, sequenced set of priorities and the momentum to act on them.',
+}
+
+/* Section — who this is for / not for. */
+export const audienceSection = {
+  title: 'Who should attend—and who should not',
+  forLabel: 'This program is designed for:',
+  forItems: [
+    'Firm owners and partners ready to make real decisions about services, people, clients, technology and process',
+    'Leaders who want to work ON the firm, not just hear about advisory in theory',
+    'Practitioners who value completed work and clear next actions over more content',
+  ],
+  notLabel: 'This program is probably not for you if:',
+  notItems: [
+    'You are looking for a passive webinar to watch in the background',
+    'You are not in a position to make or influence decisions about how the firm operates',
+    'You want theory and inspiration rather than decisions and commitments',
+  ],
+}
+
+/* Section — the offer (placed directly above the pricing cards). */
+export const offerSection = {
+  title: 'The offer',
+  body: 'Four live, 90-minute working sessions. A practical method for making the decisions your firm has been putting off. Interactive tools and worksheets you complete in the room. And a 90-day Practice Decisions Roadmap to take with you.',
+}
+
 /* Section 7 — "Frequently Asked Questions". */
 export const faqs = [
   {
