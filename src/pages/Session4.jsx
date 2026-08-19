@@ -4,7 +4,15 @@ import SessionHero from '../components/SessionHero'
 import SectionProgress from '../components/SectionProgress'
 import Reveal from '../components/Reveal'
 import ExerciseEmbed from '../components/ExerciseEmbed'
-import { INK, Band, Head, Callout, ExerciseJumpBar, EXERCISE_ANCHORS } from '../components/sessionUI'
+import {
+  INK,
+  Band,
+  Head,
+  Callout,
+  ExerciseJumpBar,
+  EXERCISE_ANCHORS,
+  SessionFraming,
+} from '../components/sessionUI'
 import { getSession } from '../data/sessions'
 import { session4 as c } from '../data/session4'
 
@@ -129,6 +137,8 @@ export default function Session4() {
         </p>
         <p className="mt-4 text-sm font-semibold text-white/70">{c.presenters}</p>
       </SessionHero>
+
+      <SessionFraming framing={session.framing} />
 
       <ExerciseJumpBar count={2} />
 

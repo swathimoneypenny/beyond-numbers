@@ -2,7 +2,7 @@ import { Link, Navigate, useParams } from 'react-router-dom'
 import { Check, Sparkles, Lock, ArrowRight, ListChecks, Loader2 } from 'lucide-react'
 import SessionHero from '../components/SessionHero'
 import Reveal from '../components/Reveal'
-import { INK, Band, Head, Callout } from '../components/sessionUI'
+import { INK, Band, Head, Callout, SessionFraming } from '../components/sessionUI'
 import { useAuth } from '../context/AuthContext'
 import { getSession } from '../data/sessions'
 import { getSessionOverview } from '../data/sessionOverviews'
@@ -47,6 +47,9 @@ export default function SessionOverview() {
           </p>
         )}
       </SessionHero>
+
+      {/* Decision framing — you will use / leave with / commitment */}
+      <SessionFraming framing={session.framing} />
 
       {/* Objectives — only sessions that actually define them */}
       {overview.objectives?.length > 0 && (

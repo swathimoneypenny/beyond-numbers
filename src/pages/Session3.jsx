@@ -4,7 +4,15 @@ import SessionHero from '../components/SessionHero'
 import SectionProgress from '../components/SectionProgress'
 import Reveal from '../components/Reveal'
 import ExerciseEmbed from '../components/ExerciseEmbed'
-import { INK, Band, Head, Callout, ExerciseJumpBar, EXERCISE_ANCHORS } from '../components/sessionUI'
+import {
+  INK,
+  Band,
+  Head,
+  Callout,
+  ExerciseJumpBar,
+  EXERCISE_ANCHORS,
+  SessionFraming,
+} from '../components/sessionUI'
 import { getSession } from '../data/sessions'
 import { session3 as c } from '../data/session3'
 
@@ -60,10 +68,15 @@ export default function Session3() {
     <>
       <SectionProgress />
 
-      {/* Header */}
-      <SessionHero session={session} subtitle={`“${c.theme}”`}>
-        <p className="mt-6 text-sm font-semibold text-white/70">{c.presenters}</p>
+      {/* Header — business question leads (session.subtitle); theme shown as a pill */}
+      <SessionHero session={session}>
+        <p className="mt-7 max-w-xl rounded-2xl border border-yellow/30 bg-yellow/10 px-5 py-3 font-display text-base font-semibold italic text-yellow">
+          “{c.theme}”
+        </p>
+        <p className="mt-4 text-sm font-semibold text-white/70">{c.presenters}</p>
       </SessionHero>
+
+      <SessionFraming framing={session.framing} />
 
       <ExerciseJumpBar count={2} />
 

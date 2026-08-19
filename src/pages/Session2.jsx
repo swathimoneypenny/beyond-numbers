@@ -11,6 +11,7 @@ import {
   ExerciseCard,
   ExerciseJumpBar,
   EXERCISE_ANCHORS,
+  SessionFraming,
 } from '../components/sessionUI'
 import CountUp from '../components/CountUp'
 import { getSession } from '../data/sessions'
@@ -37,6 +38,8 @@ export default function Session2() {
           “{c.tagline}” <span className="not-italic text-white/70">{c.taglineBy}</span>
         </p>
       </SessionHero>
+
+      <SessionFraming framing={session.framing} />
 
       <ExerciseJumpBar count={2} />
 

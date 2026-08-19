@@ -9,6 +9,33 @@ export const INK = 'text-[#1A1A1A]' // strong near-black body text on light card
 /* Anchor ids for the exercise sections, shared by the jump bar and the Bands. */
 export const EXERCISE_ANCHORS = ['exercise-1', 'exercise-2']
 
+/* The session's decision framing — "You will use / You leave with / Your
+   implementation commitment" — shown right under the header on both the public
+   overview and the protected content. Driven by session.framing (sessions.js).
+   The business question itself leads as the SessionHero subtitle. */
+export function SessionFraming({ framing }) {
+  if (!framing) return null
+  const rows = [
+    { k: 'You will use', v: framing.use },
+    { k: 'You leave with', v: framing.leaveWith },
+    { k: 'Your implementation commitment', v: framing.commitment },
+  ]
+  return (
+    <Band bg="sand">
+      <div className="grid gap-5 md:grid-cols-3">
+        {rows.map((r, i) => (
+          <Reveal key={r.k} delay={i * 0.08}>
+            <article className="flex h-full flex-col rounded-2xl border border-line bg-white p-6">
+              <p className="text-[0.8rem] font-bold uppercase tracking-[0.16em] text-teal">{r.k}</p>
+              <p className={`mt-3 text-[0.98rem] leading-relaxed ${INK}`}>{r.v}</p>
+            </article>
+          </Reveal>
+        ))}
+      </div>
+    </Band>
+  )
+}
+
 /* Slim "jump to exercise" strip that sits directly under the session header, so
    the hands-on parts are reachable without scrolling the whole session.
    Smooth scrolling comes from `html { scroll-behavior: smooth }` in index.css,

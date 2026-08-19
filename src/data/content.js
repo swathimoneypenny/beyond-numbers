@@ -46,7 +46,7 @@ export const pricing = {
    entry is rendered as a non-session pause, not a numbered session. */
 export const schedule = [
   { n: '1', title: 'Foundation & Service Portfolio', date: 'Thursday, November 5, 2026', time: '2:00pm – 3:30pm EST' },
-  { n: '2', title: 'People: Team & Clients', date: 'Thursday, November 12, 2026', time: '2:00pm – 3:30pm EST' },
+  { n: '2', title: 'People, Capacity & Clients', date: 'Thursday, November 12, 2026', time: '2:00pm – 3:30pm EST' },
   { n: '3', title: 'Technology & AI', date: 'Thursday, November 19, 2026', time: '2:00pm – 3:30pm EST' },
   {
     kind: 'break',
@@ -54,7 +54,7 @@ export const schedule = [
     date: 'Thanksgiving week · November 26',
     note: 'No live session — catch up and test',
   },
-  { n: '4', title: 'Procedures & Implementation Roadmap', date: 'Thursday, December 3, 2026', time: '2:00pm – 3:30pm EST' },
+  { n: '4', title: 'Procedures & Implementation', date: 'Thursday, December 3, 2026', time: '2:00pm – 3:30pm EST' },
 ]
 
 export const cpe = 'This workshop series is eligible for 6 CPE credits.'
@@ -343,7 +343,8 @@ export const accordions = [
     id: 'session-1',
     eyebrow: 'Session 1',
     title: 'Foundation & service portfolio',
-    subtitle: 'Why are you changing, and what are you keeping?',
+    subtitle:
+      'Which services should your firm stop, outsource, automate or focus on—and what is the first move?',
     body: {
       paragraphs: [
         'The first session sets the foundation for the entire program. Participants explore the shift from compliance-driven work to advisory-led value, then apply that thinking to their own service portfolio.',
@@ -364,7 +365,8 @@ export const accordions = [
     id: 'session-2',
     eyebrow: 'Session 2',
     title: 'People — team & clients',
-    subtitle: 'Who should you work with?',
+    subtitle:
+      "Who should own the work—and which client relationships deserve your firm's best capacity?",
     body: {
       paragraphs: [
         'The second session focuses on the people side of transformation: the team you build and the clients you serve. Participants explore the roles in a scalable advisory practice — Business Operations Strategist, Admin, Business Analyst, and Technical roles — then shift to client selection.',
@@ -386,7 +388,8 @@ export const accordions = [
     id: 'session-3',
     eyebrow: 'Session 3',
     title: 'Technology stack deep dive',
-    subtitle: 'How will you deliver the work efficiently?',
+    subtitle:
+      'Which technology earns a place in your core stack—and under what rules may AI be used on client work?',
     body: {
       paragraphs: [
         'Technology is essential to advisory work, but it is not the strategy. This session helps participants design a focused, practical technology stack that supports the firm’s service model, team structure, and client needs. It covers app evaluation, integration planning, API considerations, and tech stack costing.',
@@ -409,7 +412,8 @@ export const accordions = [
     id: 'session-4',
     eyebrow: 'Session 4',
     title: 'Procedures & implementation roadmap',
-    subtitle: 'How will the work actually get done and scale?',
+    subtitle:
+      'What must be documented, owned and tested so the work no longer depends on memory?',
     body: {
       paragraphs: [
         'The final session turns strategy into execution. Participants learn to document the workflows, procedures, and playbooks needed for consistent delivery, then sequence all commitments from the first three sessions into a single 90-day implementation roadmap.',

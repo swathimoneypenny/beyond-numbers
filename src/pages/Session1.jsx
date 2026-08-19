@@ -19,7 +19,7 @@ import SessionHero from '../components/SessionHero'
 import SectionProgress from '../components/SectionProgress'
 import Reveal from '../components/Reveal'
 import ExerciseEmbed from '../components/ExerciseEmbed'
-import { ExerciseJumpBar, EXERCISE_ANCHORS } from '../components/sessionUI'
+import { ExerciseJumpBar, EXERCISE_ANCHORS, SessionFraming } from '../components/sessionUI'
 import { getSession } from '../data/sessions'
 import { session1 as c } from '../data/session1'
 
@@ -211,6 +211,8 @@ export default function Session1() {
           {c.tagline}
         </p>
       </SessionHero>
+
+      <SessionFraming framing={session.framing} />
 
       <ExerciseJumpBar count={2} />
 
