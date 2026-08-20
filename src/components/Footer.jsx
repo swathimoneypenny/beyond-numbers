@@ -3,15 +3,20 @@ import { Mail, ArrowUpRight } from 'lucide-react'
 import Logo from './Logo'
 import { REGISTER_HREF, REGISTER_IS_EXTERNAL } from '../data/content'
 
-const footerLinks = [
+const footerPrimary = [
   { label: 'Home', to: '/' },
-  { label: 'Games', to: '/games' },
-  { label: 'Workshops', to: '/workshops' },
-  { label: 'Videos', to: '/videos' },
   { label: 'Login', to: '/login' },
-  { label: 'Checklists', to: '/checklists' },
   { label: 'Contact Us', to: '/contact' },
 ]
+
+const footerResources = [
+  { label: 'Videos', to: '/videos' },
+  { label: 'Blog', to: '/blog' },
+  { label: 'Podcast', to: '/podcast' },
+]
+
+const footerLinkClass =
+  'text-[0.95rem] text-ink/70 transition-colors hover:text-teal'
 
 export default function Footer() {
   return (
@@ -31,18 +36,31 @@ export default function Footer() {
             <h2 className="text-xs font-semibold uppercase tracking-[0.14em] text-ink/45">
               Explore
             </h2>
-            <ul className="mt-5 grid grid-cols-2 gap-x-6 gap-y-3.5">
-              {footerLinks.map((link) => (
-                <li key={link.label}>
-                  <Link
-                    to={link.to}
-                    className="text-[0.95rem] text-ink/70 transition-colors hover:text-teal"
-                  >
-                    {link.label}
-                  </Link>
-                </li>
-              ))}
-            </ul>
+            <div className="mt-5 grid grid-cols-2 gap-x-6 gap-y-6">
+              <ul className="space-y-3.5">
+                {footerPrimary.map((link) => (
+                  <li key={link.label}>
+                    <Link to={link.to} className={footerLinkClass}>
+                      {link.label}
+                    </Link>
+                  </li>
+                ))}
+              </ul>
+              <div>
+                <p className="mb-3.5 text-xs font-semibold uppercase tracking-[0.14em] text-ink/45">
+                  Resources
+                </p>
+                <ul className="space-y-3.5">
+                  {footerResources.map((link) => (
+                    <li key={link.label}>
+                      <Link to={link.to} className={footerLinkClass}>
+                        {link.label}
+                      </Link>
+                    </li>
+                  ))}
+                </ul>
+              </div>
+            </div>
           </div>
 
           {/* Contact */}
