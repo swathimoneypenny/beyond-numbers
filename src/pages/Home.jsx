@@ -1,3 +1,4 @@
+import { useState } from 'react'
 import { Check, X } from 'lucide-react'
 import Hero from '../components/Hero'
 import Section from '../components/Section'
@@ -47,6 +48,32 @@ const initials = (name) =>
     .join('')
     .slice(0, 2)
     .toUpperCase()
+
+// Facilitator headshot: circular photo, cropped with object-cover so it never
+// distorts. Falls back to the initials avatar if no photo or the image fails.
+function FacilitatorAvatar({ name, photo }) {
+  const [failed, setFailed] = useState(false)
+  const base =
+    'flex h-14 w-14 shrink-0 items-center justify-center overflow-hidden rounded-full bg-navy'
+  if (!photo || failed) {
+    return (
+      <span className={`${base} font-display text-lg font-bold text-white`}>
+        {initials(name)}
+      </span>
+    )
+  }
+  return (
+    <span className={base}>
+      <img
+        src={photo}
+        alt={name}
+        loading="lazy"
+        onError={() => setFailed(true)}
+        className="h-full w-full object-cover"
+      />
+    </span>
+  )
+}
 
 // A Register CTA points at the webinar (new tab) when registration is open, or
 // the contact page (internal) while it isn't. One helper, used by every CTA.
@@ -284,9 +311,7 @@ export default function Home() {
             <Reveal key={p.name} delay={i * 0.1}>
               <article className="flex h-full flex-col rounded-2xl border border-line bg-white p-7 shadow-[0_14px_34px_-22px_rgba(61,15,82,0.3)] sm:p-8">
                 <div className="flex items-center gap-4">
-                  <span className="flex h-14 w-14 shrink-0 items-center justify-center rounded-full bg-navy font-display text-lg font-bold text-white">
-                    {initials(p.name)}
-                  </span>
+                  <FacilitatorAvatar name={p.name} photo={p.photo} />
                   <div>
                     <h3 className="font-display text-xl font-bold text-navy">{p.name}</h3>
                     {p.role && <p className="text-sm font-semibold text-teal">{p.role}</p>}

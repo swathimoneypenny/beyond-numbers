@@ -1,5 +1,9 @@
 /* Centralized copy for the workshop site. */
 
+/* Facilitator headshots — Vite resolves these to hashed asset URLs at build. */
+import pennyPhoto from '../assets/penny.jpg.png'
+import damienPhoto from '../assets/damien.jpg.jpg'
+
 /* External registration (GoToWebinar). Update this one line when the new link
    arrives — then flip REGISTRATION_OPEN to true and every Register CTA points
    back at the webinar automatically. */
@@ -293,11 +297,13 @@ export const facilitators = {
     {
       name: 'Penny Breslin',
       role: 'Founder, MoneyPenny',
+      photo: pennyPhoto,
       bio: "Penny Breslin is an accounting industry leader, entrepreneur and co-author of It's Not Just the Numbers. As the founder of MoneyPenny, she has helped accounting firms build capacity, strengthen their operations and create better client experiences through outsourced accounting, tax and back-office support. Penny also co-hosts the It's Not Just the Numbers podcast, where she explores the people, technology and ideas shaping the future of the accounting profession.",
     },
     {
       name: 'Damien Greathead',
       role: 'Accounting technology & growth leader',
+      photo: damienPhoto,
       bio: "Damien Greathead is an accounting technology and growth leader with more than 17 years of experience helping accounting firms and software businesses grow. He has held senior roles with Intuit, Dext and Ignition and is the co-author of It's Not Just the Numbers. Damien also co-hosts the podcast of the same name, where he explores the people, technology and ideas shaping the future of the accounting profession.",
     },
   ],
