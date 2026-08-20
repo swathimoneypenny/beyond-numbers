@@ -6,8 +6,8 @@ import Reveal from '../components/Reveal'
 import ParticleBackground from '../components/ParticleBackground'
 
 /* Real Beyond Numbers channel + featured video. */
-const FEATURED_ID = 'TqTmJd_Tsiw'
-const FEATURED_TITLE = "It's Not Just the Numbers | Policies, Procedures & Workflow in CAS"
+const FEATURED_ID = 'O6-O-L5vxJg'
+const FEATURED_TITLE = "It's Not Just the Numbers - AI in Accounting: Team or Tool?"
 const YOUTUBE_CHANNEL_URL = 'https://www.youtube.com/@go-beyond-numbers'
 
 const CATEGORIES = [
@@ -24,6 +24,7 @@ const CATEGORIES = [
 
 // Beyond Numbers — real YouTube videos (add more entries here)
 const videos = [
+  { id: 'O6-O-L5vxJg', title: "It's Not Just the Numbers - AI in Accounting: Team or Tool?", category: 'Technology' },
   { id: 'TqTmJd_Tsiw', title: "It's Not Just the Numbers | Policies, Procedures & Workflow in CAS", category: 'Procedures' },
   { id: 'nVLRkGIWXXU', title: 'The Human Side of Advisory with Steven Ladd', category: 'Advisory' },
   { id: '8A_pk3BcBdM', title: 'Smart Ways to Streamline Your Accounting Firm', category: 'Workflow' },
