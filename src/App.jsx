@@ -11,6 +11,7 @@ import Session4 from './pages/Session4'
 import SessionOverview from './pages/SessionOverview'
 import Videos from './pages/Videos'
 import Blog from './pages/Blog'
+import BlogArticle from './pages/BlogArticle'
 import Podcast from './pages/Podcast'
 import Login from './pages/Login'
 import Signup from './pages/Signup'
@@ -42,6 +43,7 @@ export default function App() {
 
         <Route path="/videos" element={<Videos />} />
         <Route path="/blog" element={<Blog />} />
+        <Route path="/blog/:slug" element={<BlogArticle />} />
         <Route path="/podcast" element={<Podcast />} />
         <Route path="/login" element={<Login />} />
         <Route path="/signup" element={<Signup />} />
