@@ -18,6 +18,7 @@ import {
   whyNovemberSection,
   audienceSection,
   offerSection,
+  facilitators,
   accordions,
   faqs,
   REGISTER_HREF,
@@ -27,6 +28,25 @@ import {
 
 // Words the GooeyText accent morphs through, in the hero and the final CTA.
 const MORPH_WORDS = ['Scalable', 'Advisory-focused', 'Profitable', 'Strategic']
+
+// The book/podcast title in the facilitator bios, italicised at each occurrence
+// (parts wrapped in keyed spans so the mixed array renders cleanly).
+const BOOK_TITLE = "It's Not Just the Numbers"
+function withItalicTitle(text) {
+  const out = []
+  text.split(BOOK_TITLE).forEach((part, i) => {
+    if (i > 0) out.push(<em key={`t${i}`} className="italic">{BOOK_TITLE}</em>)
+    out.push(<span key={`p${i}`}>{part}</span>)
+  })
+  return out
+}
+const initials = (name) =>
+  name
+    .split(' ')
+    .map((w) => w[0])
+    .join('')
+    .slice(0, 2)
+    .toUpperCase()
 
 // A Register CTA points at the webinar (new tab) when registration is open, or
 // the contact page (internal) while it isn't. One helper, used by every CTA.
@@ -256,6 +276,30 @@ export default function Home() {
 
       {/* 6g — Pricing */}
       <Pricing />
+
+      {/* 6h — Meet your facilitators */}
+      <Section id="facilitators" bg="sand" accent="teal" title={facilitators.title}>
+        <div className="mt-12 grid gap-6 md:grid-cols-2">
+          {facilitators.people.map((p, i) => (
+            <Reveal key={p.name} delay={i * 0.1}>
+              <article className="flex h-full flex-col rounded-2xl border border-line bg-white p-7 shadow-[0_14px_34px_-22px_rgba(61,15,82,0.3)] sm:p-8">
+                <div className="flex items-center gap-4">
+                  <span className="flex h-14 w-14 shrink-0 items-center justify-center rounded-full bg-navy font-display text-lg font-bold text-white">
+                    {initials(p.name)}
+                  </span>
+                  <div>
+                    <h3 className="font-display text-xl font-bold text-navy">{p.name}</h3>
+                    {p.role && <p className="text-sm font-semibold text-teal">{p.role}</p>}
+                  </div>
+                </div>
+                <p className="mt-5 text-[0.97rem] leading-relaxed text-ink/75">
+                  {withItalicTitle(p.bio)}
+                </p>
+              </article>
+            </Reveal>
+          ))}
+        </div>
+      </Section>
 
       {/* 6d — Sponsors & partners */}
       <Sponsors />

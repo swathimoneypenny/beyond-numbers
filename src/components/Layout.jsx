@@ -2,7 +2,6 @@ import { useEffect } from 'react'
 import { Outlet, useLocation } from 'react-router-dom'
 import Navbar from './Navbar'
 import Footer from './Footer'
-import ContactPopup from './ContactPopup'
 import ScrollProgress from './ScrollProgress'
 import BackToTop from './BackToTop'
 import FloatingRegister from './FloatingRegister'
@@ -29,7 +28,6 @@ export default function Layout() {
       <Footer />
       <FloatingRegister />
       <BackToTop />
-      <ContactPopup />
     </div>
   )
 }

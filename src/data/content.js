@@ -285,6 +285,24 @@ export const offerSection = {
   body: 'Four live, 90-minute working sessions. A practical method for making the decisions your firm has been putting off. Interactive tools and worksheets you complete in the room. And a 90-day Practice Decisions Roadmap to take with you.',
 }
 
+/* Section — meet your facilitators. Bios are exact; the book/podcast title
+   "It's Not Just the Numbers" is italicised at render (see Home.jsx). */
+export const facilitators = {
+  title: 'Meet your facilitators',
+  people: [
+    {
+      name: 'Penny Breslin',
+      role: 'Founder, MoneyPenny',
+      bio: "Penny Breslin is an accounting industry leader, entrepreneur and co-author of It's Not Just the Numbers. As the founder of MoneyPenny, she has helped accounting firms build capacity, strengthen their operations and create better client experiences through outsourced accounting, tax and back-office support. Penny also co-hosts the It's Not Just the Numbers podcast, where she explores the people, technology and ideas shaping the future of the accounting profession.",
+    },
+    {
+      name: 'Damien Greathead',
+      role: 'Accounting technology & growth leader',
+      bio: "Damien Greathead is an accounting technology and growth leader with more than 17 years of experience helping accounting firms and software businesses grow. He has held senior roles with Intuit, Dext and Ignition and is the co-author of It's Not Just the Numbers. Damien also co-hosts the podcast of the same name, where he explores the people, technology and ideas shaping the future of the accounting profession.",
+    },
+  ],
+}
+
 /* Section 7 — "Frequently Asked Questions". */
 export const faqs = [
   {
