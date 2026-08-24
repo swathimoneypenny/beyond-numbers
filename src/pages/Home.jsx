@@ -152,12 +152,17 @@ export default function Home() {
       <Section id="work-on" bg="sand" accent="yellow" title={workOnSection.title} intro={workOnSection.subhead}>
         <div className="mt-12 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
           {workOnSection.items.map((item, i) => (
-            <Reveal key={item} delay={Math.min(i * 0.06, 0.3)}>
+            <Reveal key={item.title} delay={Math.min(i * 0.06, 0.3)}>
               <article className="flex h-full flex-col rounded-2xl border border-line bg-white p-7 shadow-[0_14px_34px_-18px_rgba(61,15,82,0.3)]">
-                <span className="flex h-10 w-10 items-center justify-center rounded-xl bg-navy font-display text-base font-bold text-white">
-                  {i + 1}
-                </span>
-                <p className="mt-4 text-[0.97rem] leading-relaxed text-ink/75">{item}</p>
+                <div className="flex items-center gap-3.5">
+                  <span className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-navy font-display text-base font-bold text-white">
+                    {i + 1}
+                  </span>
+                  <h3 className="font-display text-base font-bold uppercase tracking-[0.06em] text-navy">
+                    {item.title}
+                  </h3>
+                </div>
+                <p className="mt-4 text-[0.97rem] leading-relaxed text-ink/75">{item.text}</p>
               </article>
             </Reveal>
           ))}

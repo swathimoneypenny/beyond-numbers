@@ -194,12 +194,30 @@ export const workOnSection = {
   title: 'What you will actually work on',
   subhead: 'Bring the firm you have. Work ON the firm you want.',
   items: [
-    'Bring your service list. Apply the Traffic Light Revolution and the $100K Question. Leave with a Stop / Outsource / Automate / Focus decision set and one dated 30-day move.',
-    'Bring a clear picture of who does what. Use the 52-Card Team Pickup to move recurring work into the role that should own it. Leave with a sharper view of the role that could unlock capacity next.',
-    'Bring your client list. Score real relationships by value and effort. Leave with a client portfolio map, three Gold relationships to approach and one wrong-fit relationship to review for transition.',
-    'Bring your current technology questions. Define the shape of your Little Black Dress—a limited core stack your team can know deeply—and apply practical selection criteria. Cost a sample advisory stack so tool choices connect to delivery economics.',
-    'Bring one AI tool you are considering. Apply a vendor due-diligence scorecard across client-data exposure, training risk, review controls, audit trail, contract terms and security evidence. Leave with a Go / Conditional / No-Go decision and a safer next step.',
-    'Bring one process that depends too heavily on memory. Learn what belongs in a policy and a procedure, then draft and peer-test a real month-end reconciliation procedure.',
+    {
+      title: 'YOUR SERVICES',
+      text: 'Bring your service list. Apply the Traffic Light Revolution and the $100K Question. Leave with a Stop / Outsource / Automate / Focus decision set and one dated 30-day move.',
+    },
+    {
+      title: 'YOUR TEAM',
+      text: 'Bring a clear picture of who does what. Use the 52-Card Team Pickup to move recurring work into the role that should own it. Leave with a sharper view of the role that could unlock capacity next.',
+    },
+    {
+      title: 'YOUR CLIENTS',
+      text: 'Bring your client list. Score real relationships by value and effort. Leave with a client portfolio map, three Gold relationships to approach and one wrong-fit relationship to review for transition.',
+    },
+    {
+      title: 'YOUR TECH STACK',
+      text: 'Bring your current technology questions. Define the shape of your Little Black Dress—a limited core stack your team can know deeply—and apply practical selection criteria. Cost a sample advisory stack so tool choices connect to delivery economics.',
+    },
+    {
+      title: 'YOUR APPROACH TO AI',
+      text: 'Bring one AI tool you are considering. Apply a vendor due-diligence scorecard across client-data exposure, training risk, review controls, audit trail, contract terms and security evidence. Leave with a Go / Conditional / No-Go decision and a safer next step.',
+    },
+    {
+      title: 'YOUR SOPs',
+      text: 'Bring one process that depends too heavily on memory. Learn what belongs in a policy and a procedure, then draft and peer-test a real month-end reconciliation procedure.',
+    },
   ],
 }
 
