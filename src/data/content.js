@@ -8,14 +8,14 @@ import damienPhoto from '../assets/damien.jpg.jpg'
    arrives — then flip REGISTRATION_OPEN to true and every Register CTA points
    back at the webinar automatically. */
 export const REGISTER_URL =
-  'https://register.gotowebinar.com/register/5675019771835943003?source=Academy'
+  'https://register.gotowebinar.com/register/2634998765442130524'
 
 /* TEMPORARY (Nov 2026 relaunch): the old GoToWebinar event was removed and the
    new registration link isn't ready yet. While this is false, every Register /
    "Reserve my place" CTA routes to the contact page instead of the dead webinar
    and shows REGISTRATION_NOTE. Set REGISTER_URL above and flip this to true when
    the new link lands — nothing else needs to change. */
-export const REGISTRATION_OPEN = false
+export const REGISTRATION_OPEN = true
 export const REGISTRATION_NOTE = 'Registration opening soon — check back shortly'
 
 /* Single source of truth for where a Register CTA points and whether it's an
