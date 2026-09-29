@@ -84,7 +84,7 @@ export default function Dashboard() {
                     onClick={() => setActive(img)}
                     className="group block w-full overflow-hidden rounded-2xl border border-line bg-white shadow-[0_14px_34px_-18px_rgba(61,15,82,0.3)] transition-all duration-300 hover:-translate-y-2 hover:border-teal/40 hover:shadow-[0_36px_60px_-28px_rgba(61,15,82,0.45)]"
                   >
-                    <div className="relative aspect-[16/10] overflow-hidden bg-cream">
+                    <div className="relative aspect-[2/1] overflow-hidden bg-cream">
                       <img
                         src={img.src}
                         alt={`MoneyPenny dashboard preview ${i + 1}`}
@@ -103,7 +103,7 @@ export default function Dashboard() {
               {[0, 1, 2, 3].map((i) => (
                 <div
                   key={i}
-                  className="flex aspect-[16/10] items-center justify-center rounded-2xl border border-dashed border-line bg-cream text-sm font-medium text-ink/40"
+                  className="flex aspect-[2/1] items-center justify-center rounded-2xl border border-dashed border-line bg-cream text-sm font-medium text-ink/40"
                 >
                   Preview image {i + 1}
                 </div>
