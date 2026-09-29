@@ -18,6 +18,7 @@ import Signup from './pages/Signup'
 import ForgotPassword from './pages/ForgotPassword'
 import ResetPassword from './pages/ResetPassword'
 import Checklists from './pages/Checklists'
+import Dashboard from './pages/Dashboard'
 import Contact from './pages/Contact'
 import Register from './pages/Register'
 import NotFound from './pages/NotFound'
@@ -39,6 +40,9 @@ export default function App() {
           <Route path="/workshops/session-2/content" element={<Session2 />} />
           <Route path="/workshops/session-3/content" element={<Session3 />} />
           <Route path="/workshops/session-4/content" element={<Session4 />} />
+          {/* Internal MoneyPenny dashboard preview — signed-in users only, not
+              in the public nav. The dashboard it links to has its own login. */}
+          <Route path="/dashboard" element={<Dashboard />} />
         </Route>
 
         <Route path="/videos" element={<Videos />} />
