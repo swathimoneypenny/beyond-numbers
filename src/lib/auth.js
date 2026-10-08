@@ -158,6 +158,9 @@ export function normalizeUser(payload) {
     id: u.id ?? u.user_id ?? null,
     email: u.email ?? u.username ?? null,
     ...u,
+    // Always expose a role so callers can do `user.role === 'admin'` safely,
+    // even against a backend that predates the role field.
+    role: u.role ?? 'attendee',
   }
 }
 

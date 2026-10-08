@@ -29,6 +29,14 @@ class User(Base):
     # Generated now so Stage 2's verification email has a token to send.
     verification_token: Mapped[str | None] = mapped_column(String(64), index=True, nullable=True)
 
+    # Access role. Groundwork for gating features by role — every existing and
+    # new account defaults to "attendee". Values: "attendee", "staff", "admin".
+    # server_default makes the ALTER-TABLE migration and a fresh create_all both
+    # backfill the default without touching application code.
+    role: Mapped[str] = mapped_column(
+        String(20), default="attendee", server_default="attendee", nullable=False
+    )
+
     created_at: Mapped[datetime] = mapped_column(
         DateTime(timezone=True), default=_utcnow, nullable=False
     )

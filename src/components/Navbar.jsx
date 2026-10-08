@@ -212,6 +212,11 @@ export default function Navbar() {
                 <UserRound size={15} className="shrink-0 text-teal" />
                 <span className="truncate">{user?.email}</span>
               </span>
+              {user?.role === 'admin' && (
+                <span className="inline-flex items-center rounded-full border border-yellow/40 bg-yellow/15 px-2.5 py-1 text-[0.7rem] font-bold uppercase tracking-[0.12em] text-yellow">
+                  Admin
+                </span>
+              )}
               <button
                 type="button"
                 onClick={onLogout}
@@ -339,6 +344,11 @@ export default function Navbar() {
                   <p className="flex items-center gap-2 px-3 py-1.5 text-sm text-white/70">
                     <UserRound size={15} className="shrink-0 text-teal" />
                     <span className="truncate">{user?.email}</span>
+                    {user?.role === 'admin' && (
+                      <span className="ml-auto inline-flex items-center rounded-full border border-yellow/40 bg-yellow/15 px-2 py-0.5 text-[0.65rem] font-bold uppercase tracking-[0.12em] text-yellow">
+                        Admin
+                      </span>
+                    )}
                   </p>
                   <NavLink
                     to="/dashboard"

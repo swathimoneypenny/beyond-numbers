@@ -144,6 +144,46 @@ and set `AWS_ACCESS_KEY_ID` / `AWS_SECRET_ACCESS_KEY` in the environment.
 While SES is in **sandbox**, it only delivers to verified addresses — verify a
 test recipient in the SES console, or request production access.
 
+## Access roles (groundwork)
+
+The `users` table has a `role` column: one of `attendee` (default), `staff`,
+`admin`. `/api/auth/me` (and login/signup responses) include it, and the React
+auth context exposes `user.role`. The only visible change today is a subtle
+**Admin** badge next to the email in the nav for `admin` users — everyone else
+sees exactly what they saw before.
+
+Three operator scripts live in `backend/` (run with the app's venv, from the
+app directory so `app` is importable):
+
+| Script | Purpose |
+|--------|---------|
+| `migrate_add_role.py` | Idempotent: backs up the DB, then `ALTER TABLE users ADD COLUMN role … DEFAULT 'attendee'` if the column is missing. |
+| `set_role.py <email> <role>` | Change one user's role (e.g. promote to `admin`). |
+| `create_user.py <email> <password> [role]` | Create (or update) a verified account with a role, without the signup flow. |
+
+### Deploying the role change (server: /home/ubuntu/bn-auth)
+
+```powershell
+$KEY = "C:\Users\AI.SN\Desktop\sAI\moneypenny-key.pem"
+# 1. Copy up the changed app + the three scripts
+scp -i $KEY -r app migrate_add_role.py set_role.py create_user.py requirements.txt README.md ubuntu@3.107.206.82:/home/ubuntu/bn-auth/
+
+ssh -i $KEY ubuntu@3.107.206.82
+  cd /home/ubuntu/bn-auth
+  cp beyond_numbers.db beyond_numbers.manual-backup-$(date +%Y%m%d-%H%M%S).db   # extra backup
+  ./.venv/bin/pip install -r requirements.txt            # no-op: no new deps
+  ./.venv/bin/python migrate_add_role.py beyond_numbers.db   # also auto-backs up; prints backup path
+  pm2 restart bn-auth
+  # Provision accounts
+  ./.venv/bin/python create_user.py penny@beyond-numbers.com '<penny-admin-pw>' admin
+  ./.venv/bin/python create_user.py pbreslin1423@gmail.com '<penny-attendee-pw>' attendee
+  ./.venv/bin/python set_role.py swathi_suresh@moneypennyllc.com admin
+```
+
+`migrate_add_role.py` makes its own timestamped backup before touching the DB
+and is safe to re-run. `init_db()` (startup `create_all`) does **not** alter an
+existing table, so the migration script is the step that adds the column.
+
 ## Stage 2 hook
 
 `signup` already generates and stores a `verification_token` and sets

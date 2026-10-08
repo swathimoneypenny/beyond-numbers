@@ -48,6 +48,9 @@ class UserResponse(BaseModel):
     id: int
     email: EmailStr
     is_verified: bool
+    # Default keeps older tokens/responses valid if a row somehow predates the
+    # role column; the migration backfills every existing user to "attendee".
+    role: str = "attendee"
     created_at: datetime
 
 
