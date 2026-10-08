@@ -117,6 +117,174 @@ function mountBottomActions(doc) {
   doc.body.appendChild(bar)
 }
 
+/* ---- premium dark-purple theme (injected into the iframe) -------------- */
+
+/* Each exercise is a self-contained HTML doc with its own CSS. Rather than
+   rewrite every file, we inject a shared stylesheet into the iframe that
+   re-skins appearance (colours, surfaces, cards, buttons, inputs, typography)
+   to match the site's dark-purple look. Palette mirrors src/index.css
+   (navy/purple #4a146b…#2c0a3d, teal #25a88c, gold #f5c400).
+
+   SAFETY: appearance only. It never touches rules that drive behaviour/layout
+   — `.tab-content`/`.results-section` display toggling, the `.active`/`.sel`/
+   `.selected` state, or drag state — and it keeps semantic colours (traffic
+   lights, red/yellow/green ratings, success greens). Remove an id from
+   THEMED_EXERCISES to revert it instantly; no exercise file is modified.
+
+   TWO LAYERS:
+   - THEME_BASE is universally safe and goes on every themed exercise
+     (purple background, form controls, scrollbars, mirrored bottom bar).
+   - THEME_LIGHT converts the *light* exercises (white cards / dark text) to
+     dark. It is NOT applied to exercises that are already dark — those (see
+     BASE_ONLY) keep their own design and only get the base harmonisation, so
+     e.g. s4-ex2's intentional white "printable preview" and coloured section
+     headings are preserved. */
+const THEMED_EXERCISES = new Set([
+  's1-ex1-four-quadrants',
+  's2-ex1-team-52-card-pickup',
+  's2-ex2-client-portfolio-matrix',
+  's3-ex1-tech-stack-calculator',
+  's3-ex2-ai-vendor-scorecard',
+  's4-ex1-procedure-tech-stack',
+  's4-ex2-month-end-procedure',
+])
+
+// Already-dark exercises: base harmonisation only, keep their own dark design.
+const BASE_ONLY = new Set(['s4-ex2-month-end-procedure'])
+
+const THEME_BASE = `
+  :root { color-scheme: dark; }
+  body {
+    background: linear-gradient(155deg,#4a146b 0%,#3d0f52 46%,#2c0a3d 100%) !important;
+    color: #ffffff !important;
+  }
+  /* Form controls → dark translucent. Option list stays light so it's readable
+     in the OS dropdown. */
+  input, select, textarea, input[type="number"], input[type="text"] {
+    background: rgba(255,255,255,0.08) !important;
+    color: #fff !important;
+    border: 1px solid rgba(255,255,255,0.22) !important;
+  }
+  select option { color: #1a1a1a; }
+  ::placeholder { color: rgba(255,255,255,0.5) !important; }
+  ::-webkit-scrollbar { width: 9px; height: 9px; }
+  ::-webkit-scrollbar-thumb { background: rgba(255,255,255,0.22); border-radius: 5px; }
+  /* Mirrored bottom Save/Load bar (clones lose their in-page classes) */
+  #${BOTTOM_BAR_ID} { border-top-color: rgba(255,255,255,0.14) !important; }
+  #${BOTTOM_BAR_ID} button {
+    background: rgba(255,255,255,0.12) !important;
+    color: #fff !important;
+    border: 1px solid rgba(255,255,255,0.25) !important;
+    border-radius: 8px !important;
+    padding: 8px 16px; font-weight: 600; cursor: pointer;
+  }
+  #${BOTTOM_BAR_ID} button:hover { background: rgba(255,255,255,0.20) !important; }
+`
+
+const THEME_LIGHT = `
+  /* ---- shared light→dark (containers, headers, tabs) ---- */
+  /* NOTE: no backdrop-filter / filter / transform / will-change anywhere in
+     this theme. Those promote GPU layers, and a persistent one inside a tall,
+     full-height srcdoc iframe makes the browser skip repainting regions while
+     the parent page scrolls (content blanks until a reflow). The glass look is
+     carried by the translucent background alone. */
+  .container {
+    background: rgba(255,255,255,0.06) !important;
+    border: 1px solid rgba(255,255,255,0.12) !important;
+    box-shadow: 0 30px 80px -30px rgba(0,0,0,0.75) !important;
+  }
+  .header { color: #fff !important; }
+  .header h1, .header p { color: #fff !important; }
+  .header-buttons button {
+    background: rgba(255,255,255,0.10) !important; color: #fff !important;
+    border: 1px solid rgba(255,255,255,0.25) !important;
+  }
+  .header-buttons button:hover { background: rgba(255,255,255,0.20) !important; }
+  .tabs { background: rgba(0,0,0,0.22) !important; border-bottom: 1px solid rgba(255,255,255,0.10) !important; }
+  .tab { background: transparent !important; color: rgba(255,255,255,0.60) !important; }
+  .tab:hover { background: rgba(255,255,255,0.06) !important; color: #fff !important; }
+  .tab.active {
+    background: rgba(255,255,255,0.08) !important; color: #f5c400 !important;
+    border-bottom: 3px solid #f5c400 !important;
+  }
+
+  /* ---- Four Quadrants (s1-ex1) ---- */
+  .tab-content p, .service-name, .stat-label { color: rgba(255,255,255,0.74) !important; }
+  .assessment-row > div { color: rgba(255,255,255,0.82) !important; }
+  .quadrant-box, .analytics-card, .stat-box, .service-item, .assessment-row, .insight-item {
+    background: rgba(255,255,255,0.05) !important; border-color: rgba(255,255,255,0.12) !important;
+  }
+  .analytics-card h3 { color: #fff !important; border-bottom-color: rgba(37,168,140,0.6) !important; }
+  .service-item:hover { box-shadow: 0 2px 12px rgba(0,0,0,0.45) !important; }
+  .service-checkbox { accent-color: #25a88c; }
+  .traffic-btn { border-color: rgba(255,255,255,0.28) !important; }
+  .traffic-btn.selected { border-color: #fff !important; box-shadow: 0 0 0 2px rgba(245,196,0,0.7); }
+  .assessment-header {
+    background: linear-gradient(135deg,#8a1fb0,#4a146b) !important; color: #fff !important;
+    border-color: rgba(255,255,255,0.15) !important;
+  }
+  [style*="ffebee"] { background: rgba(252,129,129,0.14) !important; color: #fff !important; }
+
+  /* ---- headings / titles that were dark-on-light ---- */
+  .quadrant-box h3, .instructions h3, .action-card h4,
+  .panel h2, .cat-title, .pitem .tx strong, .opt .nm, .area .atitle,
+  .firmbar .fb-lead, .meta label, .ref strong, .opt .line { color: #fff !important; }
+  .instructions h3, .action-card h4 { color: #f5c400 !important; }
+  .axis-label, .bucket-subtitle, .action-list li { color: rgba(255,255,255,0.8) !important; }
+
+  /* ---- light surfaces across s2 / s3 / s4-ex1 → dark glass ---- */
+  .cards-container, .task-card, .bucket, .stat-card, .instructions,
+  .results-section, .matrix-container, .analysis-section, .action-section, .action-card,
+  .panel, .pitem, .opt, .meta, .area, .ref, .firmbar, .tipbox {
+    background: rgba(255,255,255,0.05) !important;
+  }
+  /* Gold value accents (no !important so inline semantic colours still win) */
+  .stat-value { color: #f5c400; }
+  /* Primary CTA + destructive buttons */
+  .export-btn {
+    background: linear-gradient(135deg,#25a88c 0%,#8a1fb0 100%) !important; color: #fff !important;
+    box-shadow: 0 10px 24px -10px rgba(37,168,140,0.6) !important;
+  }
+  .export-btn:hover { box-shadow: 0 14px 30px -10px rgba(37,168,140,0.75) !important; }
+  .remove-btn { background: #c0392b !important; }
+  .remove-btn:hover { background: #a93226 !important; }
+  .insight-item { background: rgba(245,196,0,0.09) !important; border-left: 4px solid #f5c400 !important; }
+
+  /* ---- interactive STATES: restyle appearance, logic untouched ---- */
+  .bucket.drag-over { background: rgba(37,168,140,0.18) !important; border-color: #25a88c !important; }
+  .opt.sel { border-color: #25a88c !important; background: rgba(37,168,140,0.16) !important; }
+  .opt .line { background: rgba(255,255,255,0.14) !important; }
+  /* Rating buttons: style UNSELECTED only (no !important → the higher-specificity
+     .g.on/.y.on/.r.on keep their red/amber/green when chosen). */
+  .ryg button { background: rgba(255,255,255,0.06); color: rgba(255,255,255,0.78); border-color: rgba(255,255,255,0.25); }
+
+  /* ---- matrix axis lines + light hovers / borders ---- */
+  .matrix-grid { border-color: rgba(255,255,255,0.35) !important; }
+  .client-table tr:hover { background: rgba(255,255,255,0.06) !important; }
+  .client-table td { border-bottom-color: rgba(255,255,255,0.12) !important; }
+  .crit-tag { background: rgba(255,107,107,0.2) !important; }
+
+  /* ---- Calibri family CSS variables (re-skins var-based elements at once) ---- */
+  :root {
+    --grad1: #4a146b !important; --grad2: #2c0a3d !important;
+    --card: rgba(255,255,255,0.05) !important; --line: rgba(255,255,255,0.2) !important;
+    --slate: #ffffff !important;
+  }
+`
+
+function themeFor(exerciseId) {
+  if (!THEMED_EXERCISES.has(exerciseId)) return null
+  return BASE_ONLY.has(exerciseId) ? THEME_BASE : THEME_BASE + THEME_LIGHT
+}
+
+function injectTheme(html, css) {
+  const styleTag = `<style id="bn-exercise-theme">${css}</style>`
+  // Place LAST in <head> so it wins ties against the exercise's own stylesheet.
+  if (/<\/head>/i.test(html)) return html.replace(/<\/head>/i, `${styleTag}</head>`)
+  if (/<\/body>/i.test(html)) return html.replace(/<\/body>/i, `${styleTag}</body>`)
+  return html + styleTag
+}
+
 export default function ExerciseEmbed({ exerciseId, title = 'Interactive exercise', minHeight = 640 }) {
   const [status, setStatus] = useState('loading') // loading | ready | error
   const [markup, setMarkup] = useState('')
@@ -140,7 +308,10 @@ export default function ExerciseEmbed({ exerciseId, title = 'Interactive exercis
         if (cancelled) return
         const raw = data?.embed?.markup
         if (!raw) throw new Error('No markup in exercise JSON')
-        setMarkup(withCharset(fixMojibake(raw)))
+        let html = withCharset(fixMojibake(raw))
+        const themeCss = themeFor(exerciseId)
+        if (themeCss) html = injectTheme(html, themeCss)
+        setMarkup(html)
         setStatus('ready')
       })
       .catch(() => {
