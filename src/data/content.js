@@ -37,7 +37,7 @@ export const pricing = {
       name: 'Early Bird',
       price: 'US$149',
       unit: 'per person',
-      note: 'Register by September 30, 2026',
+      note: 'Register by October 19, 2026',
       featured: true,
     },
   ],
@@ -339,7 +339,7 @@ export const faqs = [
   },
   {
     q: 'What does it cost?',
-    a: 'US$199 per person for the full series, or US$149 with the Early Bird rate if you register by September 30, 2026. Groups save $100 per person when multiple people from the same firm register.',
+    a: 'US$199 per person for the full series, or US$149 with the Early Bird rate if you register by October 19, 2026. Groups save $100 per person when multiple people from the same firm register.',
   },
   {
     q: 'Do I earn CPE credits?',
