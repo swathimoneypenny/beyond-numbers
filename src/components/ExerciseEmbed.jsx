@@ -167,8 +167,11 @@ const THEME_BASE = `
   }
   select option { color: #1a1a1a; }
   ::placeholder { color: rgba(255,255,255,0.5) !important; }
-  ::-webkit-scrollbar { width: 9px; height: 9px; }
-  ::-webkit-scrollbar-thumb { background: rgba(255,255,255,0.22); border-radius: 5px; }
+  /* Fully hide scrollbars in the exercise's scrollable areas while keeping
+     scrolling (wheel / drag / keyboard) fully functional. Firefox uses
+     scrollbar-width:none; WebKit/Blink hide the bar via ::-webkit-scrollbar. */
+  * { scrollbar-width: none; -ms-overflow-style: none; }
+  ::-webkit-scrollbar { width: 0 !important; height: 0 !important; display: none; }
   /* Mirrored bottom Save/Load bar (clones lose their in-page classes) */
   #${BOTTOM_BAR_ID} { border-top-color: rgba(255,255,255,0.14) !important; }
   #${BOTTOM_BAR_ID} button {
