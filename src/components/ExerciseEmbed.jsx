@@ -281,7 +281,10 @@ function themeFor(exerciseId) {
 }
 
 function injectTheme(html, css) {
-  const styleTag = `<style id="bn-exercise-theme">${css}</style>`
+  // Scope the whole dark theme to screen only, so printing / "Save as PDF"
+  // falls back to the exercise's own light print styles — dark backgrounds
+  // waste ink and read poorly on paper.
+  const styleTag = `<style id="bn-exercise-theme">@media screen{${css}}</style>`
   // Place LAST in <head> so it wins ties against the exercise's own stylesheet.
   if (/<\/head>/i.test(html)) return html.replace(/<\/head>/i, `${styleTag}</head>`)
   if (/<\/body>/i.test(html)) return html.replace(/<\/body>/i, `${styleTag}</body>`)
