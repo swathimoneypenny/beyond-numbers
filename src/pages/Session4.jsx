@@ -9,7 +9,6 @@ import {
   Band,
   Head,
   Callout,
-  ExerciseJumpBar,
   EXERCISE_ANCHORS,
   SessionFraming,
 } from '../components/sessionUI'
@@ -140,7 +139,73 @@ export default function Session4() {
 
       <SessionFraming framing={session.framing} />
 
-      <ExerciseJumpBar count={2} />
+      {/* ── Exercises / games first (moved to the top per stakeholder request).
+          Exercise Jump Bar removed (redundant now). Anchor ids unchanged. ── */}
+      {/* 19 — Exercise 1 (live embed) */}
+      <Band bg="sand" id={EXERCISE_ANCHORS[0]}>
+        <ExerciseShell
+          tag={c.exercise1.tag}
+          title={c.exercise1.title}
+          embedId={c.exercise1.embedId}
+        >
+          <p className="text-[0.8rem] font-bold uppercase tracking-[0.16em] text-teal">
+            {c.exercise1.profileLabel}
+          </p>
+          <ul className="mt-4 grid gap-2.5 sm:grid-cols-2">
+            {c.exercise1.profile.map((x) => (
+              <li key={x} className={`flex items-start gap-2.5 text-[0.95rem] ${INK}`}>
+                <span className="mt-1.5 h-1.5 w-1.5 shrink-0 rounded-full bg-teal" />
+                {x}
+              </li>
+            ))}
+          </ul>
+          <p className="mt-7 text-[0.8rem] font-bold uppercase tracking-[0.16em] text-navy/60">
+            {c.exercise1.taskLabel}
+          </p>
+          <p className={`mt-2.5 text-[0.97rem] leading-relaxed ${INK}`}>{c.exercise1.task}</p>
+          <p className="mt-6 rounded-xl border border-teal/30 bg-teal/[0.07] px-5 py-4">
+            <span className="text-[0.8rem] font-bold uppercase tracking-[0.14em] text-teal">
+              {c.exercise1.pointLabel}:{' '}
+            </span>
+            <span className={`font-semibold ${INK}`}>{c.exercise1.point}</span>
+          </p>
+          <p className="mt-4 rounded-xl border border-yellow/40 bg-yellow/[0.12] px-5 py-4">
+            <span className="text-[0.8rem] font-bold uppercase tracking-[0.14em] text-[#8a6a00]">
+              {c.exercise1.goalLabel}:{' '}
+            </span>
+            <span className={`font-semibold ${INK}`}>{c.exercise1.goal}</span>
+          </p>
+        </ExerciseShell>
+      </Band>
+
+      {/* 22 — Exercise 2 (live embed) */}
+      <Band bg="white" id={EXERCISE_ANCHORS[1]}>
+        <ExerciseShell
+          tag={c.exercise2.tag}
+          title={c.exercise2.title}
+          embedId={c.exercise2.embedId}
+        >
+          <div className="grid gap-4 sm:grid-cols-3">
+            {c.exercise2.steps.map((s) => (
+              <div key={s.n} className="rounded-2xl border border-line bg-cream p-5">
+                <span className="text-xs font-bold uppercase tracking-[0.14em] text-teal">
+                  {s.n}
+                </span>
+                <h3 className="mt-2.5 font-display text-base font-bold text-navy">{s.k}</h3>
+                <p className={`mt-1.5 text-[0.9rem] leading-relaxed ${INK}`}>{s.v}</p>
+              </div>
+            ))}
+          </div>
+          <p className="mt-6 rounded-xl border border-yellow/40 bg-yellow/[0.12] px-5 py-4">
+            <span className="text-[0.8rem] font-bold uppercase tracking-[0.14em] text-[#8a6a00]">
+              {c.exercise2.takeawayLabel}:{' '}
+            </span>
+            <span className={`font-semibold ${INK}`}>{c.exercise2.takeaway}</span>
+          </p>
+        </ExerciseShell>
+      </Band>
+
+      {/* ── Written content ─────────────────────── */}
 
       {/* 1 — The Capstone */}
       <Band bg="sand">
@@ -493,45 +558,8 @@ export default function Session4() {
       {/* 18 — Poll */}
       <Poll eyebrow={c.poll2.eyebrow} q={c.poll2.q} />
 
-      {/* 19 — Exercise 1 (live embed) */}
-      <Band bg="sand" id={EXERCISE_ANCHORS[0]}>
-        <ExerciseShell
-          tag={c.exercise1.tag}
-          title={c.exercise1.title}
-          embedId={c.exercise1.embedId}
-        >
-          <p className="text-[0.8rem] font-bold uppercase tracking-[0.16em] text-teal">
-            {c.exercise1.profileLabel}
-          </p>
-          <ul className="mt-4 grid gap-2.5 sm:grid-cols-2">
-            {c.exercise1.profile.map((x) => (
-              <li key={x} className={`flex items-start gap-2.5 text-[0.95rem] ${INK}`}>
-                <span className="mt-1.5 h-1.5 w-1.5 shrink-0 rounded-full bg-teal" />
-                {x}
-              </li>
-            ))}
-          </ul>
-          <p className="mt-7 text-[0.8rem] font-bold uppercase tracking-[0.16em] text-navy/60">
-            {c.exercise1.taskLabel}
-          </p>
-          <p className={`mt-2.5 text-[0.97rem] leading-relaxed ${INK}`}>{c.exercise1.task}</p>
-          <p className="mt-6 rounded-xl border border-teal/30 bg-teal/[0.07] px-5 py-4">
-            <span className="text-[0.8rem] font-bold uppercase tracking-[0.14em] text-teal">
-              {c.exercise1.pointLabel}:{' '}
-            </span>
-            <span className={`font-semibold ${INK}`}>{c.exercise1.point}</span>
-          </p>
-          <p className="mt-4 rounded-xl border border-yellow/40 bg-yellow/[0.12] px-5 py-4">
-            <span className="text-[0.8rem] font-bold uppercase tracking-[0.14em] text-[#8a6a00]">
-              {c.exercise1.goalLabel}:{' '}
-            </span>
-            <span className={`font-semibold ${INK}`}>{c.exercise1.goal}</span>
-          </p>
-        </ExerciseShell>
-      </Band>
-
       {/* 20 — AI Now Writes and Maintains Your Procedures */}
-      <Band bg="white">
+      <Band bg="sand">
         <Head title={c.aiWrites.eyebrow} subtitle={c.aiWrites.subtitle} />
         <div className="mt-12 grid gap-5 sm:grid-cols-2 lg:grid-cols-4">
           {c.aiWrites.steps.map((s, i) => (
@@ -568,7 +596,7 @@ export default function Session4() {
       </Band>
 
       {/* 21 — What a Finished Procedure Looks Like */}
-      <Band bg="sand">
+      <Band bg="white">
         <Head title={c.finished.eyebrow} subtitle={c.finished.subtitle} />
         <Reveal>
           <p className="mt-10 text-[0.8rem] font-bold uppercase tracking-[0.16em] text-navy/60">
@@ -590,33 +618,6 @@ export default function Session4() {
           head={c.finished.tableHead}
           rows={c.finished.tableRows}
         />
-      </Band>
-
-      {/* 22 — Exercise 2 (live embed) */}
-      <Band bg="white" id={EXERCISE_ANCHORS[1]}>
-        <ExerciseShell
-          tag={c.exercise2.tag}
-          title={c.exercise2.title}
-          embedId={c.exercise2.embedId}
-        >
-          <div className="grid gap-4 sm:grid-cols-3">
-            {c.exercise2.steps.map((s) => (
-              <div key={s.n} className="rounded-2xl border border-line bg-cream p-5">
-                <span className="text-xs font-bold uppercase tracking-[0.14em] text-teal">
-                  {s.n}
-                </span>
-                <h3 className="mt-2.5 font-display text-base font-bold text-navy">{s.k}</h3>
-                <p className={`mt-1.5 text-[0.9rem] leading-relaxed ${INK}`}>{s.v}</p>
-              </div>
-            ))}
-          </div>
-          <p className="mt-6 rounded-xl border border-yellow/40 bg-yellow/[0.12] px-5 py-4">
-            <span className="text-[0.8rem] font-bold uppercase tracking-[0.14em] text-[#8a6a00]">
-              {c.exercise2.takeawayLabel}:{' '}
-            </span>
-            <span className={`font-semibold ${INK}`}>{c.exercise2.takeaway}</span>
-          </p>
-        </ExerciseShell>
       </Band>
 
       {/* 23 — Resource: Naming Conventions */}

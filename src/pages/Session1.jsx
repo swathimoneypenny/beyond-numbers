@@ -19,7 +19,7 @@ import SessionHero from '../components/SessionHero'
 import SectionProgress from '../components/SectionProgress'
 import Reveal from '../components/Reveal'
 import ExerciseEmbed from '../components/ExerciseEmbed'
-import { ExerciseJumpBar, EXERCISE_ANCHORS, SessionFraming } from '../components/sessionUI'
+import { EXERCISE_ANCHORS, SessionFraming } from '../components/sessionUI'
 import { getSession } from '../data/sessions'
 import { session1 as c } from '../data/session1'
 
@@ -214,7 +214,20 @@ export default function Session1() {
 
       <SessionFraming framing={session.framing} />
 
-      <ExerciseJumpBar count={2} />
+      {/* ── Exercises / games first (moved to the top per stakeholder request).
+          The Exercise Jump Bar was removed: with the exercises now at the top,
+          a jump-to-exercise bar is redundant. Anchor ids are kept unchanged. ── */}
+      {/* Exercise 1 (live interactive embed) */}
+      <Band bg="sand" id={EXERCISE_ANCHORS[0]}>
+        <ExerciseCard data={c.exercise1} embedId="s1-ex1-four-quadrants" />
+      </Band>
+
+      {/* Exercise 2 (placeholder until JSON is provided) */}
+      <Band bg="white" id={EXERCISE_ANCHORS[1]}>
+        <ExerciseCard data={c.exercise2} comingSoon />
+      </Band>
+
+      {/* ── Written content ─────────────────────────────────────── */}
 
       {/* 1 — The day everything changed */}
       <Band bg="sand">
@@ -397,13 +410,8 @@ export default function Session1() {
         <Callout>{c.future.caption}</Callout>
       </Band>
 
-      {/* 7 — Exercise 1 (live interactive embed) */}
-      <Band bg="sand" id={EXERCISE_ANCHORS[0]}>
-        <ExerciseCard data={c.exercise1} embedId="s1-ex1-four-quadrants" />
-      </Band>
-
       {/* 8 — The $100K question */}
-      <Band bg="white">
+      <Band bg="sand">
         <Head title={c.hundredK.eyebrow} subtitle={c.hundredK.subtitle} />
         <Reveal>
           <div className="mt-10 rounded-2xl border border-purple/20 bg-purple/[0.05] p-7 sm:p-9">
@@ -434,7 +442,7 @@ export default function Session1() {
       </Band>
 
       {/* 9 — The five boxes */}
-      <Band bg="sand">
+      <Band bg="white">
         <Head title={c.fiveBoxes.eyebrow} subtitle={c.fiveBoxes.subtitle} />
         <div className="mt-12 grid gap-5 sm:grid-cols-2 lg:grid-cols-4">
           {c.fiveBoxes.boxes.map((b) => (
@@ -464,11 +472,6 @@ export default function Session1() {
           </div>
         </Reveal>
         <Callout>{c.fiveBoxes.caption}</Callout>
-      </Band>
-
-      {/* 10 — Exercise 2 (placeholder until JSON is provided) */}
-      <Band bg="white" id={EXERCISE_ANCHORS[1]}>
-        <ExerciseCard data={c.exercise2} comingSoon />
       </Band>
 
       {/* 11 — Overlap (Venn, dark) */}

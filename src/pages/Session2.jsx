@@ -9,7 +9,6 @@ import {
   Head,
   Callout,
   ExerciseCard,
-  ExerciseJumpBar,
   EXERCISE_ANCHORS,
   SessionFraming,
 } from '../components/sessionUI'
@@ -41,7 +40,19 @@ export default function Session2() {
 
       <SessionFraming framing={session.framing} />
 
-      <ExerciseJumpBar count={2} />
+      {/* ── Exercises / games first (moved to the top per stakeholder request).
+          Exercise Jump Bar removed (redundant now). Anchor ids unchanged. ── */}
+      {/* Exercise 1 (live embed) */}
+      <Band bg="sand" id={EXERCISE_ANCHORS[0]}>
+        <ExerciseCard data={c.exercise1} embedId="s2-ex1-team-52-card-pickup" />
+      </Band>
+
+      {/* Exercise 2 (live embed) */}
+      <Band bg="white" id={EXERCISE_ANCHORS[1]}>
+        <ExerciseCard data={c.exercise2} embedId="s2-ex2-client-portfolio-matrix" />
+      </Band>
+
+      {/* ── Written content ─────────────────────────────────────── */}
 
       {/* 1 — Welcome back */}
       <Band bg="sand">
@@ -179,13 +190,8 @@ export default function Session2() {
         <Callout>{c.admin.caption}</Callout>
       </Band>
 
-      {/* 6 — Exercise 1 (live embed) */}
-      <Band bg="white" id={EXERCISE_ANCHORS[0]}>
-        <ExerciseCard data={c.exercise1} embedId="s2-ex1-team-52-card-pickup" />
-      </Band>
-
       {/* 7 — Who will be your next hire */}
-      <Band bg="sand">
+      <Band bg="white">
         <Head title={c.nextHire.eyebrow} subtitle={c.nextHire.subtitle} />
         <div className="mt-12 grid gap-5 md:grid-cols-3">
           {c.nextHire.items.map((it, i) => (
@@ -202,7 +208,7 @@ export default function Session2() {
       </Band>
 
       {/* 8 — Right clients */}
-      <Band bg="white">
+      <Band bg="sand">
         <Head title={c.rightClients.eyebrow} subtitle={c.rightClients.subtitle} />
         <div className="mt-12 grid gap-6 md:grid-cols-2">
           <Reveal>
@@ -240,7 +246,7 @@ export default function Session2() {
       </Band>
 
       {/* 9 — Tiers */}
-      <Band bg="sand">
+      <Band bg="white">
         <Head title={c.tiers.eyebrow} subtitle={c.tiers.subtitle} />
         <div className="mt-12 grid gap-5 sm:grid-cols-2 lg:grid-cols-4">
           {c.tiers.items.map((t) => {
@@ -265,7 +271,7 @@ export default function Session2() {
       </Band>
 
       {/* 10 — Value vs effort matrix */}
-      <Band bg="white">
+      <Band bg="sand">
         <Head title={m.eyebrow} subtitle={m.subtitle} />
         <Reveal>
           <div className="mt-12 flex gap-3">
@@ -321,11 +327,6 @@ export default function Session2() {
             </Reveal>
           ))}
         </div>
-      </Band>
-
-      {/* 11 — Exercise 2 (live embed) */}
-      <Band bg="sand" id={EXERCISE_ANCHORS[1]}>
-        <ExerciseCard data={c.exercise2} embedId="s2-ex2-client-portfolio-matrix" />
       </Band>
 
       {/* 12 — Firing wrong-fit clients */}

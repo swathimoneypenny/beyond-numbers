@@ -9,7 +9,6 @@ import {
   Band,
   Head,
   Callout,
-  ExerciseJumpBar,
   EXERCISE_ANCHORS,
   SessionFraming,
 } from '../components/sessionUI'
@@ -78,7 +77,83 @@ export default function Session3() {
 
       <SessionFraming framing={session.framing} />
 
-      <ExerciseJumpBar count={2} />
+      {/* ── Exercises / games first (moved to the top per stakeholder request).
+          Exercise Jump Bar removed (redundant now). Anchor ids unchanged. ── */}
+      {/* 9 — Exercise 1 (live embed) */}
+      <Band bg="sand" id={EXERCISE_ANCHORS[0]}>
+        <ExerciseShell
+          tag={c.exercise1.tag}
+          title={c.exercise1.title}
+          embedId="s3-ex1-tech-stack-calculator"
+        >
+          <p className="text-[0.8rem] font-bold uppercase tracking-[0.16em] text-teal">
+            {c.exercise1.clientLabel}
+          </p>
+          <ul className="mt-4 grid gap-2.5 sm:grid-cols-2">
+            {c.exercise1.client.map((x) => (
+              <li key={x} className={`flex items-start gap-2.5 text-[0.95rem] ${INK}`}>
+                <span className="mt-1.5 h-1.5 w-1.5 shrink-0 rounded-full bg-teal" />
+                {x}
+              </li>
+            ))}
+          </ul>
+          <p className="mt-7 text-[0.8rem] font-bold uppercase tracking-[0.16em] text-navy/60">
+            {c.exercise1.taskLabel}
+          </p>
+          <p className={`mt-2.5 text-[0.97rem] leading-relaxed ${INK}`}>{c.exercise1.task}</p>
+          <div className="mt-4 flex flex-wrap gap-2.5">
+            {c.exercise1.categories.map((cat) => (
+              <span
+                key={cat}
+                className="rounded-full border border-navy/15 bg-cream px-3.5 py-1.5 text-sm font-semibold text-navy"
+              >
+                {cat}
+              </span>
+            ))}
+          </div>
+          <p className="mt-6 rounded-xl border border-yellow/40 bg-yellow/[0.12] px-5 py-4">
+            <span className="text-[0.8rem] font-bold uppercase tracking-[0.14em] text-[#8a6a00]">
+              {c.exercise1.goalLabel}:{' '}
+            </span>
+            <span className={`font-semibold ${INK}`}>{c.exercise1.goal}</span>
+          </p>
+        </ExerciseShell>
+      </Band>
+
+      {/* 14 — Exercise 2 (live embed) */}
+      <Band bg="white" id={EXERCISE_ANCHORS[1]}>
+        <ExerciseShell
+          tag={c.exercise2.tag}
+          title={c.exercise2.title}
+          embedId="s3-ex2-ai-vendor-scorecard"
+        >
+          <p className={`text-[1.02rem] font-medium leading-relaxed ${INK}`}>{c.exercise2.lead}</p>
+          <div className="mt-5 grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
+            {c.exercise2.areas.map((a, i) => (
+              <div key={a} className={`flex items-start gap-3 rounded-xl border border-line bg-cream p-4 text-[0.93rem] ${INK}`}>
+                <span className="font-display text-sm font-bold text-navy/40">{i + 1}</span>
+                {a}
+              </div>
+            ))}
+          </div>
+          <div className="mt-5 flex flex-wrap gap-3">
+            {c.exercise2.legend.map((l) => {
+              const lc = legendColor[l.key]
+              return (
+                <span
+                  key={l.k}
+                  className={`inline-flex items-center gap-2 rounded-full border bg-white px-4 py-2 text-sm font-bold ${lc.border} ${lc.text}`}
+                >
+                  <span className={`h-3 w-3 rounded-full ${lc.dot}`} />
+                  {l.k} — <span className={`font-semibold ${INK}`}>{l.v}</span>
+                </span>
+              )
+            })}
+          </div>
+        </ExerciseShell>
+      </Band>
+
+      {/* ── Written content ─────────────────────── */}
 
       {/* 1 — Objectives */}
       <Band bg="sand">
@@ -278,49 +353,8 @@ export default function Session3() {
         </Note>
       </Band>
 
-      {/* 9 — Exercise 1 (live embed) */}
-      <Band bg="sand" id={EXERCISE_ANCHORS[0]}>
-        <ExerciseShell
-          tag={c.exercise1.tag}
-          title={c.exercise1.title}
-          embedId="s3-ex1-tech-stack-calculator"
-        >
-          <p className="text-[0.8rem] font-bold uppercase tracking-[0.16em] text-teal">
-            {c.exercise1.clientLabel}
-          </p>
-          <ul className="mt-4 grid gap-2.5 sm:grid-cols-2">
-            {c.exercise1.client.map((x) => (
-              <li key={x} className={`flex items-start gap-2.5 text-[0.95rem] ${INK}`}>
-                <span className="mt-1.5 h-1.5 w-1.5 shrink-0 rounded-full bg-teal" />
-                {x}
-              </li>
-            ))}
-          </ul>
-          <p className="mt-7 text-[0.8rem] font-bold uppercase tracking-[0.16em] text-navy/60">
-            {c.exercise1.taskLabel}
-          </p>
-          <p className={`mt-2.5 text-[0.97rem] leading-relaxed ${INK}`}>{c.exercise1.task}</p>
-          <div className="mt-4 flex flex-wrap gap-2.5">
-            {c.exercise1.categories.map((cat) => (
-              <span
-                key={cat}
-                className="rounded-full border border-navy/15 bg-cream px-3.5 py-1.5 text-sm font-semibold text-navy"
-              >
-                {cat}
-              </span>
-            ))}
-          </div>
-          <p className="mt-6 rounded-xl border border-yellow/40 bg-yellow/[0.12] px-5 py-4">
-            <span className="text-[0.8rem] font-bold uppercase tracking-[0.14em] text-[#8a6a00]">
-              {c.exercise1.goalLabel}:{' '}
-            </span>
-            <span className={`font-semibold ${INK}`}>{c.exercise1.goal}</span>
-          </p>
-        </ExerciseShell>
-      </Band>
-
       {/* 10 — AI: Where It Fits */}
-      <Band bg="white">
+      <Band bg="sand">
         <Head title={c.aiFits.eyebrow} subtitle={c.aiFits.intro} />
         <div className="mt-12 grid gap-6 md:grid-cols-2">
           {[c.aiFits.gen, c.aiFits.agentic].map((col, i) => (
@@ -349,7 +383,7 @@ export default function Session3() {
       </Band>
 
       {/* 11 — AI Across Bookkeeping, Tax & Advisory */}
-      <Band bg="sand">
+      <Band bg="white">
         <Head title={c.aiAcross.eyebrow} />
         <div className="mt-12 grid gap-5 lg:grid-cols-3">
           {c.aiAcross.groups.map((g) => (
@@ -372,7 +406,7 @@ export default function Session3() {
       </Band>
 
       {/* 12 — AI Governance */}
-      <Band bg="white">
+      <Band bg="sand">
         <Head title={c.governance.eyebrow} subtitle={c.governance.intro} />
         <div className="mt-12 grid gap-5 sm:grid-cols-2 lg:grid-cols-4">
           {c.governance.items.map((it) => (
@@ -390,7 +424,7 @@ export default function Session3() {
       </Band>
 
       {/* 13 — NIST Framework */}
-      <Band bg="sand">
+      <Band bg="white">
         <Head title={c.nist.eyebrow} subtitle={c.nist.intro} />
         <div className="mt-12 grid gap-5 sm:grid-cols-2 lg:grid-cols-4">
           {c.nist.steps.map((s, i) => (
@@ -407,39 +441,6 @@ export default function Session3() {
         <Note label={c.nist.tellLabel} accent="yellow">
           {c.nist.tell}
         </Note>
-      </Band>
-
-      {/* 14 — Exercise 2 (live embed) */}
-      <Band bg="white" id={EXERCISE_ANCHORS[1]}>
-        <ExerciseShell
-          tag={c.exercise2.tag}
-          title={c.exercise2.title}
-          embedId="s3-ex2-ai-vendor-scorecard"
-        >
-          <p className={`text-[1.02rem] font-medium leading-relaxed ${INK}`}>{c.exercise2.lead}</p>
-          <div className="mt-5 grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
-            {c.exercise2.areas.map((a, i) => (
-              <div key={a} className={`flex items-start gap-3 rounded-xl border border-line bg-cream p-4 text-[0.93rem] ${INK}`}>
-                <span className="font-display text-sm font-bold text-navy/40">{i + 1}</span>
-                {a}
-              </div>
-            ))}
-          </div>
-          <div className="mt-5 flex flex-wrap gap-3">
-            {c.exercise2.legend.map((l) => {
-              const lc = legendColor[l.key]
-              return (
-                <span
-                  key={l.k}
-                  className={`inline-flex items-center gap-2 rounded-full border bg-white px-4 py-2 text-sm font-bold ${lc.border} ${lc.text}`}
-                >
-                  <span className={`h-3 w-3 rounded-full ${lc.dot}`} />
-                  {l.k} — <span className={`font-semibold ${INK}`}>{l.v}</span>
-                </span>
-              )
-            })}
-          </div>
-        </ExerciseShell>
       </Band>
 
       {/* 15 — Hardware & Getting Started */}
