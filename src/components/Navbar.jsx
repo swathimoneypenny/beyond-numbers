@@ -9,6 +9,8 @@ import { useAuth } from '../context/AuthContext'
 // Trimmed for launch — Games, Workshops, Checklists routes still exist; just hidden
 // from the top nav for now. Re-add here to bring them back.
 // "Resources" is a nested menu; its children each have their own route.
+// Login lives top-right next to Register (not in this list). "Workshop" is
+// added here at render time for signed-in users only (see `links` below).
 // About Us is staged but hidden: flip `enabled: true` (and add its route/page).
 const navLinks = [
   { label: 'Home', to: '/' },
@@ -20,7 +22,6 @@ const navLinks = [
       { label: 'Podcast', to: '/podcast' },
     ],
   },
-  { label: 'Login', to: '/login' },
   { label: 'Contact Us', to: '/contact' },
   { label: 'About Us', to: '/about', enabled: false },
 ]
@@ -36,8 +37,13 @@ export default function Navbar() {
   const { pathname } = useLocation()
   const navRef = useRef(null)
 
-  // Signed-in users don't need the "Login" item; they get their email + Log out.
-  const links = visibleLinks.filter((l) => !(isAuthenticated && l.to === '/login'))
+  // Signed-in users get a "Workshop" shortcut inserted right after Resources
+  // (Home, Resources, Workshop, Contact Us); logged-out users see the nav as-is.
+  const links = isAuthenticated
+    ? visibleLinks.flatMap((l) =>
+        l.label === 'Resources' ? [l, { label: 'Workshop', to: '/workshops' }] : [l],
+      )
+    : visibleLinks
 
   // A dropdown trigger reads as active when one of its children is the route.
   const childActive = (link) => link.children?.some((c) => c.to === pathname)
@@ -88,7 +94,7 @@ export default function Navbar() {
         }`}
       />
 
-      <nav ref={navRef} className="mx-auto flex h-[80px] max-w-[1240px] items-center justify-between px-5 sm:px-8">
+      <nav ref={navRef} className="mx-auto flex h-[80px] max-w-[1240px] items-center px-5 sm:px-8">
         {/* Logo on a clean white pill so the full navy wordmark stays visible on the dark nav */}
         <Link
           to="/"
@@ -98,8 +104,10 @@ export default function Navbar() {
           <Logo variant="horizontal" className="h-8 w-auto sm:h-9" />
         </Link>
 
-        {/* Desktop links */}
-        <ul className="hidden items-center gap-5 lg:flex xl:gap-7">
+        {/* Desktop links. lg:ml-10 puts a clear gap after the logo; lg:mr-6 is
+            the minimum gap before the right cluster (ml-auto on that cluster
+            expands it to push the buttons to the far right). */}
+        <ul className="hidden shrink-0 items-center gap-5 lg:ml-10 lg:mr-6 lg:flex xl:ml-12 xl:gap-7">
           {links.map((link) =>
             link.children ? (
               <li
@@ -115,7 +123,7 @@ export default function Navbar() {
                   onClick={() =>
                     setOpenMenu((v) => (v === link.label ? null : link.label))
                   }
-                  className={`group relative inline-flex items-center gap-1 text-[0.92rem] font-medium tracking-tight transition-colors ${
+                  className={`group relative inline-flex items-center gap-1 whitespace-nowrap text-[0.92rem] font-medium tracking-tight transition-colors ${
                     childActive(link) || openMenu === link.label
                       ? 'text-white'
                       : 'text-white/65 hover:text-white'
@@ -174,7 +182,7 @@ export default function Navbar() {
                   to={link.to}
                   end={link.to === '/'}
                   className={({ isActive }) =>
-                    `group relative text-[0.92rem] font-medium tracking-tight transition-colors ${
+                    `group relative whitespace-nowrap text-[0.92rem] font-medium tracking-tight transition-colors ${
                       isActive ? 'text-white' : 'text-white/65 hover:text-white'
                     }`
                   }
@@ -193,39 +201,55 @@ export default function Navbar() {
           )}
         </ul>
 
-        <div className="flex items-center gap-2">
+        <div className="ml-auto flex min-w-0 items-center gap-2 sm:gap-3">
           {/* Signed-in identity + logout. Distinct from "Register", which is
-              workshop (GoToWebinar) registration, not an account action. */}
+              workshop (GoToWebinar) registration, not an account action.
+              Compact by default: the email shows from xl up (full address on
+              hover below that), and "Log out" collapses to its icon at lg, so
+              the bar stays uncrowded for admins. */}
           {isAuthenticated && (
-            <div className="mr-1 hidden items-center gap-2 lg:flex">
+            <div className="mr-1 hidden min-w-0 items-center gap-2 lg:flex">
               <Link
                 to="/dashboard"
-                className="inline-flex items-center gap-1.5 rounded-full border border-white/15 bg-white/[0.07] px-3.5 py-2 text-sm font-medium text-white/85 backdrop-blur transition-all hover:-translate-y-0.5 hover:border-white/40 hover:text-white"
+                className="inline-flex shrink-0 items-center gap-1.5 whitespace-nowrap rounded-full border border-white/15 bg-white/[0.07] px-3.5 py-2 text-sm font-medium text-white/85 backdrop-blur transition-all hover:-translate-y-0.5 hover:border-white/40 hover:text-white"
               >
                 <LayoutDashboard size={15} className="shrink-0 text-teal" />
                 Dashboard
               </Link>
               <span
                 title={user?.email ?? ''}
-                className="inline-flex max-w-[16rem] items-center gap-2 rounded-full border border-white/15 bg-white/[0.07] px-3.5 py-2 text-sm font-medium text-white/85 backdrop-blur"
+                className="inline-flex min-w-0 items-center gap-2 rounded-full border border-white/15 bg-white/[0.07] px-3 py-2 text-sm font-medium text-white/85 backdrop-blur"
               >
                 <UserRound size={15} className="shrink-0 text-teal" />
-                <span className="truncate">{user?.email}</span>
+                <span className="hidden max-w-[12rem] truncate xl:inline">{user?.email}</span>
+                {user?.role === 'admin' && (
+                  <span className="shrink-0 rounded-full border border-yellow/40 bg-yellow/15 px-2 py-0.5 text-[0.65rem] font-bold uppercase tracking-[0.1em] text-yellow">
+                    Admin
+                  </span>
+                )}
               </span>
-              {user?.role === 'admin' && (
-                <span className="inline-flex items-center rounded-full border border-yellow/40 bg-yellow/15 px-2.5 py-1 text-[0.7rem] font-bold uppercase tracking-[0.12em] text-yellow">
-                  Admin
-                </span>
-              )}
               <button
                 type="button"
                 onClick={onLogout}
-                className="inline-flex items-center gap-1.5 rounded-full border border-white/20 px-4 py-2 text-sm font-semibold text-white/80 transition-all hover:-translate-y-0.5 hover:border-white/40 hover:text-white"
+                title="Log out"
+                aria-label="Log out"
+                className="inline-flex shrink-0 items-center gap-1.5 whitespace-nowrap rounded-full border border-white/20 px-3 py-2 text-sm font-semibold text-white/80 transition-all hover:-translate-y-0.5 hover:border-white/40 hover:text-white"
               >
                 <LogOut size={15} />
-                Log out
+                <span className="hidden xl:inline">Log out</span>
               </button>
             </div>
+          )}
+
+          {/* Login sits alongside Register (logged-out only; signed-in users
+              get their email + Log out above). */}
+          {!isAuthenticated && (
+            <Link
+              to="/login"
+              className="hidden rounded-full border border-white/25 px-5 py-2.5 text-sm font-semibold text-white/85 transition-all hover:-translate-y-0.5 hover:border-white/50 hover:text-white sm:inline-flex"
+            >
+              Login
+            </Link>
           )}
 
           {REGISTER_IS_EXTERNAL ? (
@@ -370,6 +394,18 @@ export default function Navbar() {
                     <LogOut size={16} />
                     Log out
                   </button>
+                </li>
+              )}
+              {/* Login alongside Register (logged-out only). */}
+              {!isAuthenticated && (
+                <li className="mt-2">
+                  <Link
+                    to="/login"
+                    onClick={() => setOpen(false)}
+                    className="block rounded-full border border-white/25 px-5 py-3 text-center font-semibold text-white/85 hover:border-white/50 hover:text-white"
+                  >
+                    Login
+                  </Link>
                 </li>
               )}
               <li className="mt-2">
