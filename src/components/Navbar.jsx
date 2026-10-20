@@ -37,16 +37,33 @@ export default function Navbar() {
   const { pathname } = useLocation()
   const navRef = useRef(null)
 
-  // Signed-in users get a "Workshop" shortcut inserted right after Resources
-  // (Home, Resources, Workshop, Contact Us); logged-out users see the nav as-is.
-  const links = isAuthenticated
+  // "Workshop Resources" sits at the top of the Resources dropdown for everyone;
+  // it routes to the gated workshop content when signed in, or to /login first
+  // when signed out. Flagged `shortcut` so it doesn't drive the dropdown's
+  // active-highlight (that stays tied to Videos/Blog/Podcast).
+  const withWorkshopResources = (link) =>
+    link.label === 'Resources'
+      ? {
+          ...link,
+          children: [
+            { label: 'Workshop Resources', to: isAuthenticated ? '/workshops' : '/login', shortcut: true },
+            ...link.children,
+          ],
+        }
+      : link
+
+  // Signed-in users also get a top-level "Workshop" shortcut inserted right after
+  // Resources (Home, Resources, Workshop, Contact Us); logged-out nav is as-is.
+  const links = (isAuthenticated
     ? visibleLinks.flatMap((l) =>
         l.label === 'Resources' ? [l, { label: 'Workshop', to: '/workshops' }] : [l],
       )
     : visibleLinks
+  ).map(withWorkshopResources)
 
-  // A dropdown trigger reads as active when one of its children is the route.
-  const childActive = (link) => link.children?.some((c) => c.to === pathname)
+  // A dropdown trigger reads as active when one of its content children is the
+  // route (the Workshop Resources shortcut is excluded).
+  const childActive = (link) => link.children?.some((c) => !c.shortcut && c.to === pathname)
 
   const onLogout = () => {
     logout()
