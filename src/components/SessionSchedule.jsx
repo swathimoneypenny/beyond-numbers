@@ -1,10 +1,10 @@
-import { Calendar, Clock, Award, Coffee } from 'lucide-react'
+import { Calendar, Clock, MessageCircle } from 'lucide-react'
 import Section from './Section'
 import Reveal from './Reveal'
-import { schedule, cpe } from '../data/content'
+import { schedule } from '../data/content'
 
-/* Five weeks: four dated session cards plus a muted Application-Week break, then
-   a prominent CPE-credits badge. */
+/* Three dated workshop cards plus a distinct, teal-accented Open-Hours Q&A card
+   (included with every registration). */
 export default function SessionSchedule() {
   return (
     <Section
@@ -12,32 +12,32 @@ export default function SessionSchedule() {
       bg="white"
       accent="teal"
       eyebrow="Dates & Times"
-      title="Session Schedule"
+      title="Workshop Schedule"
     >
-      <div className="mt-14 grid gap-6 sm:grid-cols-2 xl:grid-cols-5">
+      <div className="mt-14 grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
         {schedule.map((s, i) =>
-          s.kind === 'break' ? (
-            // Application Week — deliberately muted and dashed so it reads as an
-            // intentional pause, not a missing session.
+          s.kind === 'qa' ? (
+            // Bonus Open-Hours Q&A — teal-accented so it reads as an included
+            // extra, not a fourth workshop.
             <Reveal key={s.title} delay={i * 0.1}>
-              <article className="flex h-full flex-col rounded-2xl border border-dashed border-ink/20 bg-sand p-6">
+              <article className="flex h-full flex-col rounded-2xl border border-teal/40 bg-teal/[0.08] p-6">
                 <div className="flex items-center justify-between">
-                  <span className="text-xs font-bold uppercase tracking-[0.14em] text-ink/40">
-                    Break
+                  <span className="text-xs font-bold uppercase tracking-[0.14em] text-teal">
+                    Bonus
                   </span>
-                  <span className="flex h-9 w-9 items-center justify-center rounded-full bg-ink/10 text-ink/50">
-                    <Coffee size={16} />
+                  <span className="flex h-9 w-9 items-center justify-center rounded-full bg-teal text-white">
+                    <MessageCircle size={16} />
                   </span>
                 </div>
-                <h3 className="mt-4 font-display text-lg font-bold leading-snug text-ink/70">
+                <h3 className="mt-4 font-display text-lg font-bold leading-snug text-navy">
                   {s.title}
                 </h3>
                 <div className="mt-auto pt-5">
-                  <p className="flex items-center gap-2 font-semibold text-ink/55">
-                    <Calendar size={16} className="text-ink/40" />
+                  <p className="flex items-center gap-2 font-semibold text-[#1A1A1A]">
+                    <Calendar size={16} className="text-teal" />
                     {s.date}
                   </p>
-                  <p className="mt-2 text-sm italic text-ink/50">{s.note}</p>
+                  <p className="mt-2 text-sm italic text-ink/60">{s.note}</p>
                 </div>
               </article>
             </Reveal>
@@ -46,7 +46,7 @@ export default function SessionSchedule() {
               <article className="flex h-full flex-col rounded-2xl border border-line bg-cream p-6">
                 <div className="flex items-center justify-between">
                   <span className="text-xs font-bold uppercase tracking-[0.14em] text-teal">
-                    Session {s.n}
+                    Workshop {s.n}
                   </span>
                   <span className="flex h-9 w-9 items-center justify-center rounded-full bg-navy font-display text-base font-bold text-white">
                     {s.n}
@@ -70,14 +70,6 @@ export default function SessionSchedule() {
           ),
         )}
       </div>
-
-      {/* CPE credits badge */}
-      <Reveal delay={0.15}>
-        <div className="mx-auto mt-10 flex max-w-2xl items-center justify-center gap-3.5 rounded-2xl border border-yellow/50 bg-yellow/[0.14] px-6 py-5 text-center">
-          <Award size={26} className="shrink-0 text-[#8a6a00]" />
-          <p className="text-[1.05rem] font-semibold text-[#1A1A1A]">{cpe}</p>
-        </div>
-      </Reveal>
     </Section>
   )
 }

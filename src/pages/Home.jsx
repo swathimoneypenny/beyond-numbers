@@ -16,7 +16,6 @@ import {
   methodSection,
   formatSection,
   toolsSection,
-  whyNovemberSection,
   audienceSection,
   offerSection,
   facilitators,
@@ -24,11 +23,7 @@ import {
   faqs,
   REGISTER_HREF,
   REGISTER_IS_EXTERNAL,
-  REGISTRATION_NOTE,
 } from '../data/content'
-
-// Words the GooeyText accent morphs through, in the hero and the final CTA.
-const MORPH_WORDS = ['Scalable', 'Advisory-focused', 'Profitable', 'Strategic']
 
 // The book/podcast title in the facilitator bios, italicised at each occurrence
 // (parts wrapped in keyed spans so the mixed array renders cleanly).
@@ -101,25 +96,21 @@ export default function Home() {
     <>
       {/* 1 — Hero (single H1) */}
       <Hero
-        eyebrow="Workshops · From Scorekeeper to Strategist"
-        title="From Scorekeeper to Strategist"
-        tagline="Make the decisions your 2027 firm needs."
+        eyebrow="Live online workshops · December 2026"
+        title="Build, Price and Deliver Better Advisory Services"
+        tagline="Bring your team with you. Choose the right clients. Strengthen your pricing. Put practical safeguards around AI."
         description={
           <>
-            You already know advisory matters. The harder question is what it should mean for
-            your firm—and what needs to change first. Join Penny Breslin and Damien Greathead for
-            four live, 90-minute working sessions. Bring the reality of your own practice. Use
-            practical Beyond Numbers tools to make decisions about services, people, clients,
-            technology, AI and procedures. Leave with work completed and clear next actions—not
-            another set of webinar notes.
+            Three practical workshops for accounting firm owners and partners building a CAS and
+            advisory business — or looking for better results from the one they already have. Join
+            Damien Greathead and Penny Breslin for live teaching, practical tool demonstrations and
+            structured exercises to apply afterwards.
           </>
         }
-        meta="November 5–December 3, 2026 · Four live sessions · 6 CPE credits · US$199"
+        meta="December 1, 3 and 8, 2026 · 1:00–2:30 p.m. EST · Plus December 10 open-hours Q&A, included"
         box={heroBox}
-        morphTexts={MORPH_WORDS}
-        primary={registerPrimary('Reserve my place — US$199')}
-        secondary={{ label: 'View Sessions', href: '#sessions', arrow: true }}
-        note={REGISTER_IS_EXTERNAL ? undefined : REGISTRATION_NOTE}
+        primary={{ label: 'Register for the Series — $149', href: '#pricing' }}
+        secondary={{ label: 'Choose a Workshop — $79', href: '#pricing' }}
       />
 
       {/* 2 — The unresolved decisions */}
@@ -171,7 +162,7 @@ export default function Home() {
 
       {/* 4 — The Practice Decisions Method */}
       <Section id="method" bg="white" accent="teal" title={methodSection.title} intro={methodSection.subhead}>
-        <div className="mt-12 grid gap-5 sm:grid-cols-2 lg:grid-cols-4">
+        <div className="mt-12 grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
           {methodSection.steps.map((s, i) => (
             <Reveal key={s.label} delay={i * 0.08}>
               <article className="flex h-full flex-col rounded-2xl border border-line bg-cream p-6">
@@ -198,7 +189,7 @@ export default function Home() {
             {formatSection.intro}
           </p>
         </Reveal>
-        <div className="mt-10 grid gap-5 sm:grid-cols-2 lg:grid-cols-4">
+        <div className="mt-10 grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
           {formatSection.steps.map((s, i) => (
             <Reveal key={s.label} delay={i * 0.08}>
               <article className="flex h-full flex-col rounded-2xl border border-line bg-white p-6">
@@ -220,14 +211,14 @@ export default function Home() {
         accent="yellow"
         eyebrow="Full Program"
         title="Inside the Series"
-        intro="Expand any module to see the full detail — the substance behind every session."
+        intro="Expand any module to see the full detail — the substance behind every workshop."
       >
         <div className="mx-auto mt-12 max-w-3xl">
           <Accordion items={seriesItems} showIndex defaultOpenKeys={[seriesItems[0].key]} />
         </div>
       </Section>
 
-      {/* 6b — Session schedule + CPE */}
+      {/* 6b — Workshop schedule */}
       <SessionSchedule />
 
       {/* 6c — The tools behind the work */}
@@ -237,12 +228,21 @@ export default function Home() {
             {toolsSection.intro}
           </p>
         </Reveal>
-        <div className="mx-auto mt-10 grid max-w-4xl gap-4 sm:grid-cols-2">
-          {toolsSection.items.map((item, i) => (
-            <Reveal key={item} delay={Math.min(i * 0.05, 0.3)}>
-              <div className="flex h-full items-start gap-3 rounded-xl border border-line bg-white p-4">
-                <Check size={18} strokeWidth={3} className="mt-0.5 shrink-0 text-teal" />
-                <span className="text-[0.97rem] leading-relaxed text-ink/80">{item}</span>
+        <div className="mx-auto mt-10 grid max-w-5xl gap-5 md:grid-cols-3">
+          {toolsSection.groups.map((g, i) => (
+            <Reveal key={g.label} delay={Math.min(i * 0.08, 0.3)}>
+              <div className="flex h-full flex-col rounded-2xl border border-line bg-white p-6">
+                <p className="text-[0.8rem] font-bold uppercase tracking-[0.14em] text-teal">
+                  {g.label}
+                </p>
+                <ul className="mt-4 space-y-3">
+                  {g.tools.map((t) => (
+                    <li key={t} className="flex items-start gap-2.5">
+                      <Check size={18} strokeWidth={3} className="mt-0.5 shrink-0 text-teal" />
+                      <span className="text-[0.95rem] leading-relaxed text-ink/80">{t}</span>
+                    </li>
+                  ))}
+                </ul>
               </div>
             </Reveal>
           ))}
@@ -250,15 +250,6 @@ export default function Home() {
         <Reveal>
           <p className="mx-auto mt-10 max-w-2xl text-center font-display text-lg font-semibold italic text-navy">
             {toolsSection.closing}
-          </p>
-        </Reveal>
-      </Section>
-
-      {/* 6d — Why November */}
-      <Section id="why-november" bg="white" accent="teal" title={whyNovemberSection.title}>
-        <Reveal>
-          <p className="mx-auto mt-8 max-w-3xl text-center text-[1.1rem] leading-relaxed text-ink/75">
-            {whyNovemberSection.body}
           </p>
         </Reveal>
       </Section>
@@ -350,12 +341,10 @@ export default function Home() {
 
       {/* 8 — Final CTA */}
       <CTABand
-        title="Ready to move from scorekeeper to strategist?"
-        subtitle="Build a more strategic, scalable, and valuable accounting practice — and leave with a sequenced 90-day plan."
-        morphTexts={MORPH_WORDS}
-        primary={registerPrimary('Register Now')}
+        title="Make clearer decisions about your advisory business."
+        subtitle="Three practical workshops to help you build, price and protect a stronger advisory business."
+        primary={registerPrimary('Register for the Complete Series — $149')}
         secondary={{ label: 'View All Workshops', to: '/workshops', arrow: true }}
-        note="Sessions begin November 5, 2026"
       />
     </>
   )

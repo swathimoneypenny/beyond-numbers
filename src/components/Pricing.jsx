@@ -1,14 +1,9 @@
-import { Check, Users } from 'lucide-react'
+import { Check } from 'lucide-react'
 import Section from './Section'
 import Reveal from './Reveal'
 import Button from './Button'
 import CountUp from './CountUp'
-import {
-  pricing,
-  REGISTER_HREF,
-  REGISTER_IS_EXTERNAL,
-  REGISTRATION_NOTE,
-} from '../data/content'
+import { pricing, REGISTER_HREF, REGISTER_IS_EXTERNAL } from '../data/content'
 
 /* Premium pricing panel: standard + featured Early Bird cards, then the group
    discount banner and a Register CTA. */
@@ -55,35 +50,27 @@ export default function Pricing() {
                   {tier.unit}
                 </span>
               </div>
-              <p
-                className={`mt-4 flex items-start gap-2.5 text-[0.97rem] leading-relaxed ${
-                  tier.featured ? 'text-white/85' : 'text-[#1A1A1A]'
-                }`}
-              >
-                <Check
-                  size={18}
-                  strokeWidth={3}
-                  className={`mt-0.5 shrink-0 ${tier.featured ? 'text-yellow' : 'text-teal'}`}
-                />
-                {tier.note}
-              </p>
+              <ul className="mt-5 space-y-3">
+                {tier.features.map((f) => (
+                  <li
+                    key={f}
+                    className={`flex items-start gap-2.5 text-[0.97rem] leading-relaxed ${
+                      tier.featured ? 'text-white/85' : 'text-[#1A1A1A]'
+                    }`}
+                  >
+                    <Check
+                      size={18}
+                      strokeWidth={3}
+                      className={`mt-0.5 shrink-0 ${tier.featured ? 'text-yellow' : 'text-teal'}`}
+                    />
+                    {f}
+                  </li>
+                ))}
+              </ul>
             </article>
           </Reveal>
         ))}
       </div>
-
-      {/* Group discount banner */}
-      <Reveal delay={0.15}>
-        <div className="mx-auto mt-6 flex max-w-3xl items-start gap-4 rounded-2xl border border-teal/30 bg-teal/[0.08] p-6 sm:items-center">
-          <span className="flex h-11 w-11 shrink-0 items-center justify-center rounded-xl bg-teal/15 text-teal">
-            <Users size={20} />
-          </span>
-          <p className="text-[1.02rem] leading-relaxed text-[#1A1A1A]">
-            <span className="font-bold text-navy">{pricing.groupLabel}: </span>
-            {pricing.group}
-          </p>
-        </div>
-      </Reveal>
 
       <Reveal delay={0.2} className="mt-10 flex flex-col items-center gap-4">
         <Button
@@ -95,9 +82,6 @@ export default function Pricing() {
         >
           Register Now
         </Button>
-        {!REGISTER_IS_EXTERNAL && (
-          <p className="text-sm font-medium text-ink/55">{REGISTRATION_NOTE}</p>
-        )}
       </Reveal>
     </Section>
   )

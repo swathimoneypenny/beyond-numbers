@@ -50,6 +50,15 @@ export default function RichBody({ body }) {
           <p className="mt-1.5 text-[1.02rem] leading-relaxed text-ink/85">{body.takeaway}</p>
         </div>
       )}
+
+      {body.after && (
+        <div className="mt-6 max-w-3xl rounded-xl border border-teal/30 bg-teal/[0.06] px-5 py-4">
+          <p className="text-[0.8rem] font-semibold uppercase tracking-[0.12em] text-teal">
+            After the workshop
+          </p>
+          <p className="mt-1.5 text-[0.98rem] leading-relaxed text-ink/75">{body.after}</p>
+        </div>
+      )}
     </>
   )
 }

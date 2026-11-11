@@ -4,169 +4,77 @@
 import pennyPhoto from '../assets/penny.jpg.png'
 import damienPhoto from '../assets/damien.jpg.jpg'
 
-/* External registration (GoToWebinar). Update this one line when the new link
-   arrives — then flip REGISTRATION_OPEN to true and every Register CTA points
-   back at the webinar automatically. */
-export const REGISTER_URL =
-  'https://register.gotowebinar.com/register/2634998765442130524'
+/* Registration target. During the Dec 2026 relaunch there is no external
+   registration link yet, so every Register CTA points at the home pricing
+   section via the absolute anchor "/#pricing" — so it works from any page
+   (ScrollToHash in Layout navigates home, then smooth-scrolls). When the real
+   webinar link lands, set REGISTER_URL to that URL and REGISTER_IS_EXTERNAL =
+   true, and every CTA repoints automatically. */
+export const REGISTER_URL = '/#pricing'
 
-/* TEMPORARY (Nov 2026 relaunch): the old GoToWebinar event was removed and the
-   new registration link isn't ready yet. While this is false, every Register /
-   "Reserve my place" CTA routes to the contact page instead of the dead webinar
-   and shows REGISTRATION_NOTE. Set REGISTER_URL above and flip this to true when
-   the new link lands — nothing else needs to change. */
+/* Kept for the REGISTER_HREF derivation below. The note is intentionally empty
+   now that Register routes to on-page pricing (no "opening soon" message). */
 export const REGISTRATION_OPEN = true
-export const REGISTRATION_NOTE = 'Registration opening soon — check back shortly'
+export const REGISTRATION_NOTE = ''
 
 /* Single source of truth for where a Register CTA points and whether it's an
-   external link (new tab) or an internal route. All CTAs read these. */
+   external link (new tab) or an internal / on-page target. All CTAs read these. */
 export const REGISTER_HREF = REGISTRATION_OPEN ? REGISTER_URL : '/contact'
-export const REGISTER_IS_EXTERNAL = REGISTRATION_OPEN
+export const REGISTER_IS_EXTERNAL = false
 
-/* Pricing tiers (November 2026 relaunch). */
+/* Pricing (December 2026 relaunch): two options — a single workshop or the
+   full three-workshop series. No early-bird, no group discount. */
 export const pricing = {
   tiers: [
     {
-      name: 'Standard',
-      price: 'US$199',
+      name: 'Individual Workshop',
+      price: '$79',
       unit: 'per person',
-      note: 'Full series — four live sessions',
+      features: [
+        'One 90-minute live workshop',
+        'Relevant workbook and tools',
+        'December 10 open-hours Q&A',
+      ],
       featured: false,
     },
     {
-      name: 'Early Bird',
-      price: 'US$149',
+      name: 'Complete Series',
+      price: '$149',
       unit: 'per person',
-      note: 'Register by October 19, 2026',
+      badge: 'Save $88',
+      features: [
+        'Three 90-minute live workshops',
+        'Complete workbook and toolkit',
+        'December 10 open-hours Q&A',
+      ],
       featured: true,
     },
   ],
-  groupLabel: 'Group discount',
-  group: 'Save $100 per person when multiple people from the same firm register',
 }
 
-/* Session schedule (November–December 2026). Five weeks: three sessions, an
-   application-week break over Thanksgiving, then the final session. The `break`
-   entry is rendered as a non-session pause, not a numbered session. */
+/* Workshop schedule (December 2026): three live workshops plus a bonus
+   open-hours Q&A, included with every registration. */
 export const schedule = [
-  { n: '1', title: 'Foundation & Service Portfolio', date: 'Thursday, November 5, 2026', time: '2:00pm – 3:30pm EST' },
-  { n: '2', title: 'People, Capacity & Clients', date: 'Thursday, November 12, 2026', time: '2:00pm – 3:30pm EST' },
-  { n: '3', title: 'Technology & AI', date: 'Thursday, November 19, 2026', time: '2:00pm – 3:30pm EST' },
+  { n: '1', title: 'Your Vision & Your Team', date: 'December 1, 2026', time: '1:00–2:30 p.m. EST' },
+  { n: '2', title: 'Right Clients & Profitable Pricing', date: 'December 3, 2026', time: '1:00–2:30 p.m. EST' },
+  { n: '3', title: 'Cybersecurity & AI Governance', date: 'December 8, 2026', time: '1:00–2:30 p.m. EST' },
   {
-    kind: 'break',
-    title: 'Application Week',
-    date: 'Thanksgiving week · November 26',
-    note: 'No live session — catch up and test',
+    kind: 'qa',
+    title: 'Open Hours Q&A',
+    date: 'December 10, 2026',
+    note: 'Included with every registration',
   },
-  { n: '4', title: 'Procedures & Implementation', date: 'Thursday, December 3, 2026', time: '2:00pm – 3:30pm EST' },
 ]
 
-export const cpe = 'This workshop series is eligible for 6 CPE credits.'
-
-/* Hero bullet box (MaintBoard "Built for every kind of factory" equivalent). */
+/* Hero bullet box — a short "what you get" summary of the new program. */
 export const heroBox = {
-  title: 'Built for firm owners ready to grow',
+  title: 'What you get',
   items: [
-    'Move beyond compliance into advisory-led value',
-    'Audit your service mix and focus on what’s profitable',
-    'Build the right team and choose the right clients',
-    'Design a focused tech stack and a 90-day roadmap',
+    'Three live, online workshops',
+    'Practical tools and structured exercises to apply afterwards',
+    'A December 10 open-hours Q&A, included',
   ],
 }
-
-/* Section 2 — "Why This Transformation Matters" (6 challenge cards). */
-export const challenges = [
-  {
-    icon: 'Scale',
-    title: 'Compliance-only work is no longer enough',
-    text: 'Clients want context, confidence, and proactive guidance.',
-  },
-  {
-    icon: 'Workflow',
-    title: 'Owner dependency slows growth',
-    text: 'The firm relies on you being in every decision.',
-  },
-  {
-    icon: 'SlidersHorizontal',
-    title: 'Unclear service mix',
-    text: 'Low-value, high-friction services drain time and margin.',
-  },
-  {
-    icon: 'UserMinus',
-    title: 'Wrong-fit clients',
-    text: 'Too many low-value or mismatched clients dilute focus.',
-  },
-  {
-    icon: 'LayoutGrid',
-    title: 'Tool overload',
-    text: 'Too many disconnected apps add complexity, not clarity.',
-  },
-  {
-    icon: 'FileWarning',
-    title: 'Undocumented processes',
-    text: 'Work depends on memory and heroics, not systems.',
-  },
-]
-
-/* Section 3 — "What You'll Work Through" (4 session cards). */
-export const workThrough = [
-  {
-    tag: 'Session 1',
-    icon: 'Compass',
-    title: 'Foundation & service portfolio',
-    text: 'Define your value, assess your service mix with the Four Quadrants framework, and decide what to keep, delegate, or eliminate.',
-  },
-  {
-    tag: 'Session 2',
-    icon: 'Users',
-    title: 'People: team & clients',
-    text: 'Build the roles a scalable advisory team needs and use a client matrix to choose the right clients.',
-  },
-  {
-    tag: 'Session 3',
-    icon: 'Layers',
-    title: 'Technology stack deep dive',
-    text: 'Design a focused tech stack using the 80/20 rule, app evaluation criteria, and integration planning.',
-  },
-  {
-    tag: 'Session 4',
-    icon: 'Route',
-    title: 'Procedures & implementation roadmap',
-    text: 'Document workflows and playbooks, then sequence a single 90-day implementation roadmap.',
-  },
-]
-
-/* Section 4 — "How the Series Helps You" (4 cards). */
-export const helps = [
-  {
-    icon: 'Sparkles',
-    title: 'Clarity on your firm’s value',
-    text: 'A clearer definition of your unique value and a prioritized service portfolio.',
-  },
-  {
-    icon: 'UsersRound',
-    title: 'The right team & clients',
-    text: 'A team structure map and a client portfolio using the Gold, Silver, Bronze, and Fire framework.',
-  },
-  {
-    icon: 'Layers',
-    title: 'A focused tech stack',
-    text: 'A practical technology plan and an app evaluation framework.',
-  },
-  {
-    icon: 'CalendarCheck',
-    title: 'A 90-day roadmap',
-    text: 'A sequenced plan with clear 30-day and 48-hour action commitments.',
-  },
-]
-
-/* Section 5 — "The Program at a Glance" (metrics band). */
-export const metrics = [
-  { value: '4', label: 'Working sessions' },
-  { value: '90', suffix: 'min', label: 'Per session' },
-  { value: '90', suffix: 'days', label: 'Implementation roadmap' },
-  { value: '48', suffix: 'hrs', label: 'To your first action' },
-]
 
 /* ===== November 2026 relaunch — landing sections (batch 2a) =====
    Exact approved copy; rendered by src/pages/Home.jsx between the hero and
@@ -221,67 +129,73 @@ export const workOnSection = {
   ],
 }
 
-/* Section 3 — the method. */
+/* Section 3 — the method (three connected workshops). */
 export const methodSection = {
   title: 'The Beyond Numbers Practice Decisions Method',
-  subhead: 'Four connected sessions. One clearer operating direction.',
+  subhead: 'Three connected workshops. One clearer operating direction.',
   steps: [
-    { label: 'Choose the work', text: 'What should the firm stop, shift, automate and focus on?' },
     {
-      label: 'Align the capacity',
-      text: "Who should own the work—and which clients should receive the firm's best capacity?",
+      label: 'Direction & Team',
+      text: 'Decide what the firm should stop, delegate, automate or focus on — and connect your people to a shared purpose.',
     },
     {
-      label: 'Enable the delivery',
-      text: 'Which technology earns a place in the core stack, and under what rules may AI be used?',
+      label: 'Clients & Pricing',
+      text: 'Choose the right client relationships and price recurring work so the economics actually work.',
     },
     {
-      label: 'Make it repeatable',
-      text: 'What must be documented, owned and tested so the work does not depend on memory?',
+      label: 'Protection & AI',
+      text: 'Put practical safeguards around client information and AI, with clear owners and accountability.',
     },
   ],
   closing:
-    'Across the series, you convert those decisions into 48-hour and 30-day commitments. In the capstone, you select and sequence your priorities in a focused 90-day Practice Decisions Roadmap.',
+    'Each workshop comes with tools you apply afterwards, and an included open-hours Q&A to work through your questions.',
 }
 
 /* Section 4 — how the live format works. */
 export const formatSection = {
   title: 'How the live format works',
-  subhead: 'A working room, not a webinar audience.',
-  intro: 'Each 90-minute session follows a practical rhythm:',
+  subhead: 'Practical teaching you can act on.',
+  intro: 'Each 90-minute workshop follows a simple rhythm:',
   steps: [
     {
-      label: 'Frame the decision',
-      text: 'Penny and Damien introduce the minimum context and a usable framework.',
+      label: 'Learn live',
+      text: 'Damien and Penny teach the framework and the decisions behind it in a focused, 90-minute session.',
     },
-    { label: 'Apply it', text: 'You work with a worksheet or interactive tool—not a blank page.' },
-    { label: 'Decide', text: 'You turn observations into a constrained choice about your own firm.' },
-    { label: 'Commit', text: 'You name a next action, date or owner before the session closes.' },
+    {
+      label: 'See the tools',
+      text: 'The workbook and interactive tools are demonstrated live so you know exactly how to use them.',
+    },
+    {
+      label: 'Apply afterwards',
+      text: 'You complete the detailed exercises on your own firm, then bring your questions to the included Q&A.',
+    },
   ],
 }
 
-/* Section — the tools behind the work. */
+/* Section — the toolkit, grouped by workshop. */
 export const toolsSection = {
   title: 'The tools behind the work',
-  subhead: 'Frameworks you will actually use in the room.',
-  intro:
-    'The sessions are built around practical Beyond Numbers tools and worksheets, including:',
-  items: [
-    'The Traffic Light Revolution and the $100K Question for service decisions',
-    'The 52-Card Team Pickup for capacity and role clarity',
-    'The Client Portfolio Map for relationship decisions',
-    'The Little Black Dress technology approach and a sample stack costing',
-    'An AI vendor due-diligence scorecard',
-    'A month-end reconciliation procedure template',
-    'A one-page Practice Decisions Roadmap to bring it together',
+  subhead: 'Frameworks you will actually use.',
+  intro: 'Each workshop comes with practical Beyond Numbers tools and worksheets:',
+  groups: [
+    {
+      label: 'Direction & Team',
+      tools: ['Traffic Light Assessment', '$100K Question', 'Team Purpose Map'],
+    },
+    {
+      label: 'Clients & Pricing',
+      tools: [
+        'Client Portfolio Matrix',
+        'True Cost of an In-House Bookkeeper or CFO',
+        'What It Costs Your Firm to Deliver',
+      ],
+    },
+    {
+      label: 'Cybersecurity & AI',
+      tools: ['WISP & AI Governance Role Checklist'],
+    },
   ],
-  closing: 'You leave each session with completed work, not just notes.',
-}
-
-/* Section — why November. */
-export const whyNovemberSection = {
-  title: 'Why November',
-  body: 'November is when many firms start planning the year ahead. Rather than adding to the noise of a busy season, this program uses that natural planning window to help you make deliberate decisions about how your firm will operate in 2027—before the next compliance cycle takes over. You finish the series with a clear, sequenced set of priorities and the momentum to act on them.',
+  closing: 'You apply the tools afterwards, then bring your questions to the December 10 Q&A.',
 }
 
 /* Section — who this is for / not for. */
@@ -304,7 +218,7 @@ export const audienceSection = {
 /* Section — the offer (placed directly above the pricing cards). */
 export const offerSection = {
   title: 'The offer',
-  body: 'Four live, 90-minute working sessions. A practical method for making the decisions your firm has been putting off. Interactive tools and worksheets you complete in the room. And a 90-day Practice Decisions Roadmap to take with you.',
+  body: 'Three live, 90-minute workshops and a practical method for making the decisions your firm has been putting off — with interactive tools and worksheets you apply afterwards, plus an included open-hours Q&A.',
 }
 
 /* Section — meet your facilitators. Bios are exact; the book/podcast title
@@ -330,36 +244,32 @@ export const facilitators = {
 /* Section 7 — "Frequently Asked Questions". */
 export const faqs = [
   {
-    q: 'Who is this workshop for?',
-    a: 'Accounting firm owners, partners, managers, CAS leaders, and advisory practice leaders who want to move beyond compliance work and build a more scalable, advisory-focused practice.',
+    q: 'Who is the series for?',
+    a: 'Firm owners and partners building a CAS or advisory offering, or seeking better results from an existing one.',
   },
   {
-    q: 'When are the sessions and how long are they?',
-    a: 'Four 90-minute live sessions on November 5, 12, 19, and December 3, 2026, from 2:00–3:30pm EST. Thanksgiving week (November 26) is an application week with no live session — time to catch up and apply what you’ve learned. Each session builds on the last.',
+    q: 'Can I attend just one workshop?',
+    a: 'Yes. Each workshop can be taken independently. Earlier attendance or completed homework is not required.',
   },
   {
-    q: 'What does it cost?',
-    a: 'US$199 per person for the full series, or US$149 with the Early Bird rate if you register by October 19, 2026. Groups save $100 per person when multiple people from the same firm register.',
+    q: 'When are the sessions?',
+    a: 'Workshops: December 1, 3 and 8, 2026. Included Q&A: December 10. All sessions run 1:00–2:30 p.m. EST, live online.',
   },
   {
-    q: 'Do I earn CPE credits?',
-    a: 'Yes — the workshop series is eligible for 6 CPE credits.',
+    q: 'What does registration cost?',
+    a: '$79 per person for one workshop or $149 for all three. Both options include the December 10 Q&A.',
   },
   {
-    q: "What if I can't attend a session live?",
-    a: 'Every session is recorded, so you can catch up on anything you miss and revisit the material anytime.',
+    q: 'How do the exercises work?',
+    a: 'Tools are demonstrated live. Complete the detailed exercises afterwards using the toolkit, then bring your questions to the Q&A.',
   },
   {
-    q: 'Is this theory or practical?',
-    a: 'Fully practical. Each session includes hands-on exercises, real-world examples, and worksheets you can apply to your own firm immediately.',
+    q: 'What does the pricing workshop cover?',
+    a: 'Client selection and recurring bookkeeping and accounting fees, with a distinction between monthly services, setup work and additional advisory projects.',
   },
   {
-    q: 'What will I walk away with?',
-    a: 'A prioritized service portfolio, a clearer team and client structure, a focused technology stack, and a sequenced 90-day implementation roadmap with concrete action commitments.',
-  },
-  {
-    q: 'Do I need to prepare anything?',
-    a: 'Just come ready to look honestly at your current services, team, clients, and tools. Everything else is provided during the sessions.',
+    q: 'Is the third workshop only about AI?',
+    a: 'No. It covers cybersecurity leadership, WISP, insurance questions, vendors, staff responsibilities and response, alongside AI governance.',
   },
 ]
 
@@ -371,107 +281,56 @@ export const accordions = [
     body: {
       paragraphs: [
         'For years, many accounting firms have been built around compliance, deadlines, and reactive client service. That work still matters, but it is no longer enough to define the future of the firm. Clients want more context, confidence, and proactive guidance. Team members want better systems and clearer roles. Firm owners want more margin, less chaos, and a practice that does not depend on them being involved in every decision.',
-        'This workshop series helps firms step back and redesign the operating model behind their advisory ambitions. Participants work through four connected questions:',
+        'These three workshops help firms step back and redesign the operating model behind their advisory ambitions. Participants work through three connected questions:',
       ],
       orderedList: [
         'Why are we changing, and what should we keep?',
         'Who should we work with, both inside the firm and as clients?',
-        'How will we deliver the work efficiently?',
-        'How will the work actually get done and scale?',
+        'How do we price the work, and protect the firm as we add AI?',
       ],
     },
   },
   {
-    id: 'session-1',
-    eyebrow: 'Session 1',
-    title: 'Foundation & service portfolio',
-    subtitle:
-      'Which services should your firm stop, outsource, automate or focus on—and what is the first move?',
+    id: 'workshop-1',
+    eyebrow: 'Workshop 1 · December 1',
+    title: 'Build Your Advisory Business — Your Vision, Your Team',
+    subtitle: 'Create room for advisory and bring your people with you.',
     body: {
       paragraphs: [
-        'The first session sets the foundation for the entire program. Participants explore the shift from compliance-driven work to advisory-led value, then apply that thinking to their own service portfolio.',
+        'You may have a clear ambition for advisory, yet spend most of your week doing work that leaves little room to pursue it. Using the Four Quadrants framework, Traffic Light assessment and $100K Question, we will examine which services deserve more attention and which could be delegated, outsourced, automated, or stopped. We will then explore four delivery roles, identify gaps, and connect individual contributions to a shared purpose. The Team Purpose Map gives you a structure for listening to your people, identifying those others trust, and assigning meaningful responsibilities.',
       ],
-      listLabel: 'Participants will learn how to:',
-      list: [
-        'Understand the shift from scorekeeper to strategist',
-        'Assess their current service mix using the Four Quadrants framework',
-        'Identify low-value, high-friction services to eliminate or delegate',
-        'Define services at the intersection of skill, fulfillment, and profitability',
-        'Create a 30-day action plan to refine their service portfolio',
-      ],
-      takeaway:
-        'Every service you keep has a cost. Make intentional decisions about which services deserve your firm’s time, talent, and attention.',
+      listLabel: 'Resources',
+      list: ['Traffic Light Assessment', '$100K Question', 'Team Purpose Map'],
+      after: 'Allow about 90 minutes for the suggested follow-up exercises.',
     },
   },
   {
-    id: 'session-2',
-    eyebrow: 'Session 2',
-    title: 'People — team & clients',
-    subtitle:
-      "Who should own the work—and which client relationships deserve your firm's best capacity?",
+    id: 'workshop-2',
+    eyebrow: 'Workshop 2 · December 3',
+    title: 'Choose the Right Clients. Price Your Services for Profit.',
+    subtitle: 'Find the right relationships and test the economics of serving them.',
     body: {
       paragraphs: [
-        'The second session focuses on the people side of transformation: the team you build and the clients you serve. Participants explore the roles in a scalable advisory practice — Business Operations Strategist, Admin, Business Analyst, and Technical roles — then shift to client selection.',
+        "Some clients are ready for a deeper advisory relationship. Others need a different service model, a revised fee, or a planned transition. This workshop connects client selection with a practical method for pricing recurring bookkeeping and accounting services. Use the Client Portfolio Matrix to assess clients by value and effort, then examine the client's true in-house finance costs and your firm's delivery costs using two linked calculators. Compare a proposed fee, delivery margin and potential savings, while distinguishing recurring monthly work from setup fees and additional advisory projects.",
       ],
-      listLabel: 'Participants will learn how to:',
-      list: [
-        'Identify the core roles needed in a scalable advisory team',
-        'Understand why the Business Operations Strategist is central to client relationships',
-        'Recognize the under-leveraged role of admin and operational support',
-        'Use a client matrix to assess client fit, value, and effort',
-        'Identify clients to grow, transition, or exit',
-        'Explore one vertical specialization opportunity',
-      ],
-      takeaway:
-        'You do not need more clients. You need the right clients, supported by the right team structure.',
+      listLabel: 'Resources',
+      list: ['Client Portfolio Matrix', 'True Cost Calculator', 'Firm Cost Builder'],
+      after: 'Allow about 70 minutes for the suggested follow-up exercises.',
     },
   },
   {
-    id: 'session-3',
-    eyebrow: 'Session 3',
-    title: 'Technology stack deep dive',
-    subtitle:
-      'Which technology earns a place in your core stack—and under what rules may AI be used on client work?',
+    id: 'workshop-3',
+    eyebrow: 'Workshop 3 · December 8',
+    title: 'Protect Your Firm — Cybersecurity and AI Governance for Firm Leaders',
+    subtitle: 'Understand the leadership decisions behind protecting client information.',
     body: {
       paragraphs: [
-        'Technology is essential to advisory work, but it is not the strategy. This session helps participants design a focused, practical technology stack that supports the firm’s service model, team structure, and client needs. It covers app evaluation, integration planning, API considerations, and tech stack costing.',
+        'As your firm handles more client information and introduces AI, leadership needs a clear view of the risks, controls and people involved. Examine your Written Information Security Plan (WISP), cyber-insurance questions, vendor relationships and incident-response arrangements. Explore AI policies covering approved uses, client-information handling, human review and accountability, alongside questions about vendor data practices. A breach tabletop discussion helps you examine your response. Afterwards, use the role-based checklist to identify gaps and assign owners and deadlines.',
       ],
-      listLabel: 'Participants will learn how to:',
-      list: [
-        'Define a focused core technology stack',
-        'Apply the 80/20 rule to technology decisions',
-        'Evaluate apps using criteria like integration, support, scalability, pricing, security, and vertical fit',
-        'Understand native integrations vs third-party connectors',
-        'Map how tools connect across the client and firm workflow',
-        'Cost out a technology stack for a sample advisory engagement',
-        'Build a 90-day technology improvement plan',
-      ],
-      takeaway:
-        'Technology should enable better client conversations, workflows, and delivery — not become another source of complexity.',
-    },
-  },
-  {
-    id: 'session-4',
-    eyebrow: 'Session 4',
-    title: 'Procedures & implementation roadmap',
-    subtitle:
-      'What must be documented, owned and tested so the work no longer depends on memory?',
-    body: {
-      paragraphs: [
-        'The final session turns strategy into execution. Participants learn to document the workflows, procedures, and playbooks needed for consistent delivery, then sequence all commitments from the first three sessions into a single 90-day implementation roadmap.',
-      ],
-      listLabel: 'Participants will learn how to:',
-      list: [
-        'Distinguish workflow from tasking',
-        'Distinguish policy from procedure',
-        'Apply practical rules for creating usable procedures',
-        'Structure a client or firm playbook',
-        'Identify the first procedure they should document',
-        'Build a 90-day roadmap across people, clients, technology, and procedures',
-        'Commit to the first actions they will take within 48 hours',
-      ],
-      takeaway:
-        'A scalable practice is not built on memory, heroics, or good intentions. It is built on clear systems, documented procedures, and consistent execution.',
+      listLabel: 'Resources',
+      list: ['WISP & AI Governance Role Checklist', 'Printable worksheet'],
+      after:
+        "Apply the checklist afterwards with the people responsible for your firm's systems and processes.",
     },
   },
   {
@@ -482,15 +341,13 @@ export const accordions = [
       listLabel: 'By the end of the program, participants will have:',
       list: [
         'A clearer definition of their firm’s unique value',
-        'A prioritized service portfolio',
-        'A list of services to eliminate, delegate, or amplify',
+        'A prioritized service portfolio, with services to eliminate, delegate, or amplify',
         'A practical view of their current team structure and future role needs',
+        'A Team Purpose Map that connects people to shared goals',
         'A client portfolio map using the Gold, Silver, Bronze, and Fire framework',
-        'A focused technology stack plan',
-        'An integration and app evaluation framework',
-        'A procedure and playbook structure',
-        'A 90-day implementation roadmap',
-        'Clear 30-day and 48-hour action commitments',
+        'A pricing approach for recurring services, with delivery margin and potential savings',
+        'A WISP and AI-governance checklist with owners and deadlines',
+        'Practical follow-up exercises to apply after each workshop',
       ],
     },
   },
@@ -508,8 +365,8 @@ export const accordions = [
         'Struggling to define or package their advisory offering',
         'Carrying too many low-value or wrong-fit clients',
         'Trying to improve team leverage and role clarity',
-        'Overwhelmed by too many apps or disconnected systems',
-        'Looking to document procedures and reduce owner dependency',
+        'Rethinking how they price recurring work for profit',
+        'Introducing AI and want practical safeguards around client data',
         'Ready to make practical changes, not just talk about strategy',
       ],
     },
@@ -520,7 +377,7 @@ export const accordions = [
     title: 'Program promise',
     body: {
       paragraphs: [
-        'This workshop series will help participants move from scattered ideas to a practical implementation plan. You will not leave with a vague vision for advisory. You will leave with clearer decisions, practical tools, and a sequenced 90-day roadmap for building a more strategic, scalable, and valuable accounting practice.',
+        'These three workshops will help participants move from scattered ideas to practical decisions. You will not leave with a vague vision for advisory. You will leave with clearer decisions, practical tools, and concrete next steps for building a more strategic, scalable, and valuable accounting practice.',
       ],
     },
   },

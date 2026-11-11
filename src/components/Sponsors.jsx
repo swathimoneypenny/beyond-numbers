@@ -4,6 +4,8 @@ import moneypennyLogo from '../assets/sponsors/MoneyPenny-trimmed.png'
 import twineappsLogo from '../assets/sponsors/twineapps-trimmed.png'
 import xcelLabsLogo from '../assets/sponsors/XcelLabs-trimmed.png'
 import cpaTrendlinesLogo from '../assets/sponsors/cpa-trendlines-trimmed.png'
+import suiteFilesLogo from '../assets/sponsors/suitefiles.png'
+import billLogo from '../assets/sponsors/bill-trimmed.png'
 
 /* Sponsors & partners logo wall.
 
@@ -18,9 +20,8 @@ import cpaTrendlinesLogo from '../assets/sponsors/cpa-trendlines-trimmed.png'
    a readable ~50px, and the compact badge ~1.75x taller so their cap heights /
    visual weight match rather than their bounding boxes.
 
-   Four logos lay out as a centered 2x2 grid on desktop (a single row can't hold
-   four wordmarks at this height inside the container without shrinking them),
-   collapsing to one column on small screens.
+   Six logos lay out as a centered 3x2 grid on desktop (two per row), collapsing
+   to one column on small screens.
 
    TO ADD A SPONSOR: trim it to its artwork bounds, import it, add an entry with
    an `h` chosen for its shape (wordmark ~50, square mark ~88). */
@@ -34,6 +35,10 @@ const sponsors = [
     href: 'https://cpatrendlines-academy.com/',
     h: 50,
   },
+  { name: 'SuiteFiles', logo: suiteFilesLogo, href: 'https://www.suitefiles.com', h: 46 },
+  // BILL's artwork is a bold, near-square wordmark (~1.5:1), not a thin
+  // wordmark — so it gets a bit more height than ~40 to avoid looking tiny.
+  { name: 'BILL', logo: billLogo, href: 'https://www.bill.com', h: 56 },
 ]
 
 function Tile({ sponsor }) {
