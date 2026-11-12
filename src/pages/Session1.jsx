@@ -16,7 +16,6 @@ import {
   Handshake,
 } from 'lucide-react'
 import SessionHero from '../components/SessionHero'
-import SectionProgress from '../components/SectionProgress'
 import Reveal from '../components/Reveal'
 import ExerciseEmbed from '../components/ExerciseEmbed'
 import { EXERCISE_ANCHORS, SessionFraming } from '../components/sessionUI'
@@ -203,8 +202,6 @@ function QuadrantDetail({ item, tone }) {
 export default function Session1() {
   return (
     <>
-      <SectionProgress />
-
       {/* Header */}
       <SessionHero session={session}>
         <p className="mt-7 inline-flex rounded-full border border-yellow/30 bg-yellow/10 px-4 py-2 font-display text-base font-semibold italic text-yellow">

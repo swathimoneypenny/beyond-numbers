@@ -1,7 +1,6 @@
 import { Link } from 'react-router-dom'
 import { ArrowRight, ArrowLeft, Check, Sparkles, Quote } from 'lucide-react'
 import SessionHero from '../components/SessionHero'
-import SectionProgress from '../components/SectionProgress'
 import Reveal from '../components/Reveal'
 import ExerciseEmbed from '../components/ExerciseEmbed'
 import {
@@ -65,8 +64,6 @@ function ExerciseShell({ tag, title, children, embedId }) {
 export default function Session3() {
   return (
     <>
-      <SectionProgress />
-
       {/* Header — business question leads (session.subtitle); theme shown as a pill */}
       <SessionHero session={session}>
         <p className="mt-7 max-w-xl rounded-2xl border border-yellow/30 bg-yellow/10 px-5 py-3 font-display text-base font-semibold italic text-yellow">

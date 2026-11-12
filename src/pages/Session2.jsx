@@ -1,7 +1,6 @@
 import { Link } from 'react-router-dom'
 import { ArrowRight, ArrowLeft, Check, X, Users, Target, Handshake } from 'lucide-react'
 import SessionHero from '../components/SessionHero'
-import SectionProgress from '../components/SectionProgress'
 import Reveal from '../components/Reveal'
 import {
   INK,
@@ -29,8 +28,6 @@ export default function Session2() {
   const m = c.matrix
   return (
     <>
-      <SectionProgress />
-
       {/* Header */}
       <SessionHero session={session}>
         <p className="mt-7 max-w-xl rounded-2xl border border-yellow/30 bg-yellow/10 px-5 py-3 font-display text-base font-semibold italic text-yellow">

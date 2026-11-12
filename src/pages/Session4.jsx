@@ -1,7 +1,6 @@
 import { Link } from 'react-router-dom'
 import { ArrowRight, ArrowLeft, Check, Sparkles, Quote, Mail, HelpCircle } from 'lucide-react'
 import SessionHero from '../components/SessionHero'
-import SectionProgress from '../components/SectionProgress'
 import Reveal from '../components/Reveal'
 import ExerciseEmbed from '../components/ExerciseEmbed'
 import {
@@ -127,8 +126,6 @@ function DataTable({ head, rows, label }) {
 export default function Session4() {
   return (
     <>
-      <SectionProgress />
-
       {/* Header — title/question/meta come from sessions.js via SessionHero */}
       <SessionHero session={session}>
         <p className="mt-7 font-display text-lg font-semibold italic text-yellow">
