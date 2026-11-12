@@ -4,13 +4,21 @@
 import pennyPhoto from '../assets/penny.jpg.png'
 import damienPhoto from '../assets/damien.jpg.jpg'
 
-/* Registration target. During the Dec 2026 relaunch there is no external
-   registration link yet, so every Register CTA points at the home pricing
-   section via the absolute anchor "/#pricing" — so it works from any page
-   (ScrollToHash in Layout navigates home, then smooth-scrolls). When the real
-   webinar link lands, set REGISTER_URL to that URL and REGISTER_IS_EXTERNAL =
-   true, and every CTA repoints automatically. */
-export const REGISTER_URL = '/#pricing'
+/* GoToWebinar registration links (from Damien, Nov 2026): full series + one per
+   workshop. Single source of truth — the series CTAs, the "Inside the Series"
+   accordion panels, the schedule tiles and sessions.js all read from here, so a
+   link only ever lives in one place. All open in a new tab. */
+export const REGISTER_SERIES_URL =
+  'https://register.gotowebinar.com/register/6681311508260207190'
+export const REGISTER_WORKSHOP_URLS = {
+  '1': 'https://register.gotowebinar.com/register/7812016281023890270',
+  '2': 'https://register.gotowebinar.com/register/3416145703431413847',
+  '3': 'https://register.gotowebinar.com/register/69816149155681372',
+}
+
+/* Series Register CTAs (hero primary, header, floating, footer, pricing) point
+   here and open externally in a new tab. */
+export const REGISTER_URL = REGISTER_SERIES_URL
 
 /* Kept for the REGISTER_HREF derivation below. The note is intentionally empty
    now that Register routes to on-page pricing (no "opening soon" message). */
@@ -20,7 +28,7 @@ export const REGISTRATION_NOTE = ''
 /* Single source of truth for where a Register CTA points and whether it's an
    external link (new tab) or an internal / on-page target. All CTAs read these. */
 export const REGISTER_HREF = REGISTRATION_OPEN ? REGISTER_URL : '/contact'
-export const REGISTER_IS_EXTERNAL = false
+export const REGISTER_IS_EXTERNAL = true
 
 /* Pricing (December 2026 relaunch): two options — a single workshop or the
    full three-workshop series. No early-bird, no group discount. */
@@ -55,9 +63,9 @@ export const pricing = {
 /* Workshop schedule (December 2026): three live workshops plus a bonus
    open-hours Q&A, included with every registration. */
 export const schedule = [
-  { n: '1', title: 'Your Vision & Your Team', date: 'December 1, 2026', time: '1:00–2:30 p.m. EST' },
-  { n: '2', title: 'Right Clients & Profitable Pricing', date: 'December 3, 2026', time: '1:00–2:30 p.m. EST' },
-  { n: '3', title: 'Cybersecurity & AI Governance', date: 'December 8, 2026', time: '1:00–2:30 p.m. EST' },
+  { n: '1', title: 'Your Vision & Your Team', date: 'December 1, 2026', time: '1:00–2:30 p.m. EST', register: REGISTER_WORKSHOP_URLS['1'] },
+  { n: '2', title: 'Right Clients & Profitable Pricing', date: 'December 3, 2026', time: '1:00–2:30 p.m. EST', register: REGISTER_WORKSHOP_URLS['2'] },
+  { n: '3', title: 'Cybersecurity & AI Governance', date: 'December 8, 2026', time: '1:00–2:30 p.m. EST', register: REGISTER_WORKSHOP_URLS['3'] },
   {
     kind: 'qa',
     title: 'Open Hours Q&A',
@@ -295,6 +303,7 @@ export const accordions = [
     eyebrow: 'Workshop 1 · December 1',
     title: 'Build Your Advisory Business — Your Vision, Your Team',
     subtitle: 'Create room for advisory and bring your people with you.',
+    register: REGISTER_WORKSHOP_URLS['1'],
     body: {
       paragraphs: [
         'You may have a clear ambition for advisory, yet spend most of your week doing work that leaves little room to pursue it. Using the Four Quadrants framework, Traffic Light assessment and $100K Question, we will examine which services deserve more attention and which could be delegated, outsourced, automated, or stopped. We will then explore four delivery roles, identify gaps, and connect individual contributions to a shared purpose. The Team Purpose Map gives you a structure for listening to your people, identifying those others trust, and assigning meaningful responsibilities.',
@@ -309,6 +318,7 @@ export const accordions = [
     eyebrow: 'Workshop 2 · December 3',
     title: 'Choose the Right Clients. Price Your Services for Profit.',
     subtitle: 'Find the right relationships and test the economics of serving them.',
+    register: REGISTER_WORKSHOP_URLS['2'],
     body: {
       paragraphs: [
         "Some clients are ready for a deeper advisory relationship. Others need a different service model, a revised fee, or a planned transition. This workshop connects client selection with a practical method for pricing recurring bookkeeping and accounting services. Use the Client Portfolio Matrix to assess clients by value and effort, then examine the client's true in-house finance costs and your firm's delivery costs using two linked calculators. Compare a proposed fee, delivery margin and potential savings, while distinguishing recurring monthly work from setup fees and additional advisory projects.",
@@ -323,6 +333,7 @@ export const accordions = [
     eyebrow: 'Workshop 3 · December 8',
     title: 'Protect Your Firm — Cybersecurity and AI Governance for Firm Leaders',
     subtitle: 'Understand the leadership decisions behind protecting client information.',
+    register: REGISTER_WORKSHOP_URLS['3'],
     body: {
       paragraphs: [
         'As your firm handles more client information and introduces AI, leadership needs a clear view of the risks, controls and people involved. Examine your Written Information Security Plan (WISP), cyber-insurance questions, vendor relationships and incident-response arrangements. Explore AI policies covering approved uses, client-information handling, human review and accountability, alongside questions about vendor data practices. A breach tabletop discussion helps you examine your response. Afterwards, use the role-based checklist to identify gaps and assign owners and deadlines.',

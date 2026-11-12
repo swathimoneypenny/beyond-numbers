@@ -1,6 +1,7 @@
 import { Link } from 'react-router-dom'
 import { Clock, PencilRuler } from 'lucide-react'
 import Reveal from '../components/Reveal'
+import Button from '../components/Button'
 import CTABand from '../components/CTABand'
 import ParticleBackground from '../components/ParticleBackground'
 import SessionSchedule from '../components/SessionSchedule'
@@ -11,52 +12,68 @@ const metaIcons = [Clock, PencilRuler]
 
 function SessionCard({ session, index }) {
   const isComingSoon = session.comingSoon
-  // Published tiles link to the public session overview; "coming soon" tiles
-  // stay inert. The overview itself handles the sign-in gate for full content.
-  const Card = isComingSoon ? 'article' : Link
-  const cardProps = isComingSoon ? {} : { to: `/workshops/${session.slug}` }
+  // The card BODY links to the public session overview; "coming soon" tiles stay
+  // inert. The overview itself handles the sign-in gate for full content. The
+  // Register button is a SEPARATE anchor (sibling of the Link) — never nested
+  // inside it — so clicking Register doesn't trigger the card's navigation and
+  // we don't produce invalid anchor-in-anchor markup.
+  const Body = isComingSoon ? 'div' : Link
+  const bodyProps = isComingSoon ? {} : { to: `/workshops/${session.slug}` }
   return (
     <Reveal delay={Math.min(index * 0.08, 0.3)}>
-      <Card
-        {...cardProps}
+      <article
         className={`group relative flex h-full flex-col rounded-2xl border bg-white p-7 transition-all duration-300 ${
           isComingSoon
             ? 'border-line opacity-75'
             : 'border-line shadow-[0_14px_34px_-18px_rgba(61,15,82,0.3)] hover:-translate-y-2 hover:border-teal/40 hover:shadow-[0_36px_60px_-28px_rgba(61,15,82,0.45)]'
         }`}
       >
-        <div className="mb-5 flex items-center justify-between">
-          <span
-            className={`flex h-12 w-12 items-center justify-center rounded-xl font-display text-lg font-bold ${
-              isComingSoon ? 'bg-sand text-ink/40' : 'bg-navy text-white'
-            }`}
-          >
-            {session.number}
-          </span>
-          {isComingSoon && (
-            <span className="rounded-full border border-yellow/50 bg-yellow/15 px-3 py-1 text-[0.7rem] font-semibold uppercase tracking-wide text-navy">
-              Coming soon
+        <Body {...bodyProps} className="flex flex-1 flex-col">
+          <div className="mb-5 flex items-center justify-between">
+            <span
+              className={`flex h-12 w-12 items-center justify-center rounded-xl font-display text-lg font-bold ${
+                isComingSoon ? 'bg-sand text-ink/40' : 'bg-navy text-white'
+              }`}
+            >
+              {session.number}
             </span>
-          )}
-        </div>
-
-        <h3 className="font-display text-xl font-bold leading-snug text-navy">{session.title}</h3>
-        <p className="mt-1.5 text-[0.95rem] italic text-ink/55">{session.subtitle}</p>
-        <p className="mt-3.5 text-[0.92rem] leading-relaxed text-ink/65">{session.description}</p>
-
-        {/* meta row */}
-        <div className="mt-5 flex flex-wrap items-center gap-x-4 gap-y-1.5 border-t border-line pt-4">
-          {session.meta.map((m, i) => {
-            const Icon = metaIcons[i] || Clock
-            return (
-              <span key={m} className="flex items-center gap-1.5 text-xs font-medium text-ink/55">
-                <Icon size={14} className="text-teal" />
-                {m}
+            {isComingSoon && (
+              <span className="rounded-full border border-yellow/50 bg-yellow/15 px-3 py-1 text-[0.7rem] font-semibold uppercase tracking-wide text-navy">
+                Coming soon
               </span>
-            )
-          })}
-        </div>
-      </Card>
+            )}
+          </div>
+
+          <h3 className="font-display text-xl font-bold leading-snug text-navy">{session.title}</h3>
+          <p className="mt-1.5 text-[0.95rem] italic text-ink/55">{session.subtitle}</p>
+          <p className="mt-3.5 text-[0.92rem] leading-relaxed text-ink/65">{session.description}</p>
+
+          {/* meta row */}
+          <div className="mt-5 flex flex-wrap items-center gap-x-4 gap-y-1.5 border-t border-line pt-4">
+            {session.meta.map((m, i) => {
+              const Icon = metaIcons[i] || Clock
+              return (
+                <span key={m} className="flex items-center gap-1.5 text-xs font-medium text-ink/55">
+                  <Icon size={14} className="text-teal" />
+                  {m}
+                </span>
+              )
+            })}
+          </div>
+        </Body>
+
+        {/* Per-workshop Register button (new tab) — separate from the card link. */}
+        {!isComingSoon && session.register && (
+          <Button
+            href={session.register}
+            target="_blank"
+            variant="teal"
+            className="mt-5 w-full !px-4 !py-2.5 text-sm"
+          >
+            Register — $79
+          </Button>
+        )}
+      </article>
     </Reveal>
   )
 }

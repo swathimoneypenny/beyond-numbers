@@ -4,6 +4,7 @@ import Hero from '../components/Hero'
 import Section from '../components/Section'
 import Reveal from '../components/Reveal'
 import Accordion from '../components/Accordion'
+import Button from '../components/Button'
 import RichBody from '../components/RichBody'
 import CTABand from '../components/CTABand'
 import SessionSchedule from '../components/SessionSchedule'
@@ -83,7 +84,18 @@ export default function Home() {
     eyebrow: a.eyebrow,
     title: a.title,
     subtitle: a.subtitle,
-    body: <RichBody body={a.body} />,
+    body: (
+      <>
+        <RichBody body={a.body} />
+        {a.register && (
+          <div className="mt-6">
+            <Button href={a.register} target="_blank" variant="teal" arrow>
+              Register for {a.eyebrow?.split(' · ')[0] || 'this workshop'} — $79
+            </Button>
+          </div>
+        )}
+      </>
+    ),
   }))
 
   const faqItems = faqs.map((f, i) => ({
@@ -109,8 +121,8 @@ export default function Home() {
         }
         meta="December 1, 3 and 8, 2026 · 1:00–2:30 p.m. EST · Plus December 10 open-hours Q&A, included"
         box={heroBox}
-        primary={{ label: 'Register for the Series — $149', href: '#pricing' }}
-        secondary={{ label: 'Choose a Workshop — $79', href: '#pricing' }}
+        primary={registerPrimary('Register for the Series — $149')}
+        secondary={{ label: 'Choose a Workshop — $79', href: '#sessions' }}
       />
 
       {/* 2 — The unresolved decisions */}

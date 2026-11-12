@@ -1,6 +1,8 @@
 /* Workshop session data — shared by the Workshops list page and each session page.
    Add real slides/exercises later; the structure is ready for it. */
 
+import { REGISTER_WORKSHOP_URLS } from './content'
+
 export const sessions = [
   {
     number: '01',
@@ -84,6 +86,7 @@ export const workshops = [
     description:
       'Audit your services with the Traffic Light and $100K Question, clarify your unique value, then map four delivery roles and build a Team Purpose Map to bring your people with you.',
     meta: ['90 min', '4 exercises'],
+    register: REGISTER_WORKSHOP_URLS['1'],
   },
   {
     number: '02',
@@ -93,6 +96,7 @@ export const workshops = [
     description:
       'Score your clients by value and effort with the Client Portfolio Matrix, then use the True Cost Calculator and Firm Cost Builder to price recurring work for profit.',
     meta: ['90 min', '3 exercises'],
+    register: REGISTER_WORKSHOP_URLS['2'],
   },
   {
     number: '03',
@@ -102,5 +106,6 @@ export const workshops = [
     description:
       'Review your WISP, cyber-insurance, vendors and incident response, set practical AI governance, and build a role-based gap list with the WISP & AI Governance Role Checklist.',
     meta: ['90 min', '1 exercise'],
+    register: REGISTER_WORKSHOP_URLS['3'],
   },
 ]

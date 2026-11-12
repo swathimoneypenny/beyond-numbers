@@ -1,6 +1,7 @@
 import { Calendar, Clock, MessageCircle } from 'lucide-react'
 import Section from './Section'
 import Reveal from './Reveal'
+import Button from './Button'
 import { schedule } from '../data/content'
 
 /* Three dated workshop cards plus a distinct, teal-accented Open-Hours Q&A card
@@ -64,6 +65,16 @@ export default function SessionSchedule() {
                     <Clock size={16} className="text-teal" />
                     {s.time}
                   </p>
+                  {s.register && (
+                    <Button
+                      href={s.register}
+                      target="_blank"
+                      variant="teal"
+                      className="mt-5 w-full !px-4 !py-2.5 text-sm"
+                    >
+                      Register — $79
+                    </Button>
+                  )}
                 </div>
               </article>
             </Reveal>
