@@ -22,6 +22,14 @@ export default function SessionOverview() {
 
   const contentPath = `/workshops/${slug}/content`
 
+  // "Hands-on exercises" heading, counted from this session's actual exercises
+  // (same source toExercises reads) so each session shows its own number.
+  const exerciseCount = overview.exercises.length
+  const countWords = ['No', 'One', 'Two', 'Three', 'Four', 'Five', 'Six']
+  const exerciseCountWord = `${countWords[exerciseCount] ?? exerciseCount} interactive ${
+    exerciseCount === 1 ? 'exercise' : 'exercises'
+  }`
+
   // Wait for the session to finish restoring before deciding, so a returning
   // signed-in user never flashes the overview on reload.
   if (booting) {
@@ -95,7 +103,7 @@ export default function SessionOverview() {
       <Band bg={overview.objectives?.length > 0 ? 'sand' : 'white'}>
         <Head
           title="Hands-on exercises"
-          subtitle="Two interactive exercises you complete during the session."
+          subtitle={`${exerciseCountWord} you complete during the session.`}
         />
         <div className="mt-12 grid gap-6 md:grid-cols-2">
           {overview.exercises.map((ex) => (

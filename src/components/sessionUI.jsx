@@ -6,8 +6,9 @@ import ExerciseEmbed from './ExerciseEmbed'
 
 export const INK = 'text-[#1A1A1A]' // strong near-black body text on light cards
 
-/* Anchor ids for the exercise sections, shared by the jump bar and the Bands. */
-export const EXERCISE_ANCHORS = ['exercise-1', 'exercise-2']
+/* Anchor ids for the exercise sections, shared by the jump bar and the Bands.
+   Session 1 uses all four; Sessions 2–4 use only the first two. */
+export const EXERCISE_ANCHORS = ['exercise-1', 'exercise-2', 'exercise-3', 'exercise-4']
 
 /* The session's decision framing — "You will use / You leave with / Your
    implementation commitment" — shown right under the header on both the public

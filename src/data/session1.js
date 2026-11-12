@@ -2,7 +2,7 @@
    EXACT workshop content from Penny's slides (do not paraphrase). */
 
 export const session1 = {
-  tagline: 'This is your QuickBooks moment. Lead the change.',
+  tagline: "You can't hand your team a purpose you haven't found yourself.",
 
   // 1
   changed: {
@@ -168,30 +168,29 @@ export const session1 = {
       'Catalyst work funds Strategist work. Strategist work funds the practice you actually want.',
   },
 
-  // 7
+  // 7 — Exercise card: Homework 1 (The Traffic Light Revolution)
   exercise1: {
-    tag: 'Exercise 1 • 10 min',
+    tag: 'Homework 1 · Penny demos',
     title: 'The Traffic Light Revolution',
-    lead: 'Open the digital tool. Brain dump everything you do. Mark each one.',
-    link: 'beyond-numbers.com/exercises/exercise-1/',
+    lead: "Audit every service you offer. Mark what you love green, what's okay yellow, and what drains you red — then build your 90-day plan.",
     steps: [
       {
-        time: '3 min',
+        time: '~5 min',
         k: 'Brain dump',
-        v: `Click every service, task, or activity you do. Don't filter. Just click.`,
+        v: 'Click every service, task or activity you do.',
       },
       {
-        time: '2 min',
-        k: 'Time %',
-        v: 'For each one, estimate what % of your time it takes. First instinct only.',
+        time: '~5 min',
+        k: 'Time % + lights',
+        v: 'Estimate % of time for each; mark green love it, yellow okay, red drains me.',
       },
       {
-        time: '90 sec',
-        k: 'Traffic lights',
-        v: 'Mark each: 🟢 love it, 🟡 it’s okay, 🔴 drains me. Trust your gut.',
+        time: '~10 min',
+        k: 'Tabs 3–5',
+        v: 'Review the analytics and insights, then build your 90-day plan.',
       },
     ],
-    note: 'Today: Tabs 1–2 in the tool. Homework before Session 2: complete Tabs 3–5 (analytics, insights, 90-day plan).',
+    note: 'Bring your RED list and RED % to Session 2.',
   },
 
   // 8
@@ -236,28 +235,79 @@ export const session1 = {
     caption: `Boxes 1–4 free up your time. Box 5 defines why people will pay you a premium for what's left.`,
   },
 
-  // 10
+  // 10 — Exercise card: Homework 2 (The $100K Question)
   exercise2: {
-    tag: 'Exercise 2 • 10 min',
-    title: 'Work time',
-    lead: 'Open the digital tool. Fill the five boxes. Commit to one thing.',
+    tag: 'Homework 2 · Penny demos',
+    title: 'The $100K Question',
+    lead: 'A client gives you $100,000 for a year — but you can only do work you love. Design the perfect practice, and name the one thing only you can do.',
     steps: [
       {
-        time: '2 min',
+        time: '~3 min',
         k: 'Set the scene',
-        v: 'Re-read the scenario. Picture the client. Suspend your usual constraints.',
+        v: 'Re-read the scenario, suspend your constraints.',
       },
       {
-        time: '6 min',
-        k: 'Fill the boxes',
-        v: `Don't overthink. First instincts about what to stop are usually right.`,
+        time: '~10 min',
+        k: 'Fill boxes 1–4',
+        v: 'Pull from your traffic lights — RED to Stop, YELLOW to Outsource or Automate.',
       },
       {
-        time: '2 min',
+        time: '~5 min',
         k: 'Define your value',
-        v: 'Box 5: one sentence. Make it specific enough that a stranger would understand it.',
+        v: 'Box 5 — one sentence a stranger would get.',
       },
     ],
+    note: 'Bring your Box 5 sentence to Session 2.',
+  },
+
+  // 10b — Exercise card: Homework 3 (The 52-Card Team Pickup)
+  exercise3: {
+    tag: 'Homework 3 · Penny demos',
+    title: 'The 52-Card Team Pickup',
+    lead: "Sort every task in your week into the role that should own it — then find the role that's overloaded and the one that's missing. That's your next hire.",
+    steps: [
+      {
+        time: '~5 min',
+        k: 'Deal your hand',
+        v: 'Tap every task in a typical week; add your own.',
+      },
+      {
+        time: '~10 min',
+        k: 'Sort to roles',
+        v: 'Hours per week, who holds it today, and which role should own it (BOS, Admin, Analyst, Technical).',
+      },
+      {
+        time: '~5 min',
+        k: 'Find the bottleneck',
+        v: 'Which role is buried, and which is missing?',
+      },
+    ],
+    note: 'Bring your next-hire answer to Session 2.',
+  },
+
+  // 10c — Exercise card: Homework 4 (Your Team Purpose Map)
+  exercise4: {
+    tag: 'Homework 4 · Penny demos',
+    title: 'Your Team Purpose Map',
+    lead: "Draft a purpose your team already shares, connect every person to it, and name the energizers who'll help you carry it.",
+    steps: [
+      {
+        time: '~10 min',
+        k: 'Draft the purpose',
+        v: 'Combine your Box 5 with what your team cares about; add your filter question.',
+      },
+      {
+        time: '~15 min',
+        k: 'Map your people',
+        v: "Each person's role, their 'I ___' headline, and one stretch challenge.",
+      },
+      {
+        time: '~5 min',
+        k: 'Find the energizers',
+        v: 'Star the 1–2 people others trust; invite them to your listening tour first.',
+      },
+    ],
+    note: 'Label it DRAFT — test it on your listening tour. Bring it to Session 2.',
   },
 
   // 11
@@ -445,17 +495,17 @@ export const session1 = {
 
   // 19
   upNext: {
-    eyebrow: 'Up next: Session 2 — People: team & clients',
+    eyebrow: 'Up next: Session 2 — Choose the Right Clients. Price for Profit.',
     items: [
       {
-        label: 'The team',
-        title: 'The four roles in a scalable practice.',
-        v: 'BOS, Admin, Business Analyst, Technical. The architecture that lets one firm serve 50-75 clients without burning out.',
+        label: 'The clients',
+        title: 'Who should you serve?',
+        v: 'Score your clients by value and effort with the Client Portfolio Matrix — then decide who to grow, keep, or let go.',
       },
       {
-        label: 'The clients',
-        title: 'Gold, Silver, Bronze — or Fire.',
-        v: 'How to spot your best clients, your worst clients, and the vertical you should own. Plus how to fire wrong-fit clients without guilt.',
+        label: 'The pricing',
+        title: 'What should you charge?',
+        v: 'Use the True Cost Calculator and Firm Cost Builder to price recurring work for profit.',
       },
     ],
   },

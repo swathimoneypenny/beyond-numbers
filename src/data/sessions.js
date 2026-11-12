@@ -5,17 +5,17 @@ export const sessions = [
   {
     number: '01',
     slug: 'session-1',
-    title: 'Foundation & Service Portfolio',
-    subtitle:
-      'Which services should your firm stop, outsource, automate or focus on—and what is the first move?',
+    title: 'Your Vision, Your Team',
+    subtitle: 'What do I want, and how do I bring my team with me?',
     description:
-      'Understand the shift from compliance to advisory, assess your service mix with the Four Quadrants framework, and decide what to keep, delegate, or eliminate.',
-    meta: ['90 min', '2 exercises'],
+      "Audit your own work, design the practice you'd build from scratch, then discover a purpose your team already shares and the roles that support it.",
+    meta: ['90 min', '4 exercises'],
     framing: {
-      use: 'The Traffic Light Revolution and the $100K Question.',
+      use: 'The Traffic Light, the $100K Question, the 52-Card Team Pickup and the Team Purpose Map.',
       leaveWith:
-        'A Stop / Outsource / Automate / Focus decision set for your services, and one dated 30-day move.',
-      commitment: 'One 30-day service decision, with a date.',
+        "An honest audit of your own work, the practice you'd build from scratch, the role that is your next hire, and a draft Team Purpose Map — the shared purpose and the roles that support it.",
+      commitment:
+        'Bring your RED %, your Box 5 sentence, your next-hire role and your draft Team Purpose Map to Session 2.',
     },
   },
   {

@@ -216,15 +216,26 @@ export default function Session1() {
 
       {/* ── Exercises / games first (moved to the top per stakeholder request).
           The Exercise Jump Bar was removed: with the exercises now at the top,
-          a jump-to-exercise bar is redundant. Anchor ids are kept unchanged. ── */}
-      {/* Exercise 1 (live interactive embed) */}
+          a jump-to-exercise bar is redundant. Four live interactive embeds, in
+          homework order (HW1→HW4), alternating sand/white backgrounds. ── */}
+      {/* Homework 1 — The Traffic Light Revolution */}
       <Band bg="sand" id={EXERCISE_ANCHORS[0]}>
-        <ExerciseCard data={c.exercise1} embedId="s1-ex1-four-quadrants" />
+        <ExerciseCard data={c.exercise1} embedId="s1-hw1-traffic-light-assessment" />
       </Band>
 
-      {/* Exercise 2 (placeholder until JSON is provided) */}
+      {/* Homework 2 — The $100K Question */}
       <Band bg="white" id={EXERCISE_ANCHORS[1]}>
-        <ExerciseCard data={c.exercise2} comingSoon />
+        <ExerciseCard data={c.exercise2} embedId="s1-hw2-100k-question" />
+      </Band>
+
+      {/* Homework 3 — The 52-Card Team Pickup */}
+      <Band bg="sand" id={EXERCISE_ANCHORS[2]}>
+        <ExerciseCard data={c.exercise3} embedId="s1-hw3-52-card-team-pickup" />
+      </Band>
+
+      {/* Homework 4 — Your Team Purpose Map */}
+      <Band bg="white" id={EXERCISE_ANCHORS[3]}>
+        <ExerciseCard data={c.exercise4} embedId="s1-hw4-team-purpose-map" />
       </Band>
 
       {/* ── Written content ─────────────────────────────────────── */}

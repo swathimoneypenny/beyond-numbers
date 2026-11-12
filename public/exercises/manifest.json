@@ -13,13 +13,40 @@
   "schemaVersion": "1.0",
   "exercises": [
     {
-      "id": "s1-ex1-four-quadrants",
+      "id": "s1-hw1-traffic-light-assessment",
       "session": 1,
       "exercise": 1,
-      "title": "Four Quadrants Service Assessment",
+      "title": "The Traffic Light Revolution",
       "type": "assessment",
-      "file": "s1-ex1-four-quadrants.json",
-      "summary": "Plot current and prospective services across the four quadrants to see where the firm sits today and where advisory growth lies. Used in-session (Tabs 1-2) with Tabs 3-5 as pre-Session-2 homework."
+      "file": "s1-hw1-traffic-light-assessment.json",
+      "summary": "Homework 1 for Session 1 (Your Vision, Your Team), rebuilt from the 2025 Four Quadrants Service Assessment. Five tabs: (1) select services from a 51-item library across Operator, Steward, Catalyst and Strategist, add custom services, and mark each GREEN, YELLOW or RED; (2) assess each service's share of the working week, with hours computed from the user's weekly hours, plus action (keep, grow, outsource, automate, delegate, eliminate) and priority; (3) analytics of time by quadrant and by light; (4) insights and the annual value of RED hours redeployed to advisory at a user-set rate (48 working weeks); (5) a 30-day and 90-day action plan. Opens on a sample practice. Passes rated services, RED share and hours to Homework 2 and Homework 4 through browser storage."
+    },
+    {
+      "id": "s1-hw2-100k-question",
+      "session": 1,
+      "exercise": 2,
+      "title": "The $100K Question",
+      "type": "framework",
+      "file": "s1-hw2-100k-question.json",
+      "summary": "Homework 2 for Session 1 (Your Vision, Your Team), rebuilt from the 2025 $100K Question Framework tool. Four editable boxes (Stop, Outsource, Automate, Focus On) that can be filled in one click from Homework 1's traffic lights; Box 5 unique-value sentence with starters and live checks (generic words, length, names who you serve); live counts, chart, hours freed and insights; and a 30-day commitment with date, item, method, focus, accountability partner and check-in date, plus copyable commitment and partner note. Passes the Box 5 sentence to Homework 4 (Team Purpose Map)."
+    },
+    {
+      "id": "s1-hw3-52-card-team-pickup",
+      "session": 1,
+      "exercise": 3,
+      "title": "52-Card Team Pickup",
+      "type": "worksheet-tool",
+      "file": "s1-hw3-52-card-team-pickup.json",
+      "summary": "Homework 3 for Session 1 (Your Vision, Your Team). Three steps: deal your hand from a 52-card deck of common CAS tasks (13 per role, shuffled so the roles aren't given away), plus your own cards and the YELLOW and RED services pulled from the Traffic Light assessment (Homework 1); sort each card with hours per week, who holds it today (me, team, nobody) and the role that should own it (BOS, Admin orchestrator, Business analyst, Technical team); then find the bottleneck: hours on your plate that belong to another role, roles nobody holds, a suggested next-hire role and the first three cards to hand off, plus a comparison with a typical firm's sort. Opens on a sample firm; autosaves in the browser; passes the next-hire role to the Team Purpose Map (Homework 4); copy-as-text and print."
+    },
+    {
+      "id": "s1-hw4-team-purpose-map",
+      "session": 1,
+      "exercise": 4,
+      "title": "Team Purpose Map",
+      "type": "worksheet-tool",
+      "file": "s1-hw4-team-purpose-map.json",
+      "summary": "Homework 4 for Session 1 (Your Vision, Your Team). Five steps: bring in Homework 1–3 results (Box 5 sentence, RED %, next-hire role); draft a purpose headline with live word-count and buzzword checks, a filter question and a four-point authenticity check; map every person to a role (BOS, Admin orchestrator, Business analyst, Technical team) with an 'I ___' headline, connecting line, stretch challenge and energizer flag, with role-coverage gaps; plan a one-on-one listening tour ordered energizers-first with dates, status and gold-nugget notes; and view a poster-style map with a Session 2 readiness checklist. Opens on a sample firm; autosaves in the browser; copy-as-text and print."
     },
     {
       "id": "s2-ex1-team-52-card-pickup",

@@ -7,8 +7,9 @@
 
    - objectives: sessions 3 & 4 have an objectives block; 1 & 2 don't (null).
    - topics: verbatim section headings (eyebrows) from each session's data.
-   - exercises: each session's exercise1/exercise2 tag (carries the duration) +
-     title + the first available one-line field (lead / task / takeaway).
+   - exercises: every exercise the session defines (exercise1, exercise2, … in
+     order) — tag (carries the duration) + title + the first available one-line
+     field (lead / task / takeaway). Session 1 has four; the others have one–two.
    - tagline: the session's own tagline, or session 3's theme line. */
 
 import { session1 } from './session1'
@@ -18,10 +19,16 @@ import { session4 } from './session4'
 
 // One-line "what you'll do" for an exercise, taken from whichever field exists.
 const exDesc = (ex) => ex.lead || ex.task || ex.takeaway || ex.goal || ''
-const toExercises = (s) =>
-  [s.exercise1, s.exercise2]
-    .filter(Boolean)
-    .map((ex) => ({ tag: ex.tag, title: ex.title, desc: exDesc(ex) }))
+// Collect exercise1, exercise2, … in order, stopping at the first gap. Sessions
+// define different counts (Session 1 has four; others one–two).
+const toExercises = (s) => {
+  const out = []
+  for (let n = 1; s[`exercise${n}`]; n++) {
+    const ex = s[`exercise${n}`]
+    out.push({ tag: ex.tag, title: ex.title, desc: exDesc(ex) })
+  }
+  return out
+}
 
 // Objectives normalised to { k, v }; null when the session has no objectives block.
 const toObjectives = (s) =>
@@ -32,14 +39,11 @@ export const sessionOverviews = {
     tagline: session1.tagline,
     objectives: toObjectives(session1),
     topics: [
-      'The day everything changed',
-      'Binary vs. advisory work',
-      'The four service quadrants',
-      'The $100K question',
-      'The five boxes',
-      'Your unique value lives in the overlap',
-      'Four decisions, one per service',
-      'Your 30-day commitment',
+      'Audit your services with the Traffic Light',
+      'Name your unique value with the $100K Question',
+      'Sort your week with the 52-Card Team Pickup',
+      'Build your Team Purpose Map',
+      'Find your next hire and your energizers',
     ],
     exercises: toExercises(session1),
   },

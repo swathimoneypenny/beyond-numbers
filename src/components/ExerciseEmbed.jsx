@@ -140,7 +140,10 @@ function mountBottomActions(doc) {
      e.g. s4-ex2's intentional white "printable preview" and coloured section
      headings are preserved. */
 const THEMED_EXERCISES = new Set([
-  's1-ex1-four-quadrants',
+  's1-hw1-traffic-light-assessment',
+  's1-hw2-100k-question',
+  's1-hw3-52-card-team-pickup',
+  's1-hw4-team-purpose-map',
   's2-ex1-team-52-card-pickup',
   's2-ex2-client-portfolio-matrix',
   's3-ex1-tech-stack-calculator',
