@@ -4,7 +4,7 @@ import Reveal from '../components/Reveal'
 import CTABand from '../components/CTABand'
 import ParticleBackground from '../components/ParticleBackground'
 import SessionSchedule from '../components/SessionSchedule'
-import { sessions } from '../data/sessions'
+import { workshops } from '../data/sessions'
 import { REGISTER_HREF, REGISTER_IS_EXTERNAL } from '../data/content'
 
 const metaIcons = [Clock, PencilRuler]
@@ -88,16 +88,16 @@ export default function Workshops() {
               Workshop Series
             </span>
             <h1 className="mt-6 font-display text-[2.7rem] font-bold leading-[1.04] tracking-tight text-white sm:text-6xl">
-              From Scorekeeper to Strategist
+              Build, Price and Deliver Better Advisory Services
             </h1>
             <div className="mt-5 flex items-center gap-1.5">
               <span className="h-1.5 w-16 rounded-full bg-yellow" />
               <span className="h-1.5 w-9 rounded-full bg-teal" />
             </div>
             <p className="mt-7 max-w-2xl text-lg leading-relaxed text-white/70">
-              A practical 4-part workshop series helping accounting firm owners move beyond
-              compliance work and build a more intentional, scalable, advisory-focused practice. Four
-              90-minute working sessions, each with hands-on exercises.
+              Three live workshops · December 1, 3 and 8, 2026 · 1:00–2:30 p.m. EST. Practical
+              working sessions for accounting firm owners — build your advisory business, price for
+              profit, and put practical safeguards around AI.
             </p>
           </Reveal>
         </div>
@@ -106,8 +106,8 @@ export default function Workshops() {
       {/* ===== Session cards ===== */}
       <section id="sessions" className="bg-white py-20 sm:py-28">
         <div className="mx-auto max-w-[1240px] px-5 sm:px-8">
-          <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
-            {sessions.map((s, i) => (
+          <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+            {workshops.map((s, i) => (
               <SessionCard key={s.slug} session={s} index={i} />
             ))}
           </div>
@@ -120,13 +120,13 @@ export default function Workshops() {
       {/* ===== CTA ===== */}
       <CTABand
         title="Ready to transform your practice?"
-        subtitle="Register for the series and leave with a sequenced 90-day plan you can put to work."
+        subtitle="Three practical workshops to build, price and protect a stronger advisory business."
         primary={
           REGISTER_IS_EXTERNAL
             ? { label: 'Register Now', href: REGISTER_HREF, newTab: true }
             : { label: 'Register Now', to: REGISTER_HREF }
         }
-        note="Sessions begin November 5, 2026"
+        note="Workshops run December 1, 3 and 8, 2026"
       />
     </>
   )
