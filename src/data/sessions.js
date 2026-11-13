@@ -23,17 +23,16 @@ export const sessions = [
   {
     number: '02',
     slug: 'session-2',
-    title: 'People, Capacity & Clients',
-    subtitle:
-      "Who should own the work—and which client relationships deserve your firm's best capacity?",
+    title: 'Clients & Pricing',
+    subtitle: 'Who you serve, and what they should pay.',
     description:
-      'Design a scalable advisory team around four key roles, then sort your client base Gold, Silver, Bronze, or Fire to grow the right relationships.',
-    meta: ['90 min', '2 exercises'],
+      "Sort your book and release the wrong-fit clients, then move from hourly to fixed fees by pricing between your cost to deliver and the client's true in-house cost.",
+    meta: ['90 min', '3 exercises'],
     framing: {
-      use: 'The 52-Card Team Pickup and the Client Portfolio Map.',
+      use: 'The Client Portfolio Matrix, the True Cost Calculator and the Firm Cost Builder.',
       leaveWith:
-        'A sharper view of the role that could unlock capacity next, a client portfolio map, three Gold relationships to approach, and one wrong-fit relationship to review for transition.',
-      commitment: 'One capacity move and one client decision.',
+        "A sorted book with your wrong-fit clients flagged to release, and fixed fees priced between your cost to deliver and the client's true in-house cost.",
+      commitment: 'Bring your three IDEAL clients and their pricing to Session 3.',
     },
   },
   {

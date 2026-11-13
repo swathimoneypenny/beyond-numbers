@@ -4,7 +4,7 @@ import { Loader2, AlertCircle } from 'lucide-react'
 /* Reusable interactive-exercise embed.
    Loads /exercises/<exerciseId>.json (from the public/exercises folder) and renders
    its self-contained embed.markup inside an isolated, auto-resizing iframe.
-   Reuse for any session: <ExerciseEmbed exerciseId="s2-ex1-team-52-card-pickup" /> */
+   Reuse for any session: <ExerciseEmbed exerciseId="s2-hw1-client-portfolio-matrix" /> */
 
 /* Windows-1252 high range (0x80–0x9F) → original byte. Used to reverse "mojibake"
    (UTF-8 bytes that were mis-decoded as Windows-1252 and re-saved as UTF-8 — which
@@ -140,15 +140,14 @@ function mountBottomActions(doc) {
      e.g. s4-ex2's intentional white "printable preview" and coloured section
      headings are preserved. */
 const THEMED_EXERCISES = new Set([
-  // NOTE: the four Session 1 homework exercises (s1-hw1…s1-hw4) are deliberately
-  // NOT themed. They were authored as complete `color-scheme: light` designs
-  // (purple gradient field, white panels, pale semantic boxes with dark text,
-  // white inputs) that already match the brand palette. Injecting the shared
-  // dark theme forced body/input text white on their pale boxes → unreadable
-  // light-on-light. They render correctly with their own styling, so we leave
-  // them unthemed rather than fight their design with fragile per-class overrides.
-  's2-ex1-team-52-card-pickup',
-  's2-ex2-client-portfolio-matrix',
+  // NOTE: the Session 1 and Session 2 homework exercises (s1-hw1…s1-hw4,
+  // s2-hw1…s2-hw3) are deliberately NOT themed. They were authored as complete
+  // `color-scheme: light` designs (purple gradient field, white panels, pale
+  // semantic boxes with dark text, white inputs) that already match the brand
+  // palette. Injecting the shared dark theme forced body/input text white on
+  // their pale boxes → unreadable light-on-light. They render correctly with
+  // their own styling, so we leave them unthemed rather than fight their design
+  // with fragile per-class overrides.
   's3-ex1-tech-stack-calculator',
   's3-ex2-ai-vendor-scorecard',
   's4-ex1-procedure-tech-stack',

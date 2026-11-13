@@ -49,22 +49,31 @@
       "summary": "Homework 4 for Session 1 (Your Vision, Your Team). Five steps: bring in Homework 1–3 results (Box 5 sentence, RED %, next-hire role); draft a purpose headline with live word-count and buzzword checks, a filter question and a four-point authenticity check; map every person to a role (BOS, Admin orchestrator, Business analyst, Technical team) with an 'I ___' headline, connecting line, stretch challenge and energizer flag, with role-coverage gaps; plan a one-on-one listening tour ordered energizers-first with dates, status and gold-nugget notes; and view a poster-style map with a Session 2 readiness checklist. Opens on a sample firm; autosaves in the browser; copy-as-text and print."
     },
     {
-      "id": "s2-ex1-team-52-card-pickup",
+      "id": "s2-hw1-client-portfolio-matrix",
       "session": 2,
       "exercise": 1,
-      "title": "52-Card Team Pickup",
-      "type": "cardsort",
-      "file": "s2-ex1-team-52-card-pickup.json",
-      "summary": "Team-building card exercise: sort responsibilities across the four roles (BOS / Admin / Analyst / Technical) to expose gaps and frame the next hire."
+      "title": "Client Portfolio Matrix",
+      "type": "matrix",
+      "file": "s2-hw1-client-portfolio-matrix.json",
+      "summary": "Homework 1 for Session 2 (Clients & Pricing), rebuilt from the 2025 Session 4 Client Portfolio Evaluation Matrix. Enter clients with industry and annual fees, score value and effort 1–5, and each client is sorted live into IDEAL (value ≥3, effort ≤2), DEVELOP (value ≥3, effort ≥3), EXIT (value ≤2, effort ≥3) or AUTOMATE (value ≤2, effort ≤2). Shows a plotted matrix, counts and share of fees per quadrant, debrief flags (30%+ in EXIT, under 20% IDEAL), and a this-week / 30-day / 90-day action plan. Up to three IDEAL clients ticked 'Price it' are passed to Homework 2 (True Cost) and Homework 3 (Firm Cost) through browser storage. Opens on a ten-client sample book; copy or download as CSV."
     },
     {
-      "id": "s2-ex2-client-portfolio-matrix",
+      "id": "s2-hw2-true-cost-calculator",
       "session": 2,
       "exercise": 2,
-      "title": "Client Portfolio Evaluation",
-      "type": "matrix",
-      "file": "s2-ex2-client-portfolio-matrix.json",
-      "summary": "Map clients on a value-vs-effort matrix and assign Gold / Silver / Bronze / Fire tiers to guide who to grow, hold, or fire."
+      "title": "The True Cost of an In-House Bookkeeper or CFO",
+      "type": "calculator",
+      "file": "s2-hw2-true-cost-calculator.json",
+      "summary": "Homework 2 for Session 2 (Clients & Pricing). Calculates a client's true monthly cost of an in-house bookkeeper, full-charge bookkeeper/staff accountant, or controller/CFO: salary, health, benefits, payroll tax and workers' comp, vacation coverage, overhead, office space by square footage, owner management time, hiring and training, and error-fix fees. A 'Pricing for' list shows the three IDEAL clients chosen in Homework 1 and keeps separate figures for each. Presets reproduce Step 6: Pricing Examples 1 ($7,555) and 3 ($6,171) plus 2026 national-median scenarios (BLS May 2025 wages; KFF 2025 health). Shows annual cost, cost per hour worked, true-cost multiple, hidden costs, and a suggested fee; shares each client's result with Homework 3."
+    },
+    {
+      "id": "s2-hw3-firm-cost-builder",
+      "session": 2,
+      "exercise": 3,
+      "title": "What It Costs Your Firm to Deliver",
+      "type": "calculator",
+      "file": "s2-hw3-firm-cost-builder.json",
+      "summary": "Homework 3 for Session 2 (Clients & Pricing). Back-office time budget: team cost rates by role (PRP, ADM, BKM, TEAM, CFO, CPA, CBO), monthly tasks as times per month × time per event × who, per-row rate overrides, 'tech kills it' flags that move work to savings, an administration allowance, per-client technology costs, and services quoted outside the monthly fee. The client field suggests the IDEAL clients from Homework 1 and pulls that client's in-house cost from Homework 2. Presets reproduce the Step 6: Pricing BOS Time Budget examples exactly ($829.95, $1,559.95, $1,149.13). The pricing window shows margin, client savings, annual profit and fee per hour."
     },
     {
       "id": "s3-ex1-tech-stack-calculator",

@@ -1,5 +1,5 @@
 import { Link } from 'react-router-dom'
-import { ArrowRight, ArrowLeft, Check, X, Users, Target, Handshake } from 'lucide-react'
+import { ArrowRight, ArrowLeft, Check, X } from 'lucide-react'
 import SessionHero from '../components/SessionHero'
 import Reveal from '../components/Reveal'
 import {
@@ -11,7 +11,6 @@ import {
   EXERCISE_ANCHORS,
   SessionFraming,
 } from '../components/sessionUI'
-import CountUp from '../components/CountUp'
 import { getSession } from '../data/sessions'
 import { session2 as c } from '../data/session2'
 
@@ -25,7 +24,6 @@ const tier = {
 }
 
 export default function Session2() {
-  const m = c.matrix
   return (
     <>
       {/* Header */}
@@ -38,173 +36,26 @@ export default function Session2() {
       <SessionFraming framing={session.framing} />
 
       {/* ── Exercises / games first (moved to the top per stakeholder request).
-          Exercise Jump Bar removed (redundant now). Anchor ids unchanged. ── */}
-      {/* Exercise 1 (live embed) */}
+          Exercise Jump Bar removed (redundant now). Three live interactive
+          embeds, in homework order (HW1→HW3), alternating sand/white. ── */}
+      {/* Homework 1 — Client Portfolio Matrix */}
       <Band bg="sand" id={EXERCISE_ANCHORS[0]}>
-        <ExerciseCard data={c.exercise1} embedId="s2-ex1-team-52-card-pickup" />
+        <ExerciseCard data={c.exercise1} embedId="s2-hw1-client-portfolio-matrix" />
       </Band>
 
-      {/* Exercise 2 (live embed) */}
+      {/* Homework 2 — The True Cost of an In-House Bookkeeper or CFO */}
       <Band bg="white" id={EXERCISE_ANCHORS[1]}>
-        <ExerciseCard data={c.exercise2} embedId="s2-ex2-client-portfolio-matrix" />
+        <ExerciseCard data={c.exercise2} embedId="s2-hw2-true-cost-calculator" />
       </Band>
 
-      {/* ── Written content ─────────────────────────────────────── */}
-
-      {/* 1 — Welcome back */}
-      <Band bg="sand">
-        <Head title={c.welcome.eyebrow} subtitle={c.welcome.subtitle} />
-        <div className="mt-12 grid gap-6 md:grid-cols-2">
-          {c.welcome.items.map((it) => (
-            <Reveal key={it.label}>
-              <article className="h-full rounded-2xl border border-line bg-white p-7 shadow-[0_14px_34px_-20px_rgba(61,15,82,0.3)]">
-                <span className="inline-flex items-center gap-2 text-xs font-bold uppercase tracking-[0.14em] text-teal">
-                  {it.label === 'The team' ? <Users size={15} /> : <Target size={15} />}
-                  {it.label}
-                </span>
-                <p className={`mt-3 text-[1.02rem] leading-relaxed ${INK}`}>{it.v}</p>
-              </article>
-            </Reveal>
-          ))}
-        </div>
+      {/* Homework 3 — What It Costs Your Firm to Deliver */}
+      <Band bg="sand" id={EXERCISE_ANCHORS[2]}>
+        <ExerciseCard data={c.exercise3} embedId="s2-hw3-firm-cost-builder" />
       </Band>
 
-      {/* 2 — A tale of two firms */}
-      <Band bg="white">
-        <Head title={c.twoFirms.eyebrow} subtitle={c.twoFirms.subtitle} />
-        <div className="mt-12 grid gap-6 md:grid-cols-2">
-          {[
-            { f: c.twoFirms.firm1, ok: false },
-            { f: c.twoFirms.firm2, ok: true },
-          ].map(({ f, ok }) => (
-            <Reveal key={f.name} delay={ok ? 0.1 : 0}>
-              <article
-                className={`h-full rounded-2xl border p-7 ${
-                  ok ? 'border-teal/30 bg-teal/[0.07]' : 'border-[#d6453b]/25 bg-white'
-                }`}
-              >
-                <h3 className="font-display text-xl font-bold text-navy">{f.name}</h3>
-                <p className="mt-1 font-display text-base font-semibold italic text-navy">{f.tag}</p>
-                <ul className="mt-5 space-y-3">
-                  {f.items.map((it) => (
-                    <li key={it} className="flex items-start gap-3">
-                      {ok ? (
-                        <Check size={17} strokeWidth={3} className="mt-0.5 shrink-0 text-teal" />
-                      ) : (
-                        <X size={16} strokeWidth={3} className="mt-0.5 shrink-0 text-[#b23a30]" />
-                      )}
-                      <span className={`text-[0.97rem] ${ok ? 'font-medium' : ''} ${INK}`}>{it}</span>
-                    </li>
-                  ))}
-                </ul>
-              </article>
-            </Reveal>
-          ))}
-        </div>
-        <Callout>{c.twoFirms.caption}</Callout>
-      </Band>
+      {/* ── Written content — Clients & Pricing ─────────────────── */}
 
-      {/* 3 — Building a diverse advisory team */}
-      <Band bg="sand">
-        <Head title={c.team.eyebrow} subtitle={c.team.subtitle} />
-        <div className="mt-12 grid gap-5 sm:grid-cols-2">
-          {c.team.roles.map((r) => (
-            <Reveal key={r.name}>
-              <article className="flex h-full flex-col rounded-2xl border border-line bg-white p-7">
-                <div className="flex flex-wrap items-center gap-3">
-                  <h3 className="font-display text-xl font-bold text-navy">{r.name}</h3>
-                  <span className="rounded-full bg-teal/12 px-3 py-1 text-xs font-bold text-teal">
-                    {r.role}
-                  </span>
-                </div>
-                <p className={`mt-4 leading-relaxed ${INK}`}>{r.v}</p>
-              </article>
-            </Reveal>
-          ))}
-        </div>
-        <Callout>
-          <span className="font-bold">{c.team.insightLabel} </span>
-          {c.team.insight}
-        </Callout>
-      </Band>
-
-      {/* 4 — The BOS */}
-      <Band bg="white">
-        <Head title={c.bos.eyebrow} subtitle={c.bos.subtitle} />
-        <div className="mt-12 grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
-          {c.bos.traits.map((t) => (
-            <Reveal key={t.k}>
-              <article className="h-full rounded-2xl border border-line bg-cream p-6">
-                <h3 className="font-display text-lg font-bold text-navy">{t.k}</h3>
-                <p className={`mt-2 text-[0.95rem] leading-relaxed ${INK}`}>{t.v}</p>
-              </article>
-            </Reveal>
-          ))}
-        </div>
-        <Reveal>
-          <div className="mt-8 rounded-2xl border border-navy/15 bg-navy p-7 sm:p-9">
-            <p className="text-[0.8rem] font-bold uppercase tracking-[0.16em] text-yellow">
-              {c.bos.doesLabel}
-            </p>
-            <ul className="mt-5 grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
-              {c.bos.does.map((d) => (
-                <li key={d} className="flex items-start gap-2.5 text-[0.95rem] text-white/90">
-                  <Check size={16} strokeWidth={2.5} className="mt-0.5 shrink-0 text-teal" />
-                  {d}
-                </li>
-              ))}
-            </ul>
-          </div>
-        </Reveal>
-      </Band>
-
-      {/* 5 — Admin excellence */}
-      <Band bg="sand">
-        <Head title={c.admin.eyebrow} subtitle={c.admin.subtitle} />
-        <Reveal>
-          <div className="mt-10 rounded-2xl border border-line bg-white p-7 sm:p-9">
-            <p className="text-[0.8rem] font-bold uppercase tracking-[0.16em] text-teal">
-              {c.admin.caseLabel}
-            </p>
-            <p className={`mt-4 text-[1.02rem] leading-relaxed ${INK}`}>{c.admin.caseText}</p>
-            <p className="mt-4 font-display text-lg font-semibold italic text-navy">
-              {c.admin.caseQuote}
-            </p>
-          </div>
-        </Reveal>
-        <div className="mt-6 grid gap-5 sm:grid-cols-3">
-          {c.admin.stats.map((s, i) => (
-            <Reveal key={s.k} delay={i * 0.08}>
-              <div className="rounded-2xl border border-line bg-white p-6 text-center">
-                <p className="font-display text-4xl font-bold text-navy">
-                  <CountUp>{s.v}</CountUp>
-                </p>
-                <p className={`mt-2 text-sm font-semibold ${INK}`}>{s.k}</p>
-              </div>
-            </Reveal>
-          ))}
-        </div>
-        <Callout>{c.admin.caption}</Callout>
-      </Band>
-
-      {/* 7 — Who will be your next hire */}
-      <Band bg="white">
-        <Head title={c.nextHire.eyebrow} subtitle={c.nextHire.subtitle} />
-        <div className="mt-12 grid gap-5 md:grid-cols-3">
-          {c.nextHire.items.map((it, i) => (
-            <Reveal key={it.k} delay={i * 0.08}>
-              <article className="flex h-full flex-col rounded-2xl border border-line bg-white p-6">
-                <span className="font-display text-2xl font-bold text-navy/25">0{i + 1}</span>
-                <h3 className="mt-2 font-display text-lg font-bold text-navy">{it.k}</h3>
-                <p className={`mt-2 text-[0.95rem] leading-relaxed ${INK}`}>{it.v}</p>
-              </article>
-            </Reveal>
-          ))}
-        </div>
-        <Callout>{c.nextHire.caption}</Callout>
-      </Band>
-
-      {/* 8 — Right clients */}
+      {/* 1 — Right clients (traditional vs advisory) */}
       <Band bg="sand">
         <Head title={c.rightClients.eyebrow} subtitle={c.rightClients.subtitle} />
         <div className="mt-12 grid gap-6 md:grid-cols-2">
@@ -242,14 +93,14 @@ export default function Session2() {
         <Callout>{c.rightClients.caption}</Callout>
       </Band>
 
-      {/* 9 — Tiers */}
+      {/* 2 — Sort every client (tiers) */}
       <Band bg="white">
         <Head title={c.tiers.eyebrow} subtitle={c.tiers.subtitle} />
         <div className="mt-12 grid gap-5 sm:grid-cols-2 lg:grid-cols-4">
           {c.tiers.items.map((t) => {
             const s = tier[t.key]
             return (
-              <Reveal key={t.key}>
+              <Reveal key={t.name}>
                 <article className={`flex h-full flex-col rounded-2xl border bg-white p-6 ${s.border}`}>
                   <div className="flex items-center gap-2.5">
                     <span className={`h-3.5 w-3.5 rounded-full ${s.dot}`} />
@@ -267,50 +118,13 @@ export default function Session2() {
         <Callout>{c.tiers.caption}</Callout>
       </Band>
 
-      {/* 10 — Value vs effort matrix */}
+      {/* 3 — Where the tiers come from: value vs. effort */}
       <Band bg="sand">
-        <Head title={m.eyebrow} subtitle={m.subtitle} />
-        <Reveal>
-          <div className="mt-12 flex gap-3">
-            <div className="flex items-center justify-center">
-              <span className="text-xs font-bold uppercase tracking-wide text-navy/60 [writing-mode:vertical-rl] rotate-180">
-                {m.axisY}
-              </span>
-            </div>
-            <div className="flex-1">
-              <div className="grid grid-cols-2 gap-3">
-                {['fire', 'silver', 'bronze', 'gold'].map((key) => {
-                  const q = m.quadrants[key]
-                  const s = tier[key]
-                  return (
-                    <div key={key} className={`rounded-2xl border p-6 ${s.border} ${s.soft}`}>
-                      <div className="flex items-center gap-2.5">
-                        <span className={`h-3 w-3 rounded-full ${s.dot}`} />
-                        <h3 className={`font-display text-lg font-bold tracking-wide ${s.text}`}>
-                          {q.name}
-                        </h3>
-                      </div>
-                      <p className={`mt-2 text-[0.95rem] font-medium ${INK}`}>{q.v}</p>
-                    </div>
-                  )
-                })}
-              </div>
-              <p className="mt-3 text-center text-xs font-bold uppercase tracking-wide text-navy/60">
-                {m.axisX}
-              </p>
-            </div>
-          </div>
-        </Reveal>
-
-        <Reveal>
-          <p className="mt-10 text-[0.8rem] font-bold uppercase tracking-[0.16em] text-navy/60">
-            {m.scoreLabel}
-          </p>
-        </Reveal>
-        <div className="mt-5 grid gap-5 sm:grid-cols-2">
-          {[m.value, m.effort].map((col) => (
+        <Head title={c.valueEffort.eyebrow} subtitle={c.valueEffort.subtitle} />
+        <div className="mt-12 grid gap-5 sm:grid-cols-2">
+          {[c.valueEffort.value, c.valueEffort.effort].map((col) => (
             <Reveal key={col.k}>
-              <article className="h-full rounded-2xl border border-line bg-cream p-6">
+              <article className="h-full rounded-2xl border border-line bg-white p-6">
                 <h3 className="font-display text-lg font-bold text-navy">{col.k}</h3>
                 <ul className="mt-4 space-y-2.5">
                   {col.items.map((it) => (
@@ -326,7 +140,7 @@ export default function Session2() {
         </div>
       </Band>
 
-      {/* 12 — Firing wrong-fit clients */}
+      {/* 4 — Firing wrong-fit clients */}
       <Band bg="white">
         <Head title={c.firing.eyebrow} subtitle={c.firing.subtitle} />
         <Reveal>
@@ -334,7 +148,7 @@ export default function Session2() {
             <p className="text-[0.8rem] font-bold uppercase tracking-[0.16em] text-teal">
               {c.firing.exitLabel}
             </p>
-            <ul className="mt-5 grid gap-3 sm:grid-cols-2">
+            <ul className="mt-5 grid gap-3 sm:grid-cols-3">
               {c.firing.exit.map((e) => (
                 <li key={e} className="flex items-start gap-3">
                   <Check size={17} strokeWidth={3} className="mt-0.5 shrink-0 text-teal" />
@@ -364,70 +178,27 @@ export default function Session2() {
         </div>
       </Band>
 
-      {/* 13 — Own a vertical */}
+      {/* 5 — Own a vertical */}
       <Band bg="sand">
         <Head title={c.vertical.eyebrow} subtitle={c.vertical.subtitle} />
         <Reveal>
-          <div className="mt-10 flex flex-wrap gap-2.5">
-            {c.vertical.examples.map((ex) => (
-              <span
-                key={ex}
-                className="rounded-full border border-navy/15 bg-white px-4 py-2 text-sm font-semibold text-navy"
-              >
-                {ex}
-              </span>
-            ))}
-          </div>
-        </Reveal>
-        <Reveal>
-          <p className="mt-8 text-[0.8rem] font-bold uppercase tracking-[0.16em] text-navy/60">
+          <p className="mt-10 text-[0.8rem] font-bold uppercase tracking-[0.16em] text-navy/60">
             {c.vertical.testsLabel}
           </p>
         </Reveal>
         <div className="mt-5 grid gap-5 sm:grid-cols-2 lg:grid-cols-4">
           {c.vertical.tests.map((t) => (
-            <Reveal key={t.k}>
-              <article className="h-full rounded-2xl border border-line bg-white p-6">
-                <h3 className="font-display text-base font-bold text-navy">{t.k}</h3>
-                <p className={`mt-2 text-[0.92rem] leading-relaxed ${INK}`}>{t.v}</p>
+            <Reveal key={t}>
+              <article className="flex h-full items-center rounded-2xl border border-line bg-white p-6">
+                <h3 className="font-display text-base font-bold text-navy">{t}</h3>
               </article>
             </Reveal>
           ))}
         </div>
-        <Callout>{c.vertical.caption}</Callout>
       </Band>
 
-      {/* 14 — Restaurant success story */}
+      {/* 6 — Having the conversation */}
       <Band bg="white">
-        <Head title={c.restaurant.eyebrow} subtitle={c.restaurant.subtitle} />
-        <div className="mt-12 grid gap-3.5">
-          {c.restaurant.steps.map((s, i) => (
-            <Reveal key={s} delay={Math.min(i * 0.05, 0.25)}>
-              <div className="flex items-center gap-4 rounded-2xl border border-line bg-cream p-5">
-                <span className="flex h-9 w-9 shrink-0 items-center justify-center rounded-full bg-navy font-display text-sm font-bold text-white">
-                  {i + 1}
-                </span>
-                <p className={`text-[1.02rem] ${INK}`}>{s}</p>
-              </div>
-            </Reveal>
-          ))}
-        </div>
-        <div className="mt-8 grid grid-cols-2 gap-5 lg:grid-cols-4">
-          {c.restaurant.results.map((r, i) => (
-            <Reveal key={r.k} delay={i * 0.08}>
-              <div className="rounded-2xl border border-teal/30 bg-teal/[0.07] p-6 text-center">
-                <p className="font-display text-3xl font-bold text-navy sm:text-4xl">
-                  <CountUp>{r.v}</CountUp>
-                </p>
-                <p className={`mt-2 text-sm font-semibold ${INK}`}>{r.k}</p>
-              </div>
-            </Reveal>
-          ))}
-        </div>
-      </Band>
-
-      {/* 15 — Having the conversation */}
-      <Band bg="sand">
         <Head title={c.conversation.eyebrow} subtitle={c.conversation.subtitle} />
         <div className="mt-12 grid gap-6 md:grid-cols-2">
           <Reveal>
@@ -461,39 +232,34 @@ export default function Session2() {
             </article>
           </Reveal>
         </div>
-        <Reveal>
-          <p className="mt-10 text-[0.8rem] font-bold uppercase tracking-[0.16em] text-navy/60">
-            {c.conversation.actsLabel}
-          </p>
-        </Reveal>
-        <div className="mt-5 grid gap-5 md:grid-cols-3">
-          {c.conversation.acts.map((a) => (
-            <Reveal key={a.k}>
-              <article className="h-full rounded-2xl border border-line bg-white p-6">
-                <h3 className="font-display text-base font-bold text-navy">{a.k}</h3>
-                <p className={`mt-2 text-[0.97rem] italic leading-relaxed ${INK}`}>{a.v}</p>
-              </article>
-            </Reveal>
-          ))}
-        </div>
+        <Callout>{c.conversation.caption}</Callout>
       </Band>
 
-      {/* 16 — 30-day commitments */}
-      <Band bg="white">
-        <Head title={c.commitments.eyebrow} subtitle={c.commitments.subtitle} />
+      {/* 7 — Hourly billing punishes you (hourly vs fixed) */}
+      <Band bg="sand">
+        <Head title={c.hourlyVsFixed.eyebrow} subtitle={c.hourlyVsFixed.subtitle} />
         <div className="mt-12 grid gap-6 md:grid-cols-2">
-          {[c.commitments.team, c.commitments.clients].map((col, idx) => (
-            <Reveal key={col.label} delay={idx * 0.1}>
-              <article className="h-full rounded-2xl border border-line bg-cream p-7">
-                <span className="inline-flex items-center gap-2 text-xs font-bold uppercase tracking-[0.16em] text-teal">
-                  {idx === 0 ? <Users size={15} /> : <Target size={15} />}
-                  {col.label}
-                </span>
-                <ul className="mt-5 space-y-3.5">
-                  {col.items.map((it) => (
+          {[
+            { f: c.hourlyVsFixed.firm1, ok: false },
+            { f: c.hourlyVsFixed.firm2, ok: true },
+          ].map(({ f, ok }) => (
+            <Reveal key={f.name} delay={ok ? 0.1 : 0}>
+              <article
+                className={`h-full rounded-2xl border p-7 ${
+                  ok ? 'border-teal/30 bg-teal/[0.07]' : 'border-[#d6453b]/25 bg-white'
+                }`}
+              >
+                <h3 className="font-display text-xl font-bold text-navy">{f.name}</h3>
+                <p className="mt-1 font-display text-base font-semibold italic text-navy">{f.tag}</p>
+                <ul className="mt-5 space-y-3">
+                  {f.items.map((it) => (
                     <li key={it} className="flex items-start gap-3">
-                      <Check size={17} strokeWidth={3} className="mt-0.5 shrink-0 text-teal" />
-                      <span className={`text-[0.97rem] ${INK}`}>{it}</span>
+                      {ok ? (
+                        <Check size={17} strokeWidth={3} className="mt-0.5 shrink-0 text-teal" />
+                      ) : (
+                        <X size={16} strokeWidth={3} className="mt-0.5 shrink-0 text-[#b23a30]" />
+                      )}
+                      <span className={`text-[0.97rem] ${ok ? 'font-medium' : ''} ${INK}`}>{it}</span>
                     </li>
                   ))}
                 </ul>
@@ -503,37 +269,11 @@ export default function Session2() {
         </div>
       </Band>
 
-      {/* 17 — Pair up */}
-      <Band bg="sand">
-        <Head title={c.pairUp.eyebrow} subtitle={c.pairUp.subtitle} />
-        <Reveal>
-          <div className="mt-8 flex items-center gap-3.5">
-            <Handshake size={22} className="shrink-0 text-teal" />
-            <span className="text-sm font-bold uppercase tracking-[0.14em] text-navy/60">
-              Find one person · Exchange commitments · Schedule the check-in
-            </span>
-          </div>
-        </Reveal>
-        <div className="mt-6 grid gap-5 md:grid-cols-3">
-          {c.pairUp.steps.map((s) => (
-            <Reveal key={s.n}>
-              <article className="flex h-full flex-col rounded-2xl border border-line bg-white p-6">
-                <span className="flex h-9 w-9 items-center justify-center rounded-full bg-navy font-display text-sm font-bold text-white">
-                  {s.n}
-                </span>
-                <h3 className="mt-4 font-display text-lg font-bold text-navy">{s.k}</h3>
-                <p className={`mt-2 text-[0.95rem] leading-relaxed ${INK}`}>{s.v}</p>
-              </article>
-            </Reveal>
-          ))}
-        </div>
-      </Band>
-
-      {/* 18 — Key takeaways */}
+      {/* 8 — How fixed monthly pricing works */}
       <Band bg="white">
-        <Head title={c.takeaways.eyebrow} subtitle={c.takeaways.subtitle} />
+        <Head title={c.fixedPricing.eyebrow} subtitle={c.fixedPricing.subtitle} />
         <div className="mt-12 space-y-4">
-          {c.takeaways.items.map((t, i) => (
+          {c.fixedPricing.items.map((t, i) => (
             <Reveal key={t} delay={Math.min(i * 0.05, 0.2)}>
               <div className="flex gap-5 rounded-2xl border border-line bg-cream p-6">
                 <span className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-navy font-display text-base font-bold text-white">
@@ -546,7 +286,47 @@ export default function Session2() {
         </div>
       </Band>
 
-      {/* 19 — Up next (dark) */}
+      {/* 9 — The pricing window */}
+      <Band bg="sand">
+        <Head title={c.pricingWindow.eyebrow} subtitle={c.pricingWindow.subtitle} />
+        <Reveal>
+          <div className="mt-10 rounded-2xl border border-line bg-white p-7 sm:p-9">
+            <p className="text-[0.8rem] font-bold uppercase tracking-[0.16em] text-teal">
+              {c.pricingWindow.caseLabel}
+            </p>
+            <p className={`mt-4 text-[1.02rem] leading-relaxed ${INK}`}>{c.pricingWindow.caseText}</p>
+          </div>
+        </Reveal>
+        <div className="mt-6 grid gap-5 sm:grid-cols-3">
+          {c.pricingWindow.stats.map((s) => (
+            <Reveal key={s.k}>
+              <div className="rounded-2xl border border-line bg-white p-6 text-center">
+                <p className="font-display text-4xl font-bold text-navy">{s.v}</p>
+                <p className={`mt-2 text-sm font-semibold ${INK}`}>{s.k}</p>
+              </div>
+            </Reveal>
+          ))}
+        </div>
+        <Callout>{c.pricingWindow.caption}</Callout>
+      </Band>
+
+      {/* 10 — Fixed fee + value-added = advisory */}
+      <Band bg="white">
+        <Head title={c.advisoryStack.eyebrow} subtitle={c.advisoryStack.subtitle} />
+        <div className="mt-12 grid gap-5 md:grid-cols-3">
+          {c.advisoryStack.items.map((it, i) => (
+            <Reveal key={it.k} delay={i * 0.08}>
+              <article className="flex h-full flex-col rounded-2xl border border-line bg-white p-6">
+                <span className="font-display text-2xl font-bold text-navy/25">0{i + 1}</span>
+                <h3 className="mt-2 font-display text-lg font-bold text-navy">{it.k}</h3>
+                <p className={`mt-2 text-[0.95rem] leading-relaxed ${INK}`}>{it.v}</p>
+              </article>
+            </Reveal>
+          ))}
+        </div>
+      </Band>
+
+      {/* Up next (dark) */}
       <Band bg="deep" glow>
         <Reveal>
           <span className="inline-flex items-center gap-2 rounded-full border border-white/15 bg-white/[0.07] px-4 py-1.5 text-[0.8rem] font-bold uppercase tracking-[0.18em] text-yellow">

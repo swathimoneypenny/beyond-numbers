@@ -152,9 +152,14 @@ export function PullQuote({ children, cite }) {
 /* Exercise callout (teal-accented). Pass `embedId` to mount the live interactive
    exercise, or `comingSoon` to show a placeholder. */
 export function ExerciseCard({ data, embedId, comingSoon = false }) {
+  // No Reveal/motion wrapper around the exercise card: framer-motion keeps a
+  // transform (and will-change) on the animated element, and a tall same-origin
+  // iframe nested under a transformed ancestor triggers Chrome's scroll-repaint
+  // bug (regions blank until a reflow). Rendering the card statically removes
+  // that compositing trigger. Shared by Sessions 2–4 (Session 1 has its own
+  // local copy with the same fix); the interactive embed matters more than a fade-in.
   return (
-    <Reveal>
-      <div className="overflow-hidden rounded-3xl border border-teal/30 bg-white shadow-[0_24px_60px_-30px_rgba(61,15,82,0.35)]">
+    <div className="overflow-hidden rounded-3xl border border-teal/30 bg-white shadow-[0_24px_60px_-30px_rgba(61,15,82,0.35)]">
         <div className="bg-teal/[0.08] px-7 py-6 sm:px-9">
           <span className="inline-flex items-center gap-2 rounded-full bg-teal px-3.5 py-1.5 text-xs font-bold uppercase tracking-[0.14em] text-white">
             <Sparkles size={14} />
@@ -208,6 +213,5 @@ export function ExerciseCard({ data, embedId, comingSoon = false }) {
           </div>
         )}
       </div>
-    </Reveal>
   )
 }
