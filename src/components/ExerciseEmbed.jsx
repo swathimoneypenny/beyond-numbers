@@ -140,16 +140,14 @@ function mountBottomActions(doc) {
      e.g. s4-ex2's intentional white "printable preview" and coloured section
      headings are preserved. */
 const THEMED_EXERCISES = new Set([
-  // NOTE: the Session 1 and Session 2 homework exercises (s1-hw1…s1-hw4,
-  // s2-hw1…s2-hw3) are deliberately NOT themed. They were authored as complete
+  // NOTE: the Session 1–3 homework exercises (s1-hw1…s1-hw4, s2-hw1…s2-hw3,
+  // s3-hw1) are deliberately NOT themed. They were authored as complete
   // `color-scheme: light` designs (purple gradient field, white panels, pale
   // semantic boxes with dark text, white inputs) that already match the brand
   // palette. Injecting the shared dark theme forced body/input text white on
   // their pale boxes → unreadable light-on-light. They render correctly with
   // their own styling, so we leave them unthemed rather than fight their design
   // with fragile per-class overrides.
-  's3-ex1-tech-stack-calculator',
-  's3-ex2-ai-vendor-scorecard',
   's4-ex1-procedure-tech-stack',
   's4-ex2-month-end-procedure',
 ])

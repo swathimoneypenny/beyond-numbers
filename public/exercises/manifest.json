@@ -76,22 +76,13 @@
       "summary": "Homework 3 for Session 2 (Clients & Pricing). Back-office time budget: team cost rates by role (PRP, ADM, BKM, TEAM, CFO, CPA, CBO), monthly tasks as times per month × time per event × who, per-row rate overrides, 'tech kills it' flags that move work to savings, an administration allowance, per-client technology costs, and services quoted outside the monthly fee. The client field suggests the IDEAL clients from Homework 1 and pulls that client's in-house cost from Homework 2. Presets reproduce the Step 6: Pricing BOS Time Budget examples exactly ($829.95, $1,559.95, $1,149.13). The pricing window shows margin, client savings, annual profit and fee per hour."
     },
     {
-      "id": "s3-ex1-tech-stack-calculator",
+      "id": "s3-hw1-wisp-ai-role-checklist",
       "session": 3,
       "exercise": 1,
-      "title": "Tech Stack Cost Calculator",
-      "type": "calculator",
-      "file": "s3-ex1-tech-stack-calculator.json",
-      "summary": "Build an advisory tech stack for the Regional Distribution Co. case across seven app categories with 2026-verified pricing; live total and benchmark."
-    },
-    {
-      "id": "s3-ex2-ai-vendor-scorecard",
-      "session": 3,
-      "exercise": 2,
-      "title": "AI Vendor Due-Diligence Scorecard",
-      "type": "scorecard",
-      "file": "s3-ex2-ai-vendor-scorecard.json",
-      "summary": "Score one AI tool across six areas (three critical) before client data is involved; auto Go / Conditional / No-Go verdict, any critical Red forces No-Go."
+      "title": "WISP & AI Governance Role Checklist",
+      "type": "checklist",
+      "file": "s3-hw1-wisp-ai-role-checklist.json",
+      "summary": "Attendees check off what their Written Information Security Plan covers (FTC nine elements, IRS/state, insurance and response, AI governance) with Have/Partial/Missing/Don't know and notes, then mark their own duties at the Partner, Staff Accountant, Preparer, or Bookkeeper level. Missing, Don't know, Partial, and Need help items roll into one gap list with copy and print."
     },
     {
       "id": "s4-ex1-procedure-tech-stack",

@@ -38,17 +38,16 @@ export const sessions = [
   {
     number: '03',
     slug: 'session-3',
-    title: 'Technology & AI',
-    subtitle:
-      'Which technology earns a place in your core stack—and under what rules may AI be used on client work?',
+    title: 'Protect Your Firm — Cybersecurity and AI Governance',
+    subtitle: 'What must leaders own as you add AI and handle more client data?',
     description:
-      "Build a focused 'Little Black Dress' tech stack, apply the 80/20 rule, and learn where AI fits across the workflow with practical AI governance.",
-    meta: ['90 min', '2 exercises'],
+      'Review your WISP, cyber-insurance, vendors and incident response, set practical AI governance, and build a role-based gap list.',
+    meta: ['90 min', '1 exercise'],
     framing: {
-      use: 'The Little Black Dress technology approach, a sample stack costing, and an AI vendor due-diligence scorecard.',
+      use: 'The shift from IT task to leadership duty, the rules (FTC, IRS, states and AI), and the WISP & AI Governance Role Checklist.',
       leaveWith:
-        'The shape of your core stack, a costed sample advisory stack, and a Go / Conditional / No-Go decision on one AI tool with a safer next step.',
-      commitment: 'One technology decision and one AI guardrail.',
+        'A read on your security and AI gaps, the five controls to put in place, and a role-based gap list owned by name and date.',
+      commitment: 'Finish your WISP role checklist with your team.',
     },
   },
   {

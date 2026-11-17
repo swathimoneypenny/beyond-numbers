@@ -1,7 +1,8 @@
 import { Link } from 'react-router-dom'
-import { ArrowRight, ArrowLeft, Check, Sparkles, Quote } from 'lucide-react'
+import { ArrowRight, ArrowLeft, Check, Sparkles, Quote, Download } from 'lucide-react'
 import SessionHero from '../components/SessionHero'
 import Reveal from '../components/Reveal'
+import Button from '../components/Button'
 import ExerciseEmbed from '../components/ExerciseEmbed'
 import {
   INK,
@@ -40,24 +41,27 @@ function Note({ label, children, accent = 'teal' }) {
   )
 }
 
-/* Exercise shell: teal header + custom body + live embed. */
+/* Exercise shell: teal header + custom body + live embed. (Used in Chunk 3.) */
 function ExerciseShell({ tag, title, children, embedId }) {
+  // No Reveal/motion wrapper around the exercise shell: framer-motion keeps a
+  // transform (and will-change) on the animated element, and a tall same-origin
+  // iframe under a transformed ancestor triggers Chrome's scroll-repaint bug
+  // (regions blank until a reflow). Rendering the shell statically removes that
+  // compositing trigger (same fix as Session 1's local card and the shared card).
   return (
-    <Reveal>
-      <div className="overflow-hidden rounded-3xl border border-teal/30 bg-white shadow-[0_24px_60px_-30px_rgba(61,15,82,0.35)]">
-        <div className="bg-teal/[0.08] px-7 py-6 sm:px-9">
-          <span className="inline-flex items-center gap-2 rounded-full bg-teal px-3.5 py-1.5 text-xs font-bold uppercase tracking-[0.14em] text-white">
-            <Sparkles size={14} />
-            {tag}
-          </span>
-          <h2 className="mt-4 font-display text-2xl font-bold text-navy sm:text-3xl">{title}</h2>
-        </div>
-        <div className="px-7 py-7 sm:px-9 sm:py-8">{children}</div>
-        <div className="px-7 pb-9 sm:px-9">
-          <ExerciseEmbed exerciseId={embedId} title={title} />
-        </div>
+    <div className="overflow-hidden rounded-3xl border border-teal/30 bg-white shadow-[0_24px_60px_-30px_rgba(61,15,82,0.35)]">
+      <div className="bg-teal/[0.08] px-7 py-6 sm:px-9">
+        <span className="inline-flex items-center gap-2 rounded-full bg-teal px-3.5 py-1.5 text-xs font-bold uppercase tracking-[0.14em] text-white">
+          <Sparkles size={14} />
+          {tag}
+        </span>
+        <h2 className="mt-4 font-display text-2xl font-bold text-navy sm:text-3xl">{title}</h2>
       </div>
-    </Reveal>
+      <div className="px-7 py-7 sm:px-9 sm:py-8">{children}</div>
+      <div className="px-7 pb-9 sm:px-9">
+        <ExerciseEmbed exerciseId={embedId} title={title} />
+      </div>
+    </div>
   )
 }
 
@@ -74,429 +78,206 @@ export default function Session3() {
 
       <SessionFraming framing={session.framing} />
 
-      {/* ── Exercises / games first (moved to the top per stakeholder request).
-          Exercise Jump Bar removed (redundant now). Anchor ids unchanged. ── */}
-      {/* 9 — Exercise 1 (live embed) */}
+      {/* ── Exercise (live embed) + downloadable worksheet, first ── */}
       <Band bg="sand" id={EXERCISE_ANCHORS[0]}>
         <ExerciseShell
           tag={c.exercise1.tag}
           title={c.exercise1.title}
-          embedId="s3-ex1-tech-stack-calculator"
+          embedId="s3-hw1-wisp-ai-role-checklist"
         >
-          <p className="text-[0.8rem] font-bold uppercase tracking-[0.16em] text-teal">
-            {c.exercise1.clientLabel}
-          </p>
-          <ul className="mt-4 grid gap-2.5 sm:grid-cols-2">
-            {c.exercise1.client.map((x) => (
-              <li key={x} className={`flex items-start gap-2.5 text-[0.95rem] ${INK}`}>
-                <span className="mt-1.5 h-1.5 w-1.5 shrink-0 rounded-full bg-teal" />
-                {x}
-              </li>
-            ))}
-          </ul>
-          <p className="mt-7 text-[0.8rem] font-bold uppercase tracking-[0.16em] text-navy/60">
-            {c.exercise1.taskLabel}
-          </p>
-          <p className={`mt-2.5 text-[0.97rem] leading-relaxed ${INK}`}>{c.exercise1.task}</p>
-          <div className="mt-4 flex flex-wrap gap-2.5">
-            {c.exercise1.categories.map((cat) => (
-              <span
-                key={cat}
-                className="rounded-full border border-navy/15 bg-cream px-3.5 py-1.5 text-sm font-semibold text-navy"
-              >
-                {cat}
-              </span>
-            ))}
-          </div>
-          <p className="mt-6 rounded-xl border border-yellow/40 bg-yellow/[0.12] px-5 py-4">
-            <span className="text-[0.8rem] font-bold uppercase tracking-[0.14em] text-[#8a6a00]">
-              {c.exercise1.goalLabel}:{' '}
-            </span>
-            <span className={`font-semibold ${INK}`}>{c.exercise1.goal}</span>
-          </p>
-        </ExerciseShell>
-      </Band>
-
-      {/* 14 — Exercise 2 (live embed) */}
-      <Band bg="white" id={EXERCISE_ANCHORS[1]}>
-        <ExerciseShell
-          tag={c.exercise2.tag}
-          title={c.exercise2.title}
-          embedId="s3-ex2-ai-vendor-scorecard"
-        >
-          <p className={`text-[1.02rem] font-medium leading-relaxed ${INK}`}>{c.exercise2.lead}</p>
-          <div className="mt-5 grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
-            {c.exercise2.areas.map((a, i) => (
-              <div key={a} className={`flex items-start gap-3 rounded-xl border border-line bg-cream p-4 text-[0.93rem] ${INK}`}>
-                <span className="font-display text-sm font-bold text-navy/40">{i + 1}</span>
-                {a}
+          <p className={`text-[1.02rem] font-medium leading-relaxed ${INK}`}>{c.exercise1.lead}</p>
+          <div className="mt-6 grid gap-4 sm:grid-cols-3">
+            {c.exercise1.steps.map((s, i) => (
+              <div key={s.k} className="rounded-2xl border border-line bg-cream p-5">
+                <div className="flex items-center justify-between">
+                  <span className="font-display text-lg font-bold text-navy">0{i + 1}</span>
+                  <span className="rounded-full bg-navy px-2.5 py-1 text-[0.68rem] font-bold uppercase tracking-wide text-white">
+                    {s.time}
+                  </span>
+                </div>
+                <h3 className="mt-3 font-display text-base font-bold text-navy">{s.k}</h3>
+                <p className={`mt-1.5 text-[0.9rem] leading-relaxed ${INK}`}>{s.v}</p>
               </div>
             ))}
           </div>
-          <div className="mt-5 flex flex-wrap gap-3">
-            {c.exercise2.legend.map((l) => {
-              const lc = legendColor[l.key]
-              return (
-                <span
-                  key={l.k}
-                  className={`inline-flex items-center gap-2 rounded-full border bg-white px-4 py-2 text-sm font-bold ${lc.border} ${lc.text}`}
-                >
-                  <span className={`h-3 w-3 rounded-full ${lc.dot}`} />
-                  {l.k} — <span className={`font-semibold ${INK}`}>{l.v}</span>
-                </span>
-              )
-            })}
-          </div>
+          {c.exercise1.note && (
+            <div className="mt-6 rounded-xl border border-yellow/40 bg-yellow/[0.14] px-5 py-4">
+              <p className={`text-[0.92rem] font-semibold leading-relaxed ${INK}`}>
+                {c.exercise1.note}
+              </p>
+            </div>
+          )}
+          <Button
+            href="/downloads/Session_3_Homework_WISP_Role_Checklist_Worksheet.pdf"
+            download
+            variant="teal"
+            className="mt-6"
+          >
+            <Download size={18} />
+            Download the printable worksheet (PDF)
+          </Button>
         </ExerciseShell>
       </Band>
 
-      {/* ── Written content ─────────────────────── */}
+      {/* ── Written content ─────────────────────────────────────── */}
 
-      {/* 1 — Objectives */}
+      {/* 1 — Cybersecurity is now your job */}
       <Band bg="sand">
-        <Head title={c.objectives.eyebrow} />
-        <div className="mt-12 grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
-          {c.objectives.items.map((it) => (
-            <Reveal key={it.n}>
-              <article className="flex h-full flex-col rounded-2xl border border-line bg-white p-6">
-                <span className="flex h-10 w-10 items-center justify-center rounded-xl bg-navy font-display text-base font-bold text-white">
-                  {it.n}
-                </span>
-                <h3 className="mt-4 font-display text-lg font-bold text-navy">{it.k}</h3>
-                <p className={`mt-2 text-[0.95rem] leading-relaxed ${INK}`}>{it.v}</p>
+        <Head title={c.nowYourJob.eyebrow} subtitle={c.nowYourJob.subtitle} />
+        <div className="mt-12 grid gap-6 md:grid-cols-2">
+          <Reveal>
+            <article className="h-full rounded-2xl border border-[#d6453b]/25 bg-white p-7">
+              <p className="text-[0.72rem] font-bold uppercase tracking-[0.16em] text-navy/60">
+                {c.nowYourJob.oldLabel}
+              </p>
+              <ul className="mt-5 space-y-3">
+                {c.nowYourJob.old.map((t) => (
+                  <li key={t} className={`flex items-start gap-3 text-[0.97rem] ${INK}`}>
+                    <span className="mt-1.5 h-1.5 w-1.5 shrink-0 rounded-full bg-navy/40" />
+                    {t}
+                  </li>
+                ))}
+              </ul>
+            </article>
+          </Reveal>
+          <Reveal delay={0.1}>
+            <article className="h-full rounded-2xl border border-teal/30 bg-teal/[0.07] p-7">
+              <p className="text-[0.72rem] font-bold uppercase tracking-[0.16em] text-teal">
+                {c.nowYourJob.newLabel}
+              </p>
+              <ul className="mt-5 space-y-3">
+                {c.nowYourJob.new.map((t) => (
+                  <li key={t} className="flex items-start gap-3">
+                    <Check size={17} strokeWidth={3} className="mt-0.5 shrink-0 text-teal" />
+                    <span className={`text-[0.97rem] font-medium ${INK}`}>{t}</span>
+                  </li>
+                ))}
+              </ul>
+            </article>
+          </Reveal>
+        </div>
+        <div className="mt-6 grid gap-5 sm:grid-cols-2">
+          {c.nowYourJob.stats.map((s) => (
+            <Reveal key={s.k}>
+              <div className="rounded-2xl border border-line bg-white p-6 text-center">
+                <p className="font-display text-4xl font-bold text-navy">{s.v}</p>
+                <p className={`mt-2 text-sm font-semibold ${INK}`}>{s.k}</p>
+              </div>
+            </Reveal>
+          ))}
+        </div>
+      </Band>
+
+      {/* 2 — The FTC Safeguards Rule */}
+      <Band bg="white">
+        <Head title={c.ftcRule.eyebrow} subtitle={c.ftcRule.subtitle} />
+        <div className="mt-12 grid gap-5 sm:grid-cols-2">
+          {c.ftcRule.facts.map((f) => (
+            <Reveal key={f.k}>
+              <div className="rounded-2xl border border-line bg-cream p-6 text-center">
+                <p className="font-display text-3xl font-bold text-navy sm:text-4xl">{f.v}</p>
+                <p className={`mt-2 text-sm font-semibold ${INK}`}>{f.k}</p>
+              </div>
+            </Reveal>
+          ))}
+        </div>
+        <Reveal>
+          <p className="mt-8 text-[0.8rem] font-bold uppercase tracking-[0.16em] text-navy/60">
+            {c.ftcRule.elementsLabel}
+          </p>
+        </Reveal>
+        <div className="mt-5 grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
+          {c.ftcRule.elements.map((e, i) => (
+            <Reveal key={e} delay={Math.min(i * 0.04, 0.24)}>
+              <div className={`flex items-start gap-3 rounded-xl border border-line bg-cream p-4 text-[0.95rem] ${INK}`}>
+                <Check size={16} strokeWidth={3} className="mt-0.5 shrink-0 text-teal" />
+                {e}
+              </div>
+            </Reveal>
+          ))}
+        </div>
+      </Band>
+
+      {/* 3 — IRS and the state patchwork */}
+      <Band bg="sand">
+        <Head title={c.irsStates.eyebrow} subtitle={c.irsStates.subtitle} />
+        <div className="mt-12 grid gap-5 sm:grid-cols-2">
+          {c.irsStates.points.map((p) => (
+            <Reveal key={p.k}>
+              <article className="h-full rounded-2xl border border-line bg-white p-6">
+                <h3 className="font-display text-lg font-bold text-navy">{p.k}</h3>
+                <p className={`mt-2 text-[0.95rem] leading-relaxed ${INK}`}>{p.v}</p>
               </article>
             </Reveal>
           ))}
         </div>
-        <Callout>{c.objectives.caption}</Callout>
       </Band>
 
-      {/* 2 — Technology Evolution */}
+      {/* 4 — AI governance has arrived */}
       <Band bg="white">
-        <Head title={c.evolution.eyebrow} />
-        <div className="mt-12 flex flex-col items-stretch gap-3 lg:flex-row lg:items-center">
-          {c.evolution.timeline.map((stage, i) => {
-            const last = i === c.evolution.timeline.length - 1
+        <Head title={c.aiGovernance.eyebrow} subtitle={c.aiGovernance.subtitle} />
+        <Reveal>
+          <p className="mt-10 text-[0.8rem] font-bold uppercase tracking-[0.16em] text-navy/60">
+            {c.aiGovernance.kitLabel}
+          </p>
+        </Reveal>
+        <div className="mt-5 grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
+          {c.aiGovernance.kit.map((k) => (
+            <Reveal key={k}>
+              <div className={`flex items-start gap-3 rounded-xl border border-line bg-cream p-4 text-[0.95rem] ${INK}`}>
+                <Check size={16} strokeWidth={3} className="mt-0.5 shrink-0 text-teal" />
+                {k}
+              </div>
+            </Reveal>
+          ))}
+        </div>
+      </Band>
+
+      {/* 5 — What never gets pasted (GREEN / YELLOW / RED) */}
+      <Band bg="sand">
+        <Head title={c.neverPaste.eyebrow} subtitle={c.neverPaste.subtitle} />
+        <div className="mt-12 grid gap-6 md:grid-cols-3">
+          {c.neverPaste.bands.map((b) => {
+            const lc = legendColor[b.key]
             return (
-              <Reveal key={stage.k} delay={i * 0.08} className="flex flex-1 items-center gap-3">
-                <div
-                  className={`flex-1 rounded-2xl border p-5 text-center ${
-                    last ? 'border-teal/40 bg-teal/[0.1]' : 'border-line bg-cream'
-                  }`}
-                >
-                  <p className={`font-display text-base font-bold ${last ? 'text-teal' : 'text-navy'}`}>
-                    {stage.k}
-                  </p>
-                  <p className={`mt-1 text-xs font-semibold ${INK}`}>{stage.t}</p>
-                </div>
-                {!last && <ArrowRight size={20} className="hidden shrink-0 text-navy/40 lg:block" />}
+              <Reveal key={b.key}>
+                <article className={`flex h-full flex-col rounded-2xl border bg-white p-6 ${lc.border}`}>
+                  <div className="flex items-center gap-2.5">
+                    <span className={`h-3.5 w-3.5 rounded-full ${lc.dot}`} />
+                    <h3 className={`font-display text-lg font-bold tracking-wide ${lc.text}`}>
+                      {b.label}
+                    </h3>
+                  </div>
+                  <p className={`mt-2 text-[0.9rem] font-semibold ${INK}`}>{b.rule}</p>
+                  <ul className="mt-4 space-y-2.5">
+                    {b.items.map((it) => (
+                      <li key={it} className={`flex items-start gap-2.5 text-[0.93rem] ${INK}`}>
+                        <span className={`mt-1.5 h-1.5 w-1.5 shrink-0 rounded-full ${lc.dot}`} />
+                        {it}
+                      </li>
+                    ))}
+                  </ul>
+                </article>
               </Reveal>
             )
           })}
         </div>
-        <Reveal>
-          <p className={`mt-10 max-w-3xl text-[1.02rem] leading-relaxed ${INK}`}>{c.evolution.p1}</p>
-        </Reveal>
-        <Note label={c.evolution.shiftLabel}>{c.evolution.shift}</Note>
       </Band>
 
-      {/* 3 — Little Black Dress */}
-      <Band bg="sand">
-        <Head title={c.lbd.eyebrow} />
-        <Reveal>
-          <div className="mt-10 rounded-2xl border border-navy/15 bg-navy p-7 text-center sm:p-9">
-            <p className="text-[0.72rem] font-bold uppercase tracking-[0.18em] text-yellow">
-              Core stack
-            </p>
-            <p className="mt-3 font-display text-xl font-bold text-white sm:text-2xl">{c.lbd.core}</p>
-          </div>
-        </Reveal>
-        <Reveal>
-          <p className="mt-8 text-[0.8rem] font-bold uppercase tracking-[0.16em] text-navy/60">
-            {c.lbd.conceptLabel}
-          </p>
-        </Reveal>
-        <ul className="mt-5 grid gap-3 sm:grid-cols-2">
-          {c.lbd.concept.map((x) => (
-            <Reveal key={x}>
-              <li className="flex items-start gap-3 rounded-xl border border-line bg-white p-4">
-                <Check size={17} strokeWidth={3} className="mt-0.5 shrink-0 text-teal" />
-                <span className={`text-[0.97rem] ${INK}`}>{x}</span>
-              </li>
-            </Reveal>
-          ))}
-        </ul>
-        <Callout>{c.lbd.caption}</Callout>
-      </Band>
-
-      {/* 4 — 80/20 Rule */}
+      {/* 6 — What your insurer expects */}
       <Band bg="white">
-        <Head title={c.eightyTwenty.eyebrow} />
+        <Head title={c.insurer.eyebrow} subtitle={c.insurer.subtitle} />
         <div className="mt-12 grid gap-6 md:grid-cols-2">
-          {c.eightyTwenty.items.map((it, i) => (
-            <Reveal key={it.pct} delay={i * 0.1}>
-              <article
-                className={`h-full rounded-2xl border p-7 ${
-                  i === 0 ? 'border-teal/30 bg-teal/[0.07]' : 'border-yellow/40 bg-yellow/[0.1]'
-                }`}
-              >
-                <p className="font-display text-5xl font-bold text-navy">{it.pct}</p>
-                <h3 className="mt-3 font-display text-xl font-bold text-navy">{it.k}</h3>
-                <p className={`mt-2 text-[0.97rem] leading-relaxed ${INK}`}>{it.v}</p>
-              </article>
-            </Reveal>
-          ))}
-        </div>
-        <Note label={c.eightyTwenty.caseLabel} accent="yellow">
-          {c.eightyTwenty.case}
-        </Note>
-      </Band>
-
-      {/* 5 — 6 Criteria */}
-      <Band bg="sand">
-        <Head title={c.criteria.eyebrow} />
-        <div className="mt-12 grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
-          {c.criteria.items.map((it) => (
-            <Reveal key={it.n}>
-              <article className="flex h-full flex-col rounded-2xl border border-line bg-white p-6">
-                <div className="flex items-center gap-3">
-                  <span className="flex h-9 w-9 items-center justify-center rounded-lg bg-navy font-display text-sm font-bold text-white">
-                    {it.n}
-                  </span>
-                  <h3 className="font-display text-base font-bold text-navy">{it.k}</h3>
-                </div>
-                <p className={`mt-3 text-[0.93rem] leading-relaxed ${INK}`}>{it.v}</p>
-              </article>
-            </Reveal>
-          ))}
-        </div>
-        <Callout>{c.criteria.caption}</Callout>
-      </Band>
-
-      {/* 6 — Core App Categories */}
-      <Band bg="white">
-        <Head title={c.categories.eyebrow} />
-        <div className="mt-12 grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
-          {c.categories.items.map((it) => (
-            <Reveal key={it.k}>
-              <article className="h-full rounded-2xl border border-line bg-cream p-6">
-                <h3 className="font-display text-base font-bold text-teal">{it.k}</h3>
-                <p className={`mt-2 text-[0.95rem] leading-relaxed ${INK}`}>{it.v}</p>
-              </article>
-            </Reveal>
-          ))}
-        </div>
-        <Note label="Pro tip">{c.categories.proTip}</Note>
-      </Band>
-
-      {/* 7 — Power of Integration */}
-      <Band bg="sand">
-        <Head title={c.integration.eyebrow} />
-        <div className="mt-12 grid gap-6 md:grid-cols-2">
-          {[c.integration.native, c.integration.third].map((it, i) => (
-            <Reveal key={it.k} delay={i * 0.1}>
-              <article className="h-full rounded-2xl border border-line bg-white p-7">
-                <h3 className="font-display text-lg font-bold text-navy">{it.k}</h3>
-                <p className={`mt-2 text-[0.97rem] leading-relaxed ${INK}`}>{it.v}</p>
-                <p className="mt-4 rounded-lg bg-teal/[0.08] px-3.5 py-2.5 text-[0.9rem] font-semibold text-teal">
-                  {it.ex}
-                </p>
-              </article>
-            </Reveal>
-          ))}
-        </div>
-        <Reveal>
-          <p className="mt-8 text-[0.8rem] font-bold uppercase tracking-[0.16em] text-navy/60">
-            {c.integration.stackLabel}
-          </p>
-          <div className="mt-5 flex flex-wrap items-center gap-2.5">
-            {c.integration.stack.map((s, i) => (
-              <span key={s} className="flex items-center gap-2.5">
-                {i > 0 && <ArrowRight size={16} className="text-teal" />}
-                <span className="rounded-full border border-navy/15 bg-white px-4 py-2 text-sm font-bold text-navy">
-                  {s}
-                </span>
-              </span>
-            ))}
-          </div>
-        </Reveal>
-        <Note label="Result">{c.integration.result}</Note>
-      </Band>
-
-      {/* 8 — Solving Document Retrieval */}
-      <Band bg="white">
-        <Head title={c.documents.eyebrow} />
-        <Reveal>
-          <figure className="mt-10 rounded-2xl border border-navy/15 bg-navy p-7 sm:p-9">
-            <Quote className="mb-3 text-yellow" size={28} />
-            <blockquote className="font-display text-xl font-semibold italic leading-snug text-white">
-              {c.documents.quote}
-            </blockquote>
-          </figure>
-        </Reveal>
-        <div className="mt-8 grid gap-5 sm:grid-cols-2 lg:grid-cols-4">
-          {c.documents.tools.map((t) => (
-            <Reveal key={t.k}>
-              <article className="h-full rounded-2xl border border-line bg-cream p-6">
-                <h3 className="font-display text-base font-bold text-navy">{t.k}</h3>
-                <p className={`mt-2 text-[0.93rem] leading-relaxed ${INK}`}>{t.v}</p>
-              </article>
-            </Reveal>
-          ))}
-        </div>
-        <Note label={c.documents.processLabel}>{c.documents.process}</Note>
-        <Note label={c.documents.warnLabel} accent="yellow">
-          {c.documents.warn}
-        </Note>
-      </Band>
-
-      {/* 10 — AI: Where It Fits */}
-      <Band bg="sand">
-        <Head title={c.aiFits.eyebrow} subtitle={c.aiFits.intro} />
-        <div className="mt-12 grid gap-6 md:grid-cols-2">
-          {[c.aiFits.gen, c.aiFits.agentic].map((col, i) => (
-            <Reveal key={col.k} delay={i * 0.1}>
-              <article
-                className={`h-full rounded-2xl border p-7 ${
-                  i === 0 ? 'border-teal/30 bg-teal/[0.06]' : 'border-purple/30 bg-purple/[0.06]'
-                }`}
-              >
-                <h3 className="font-display text-xl font-bold text-navy">{col.k}</h3>
-                <p className={`mt-2 text-[0.97rem] leading-relaxed ${INK}`}>{col.v}</p>
-                <ul className="mt-5 space-y-2.5">
-                  {col.items.map((x) => (
-                    <li key={x} className={`flex items-start gap-2.5 text-[0.95rem] ${INK}`}>
-                      <span
-                        className={`mt-1.5 h-1.5 w-1.5 shrink-0 rounded-full ${i === 0 ? 'bg-teal' : 'bg-purple'}`}
-                      />
-                      {x}
-                    </li>
-                  ))}
-                </ul>
-              </article>
-            </Reveal>
-          ))}
-        </div>
-      </Band>
-
-      {/* 11 — AI Across Bookkeeping, Tax & Advisory */}
-      <Band bg="white">
-        <Head title={c.aiAcross.eyebrow} />
-        <div className="mt-12 grid gap-5 lg:grid-cols-3">
-          {c.aiAcross.groups.map((g) => (
-            <Reveal key={g.k}>
-              <article className="flex h-full flex-col rounded-2xl border border-line bg-white p-6">
-                <h3 className="font-display text-lg font-bold text-teal">{g.k}</h3>
-                <ul className="mt-4 space-y-3">
-                  {g.items.map((x) => (
-                    <li key={x} className={`flex items-start gap-2.5 text-[0.94rem] ${INK}`}>
-                      <span className="mt-1.5 h-1.5 w-1.5 shrink-0 rounded-full bg-navy/40" />
-                      {x}
-                    </li>
-                  ))}
-                </ul>
-              </article>
-            </Reveal>
-          ))}
-        </div>
-        <Note label={c.aiAcross.signalLabel}>{c.aiAcross.signal}</Note>
-      </Band>
-
-      {/* 12 — AI Governance */}
-      <Band bg="sand">
-        <Head title={c.governance.eyebrow} subtitle={c.governance.intro} />
-        <div className="mt-12 grid gap-5 sm:grid-cols-2 lg:grid-cols-4">
-          {c.governance.items.map((it) => (
-            <Reveal key={it.k}>
-              <article className="h-full rounded-2xl border border-line bg-cream p-6">
-                <h3 className="font-display text-lg font-bold text-navy">{it.k}</h3>
-                <p className={`mt-2 text-[0.93rem] leading-relaxed ${INK}`}>{it.v}</p>
-              </article>
-            </Reveal>
-          ))}
-        </div>
-        <Note label={c.governance.patchLabel} accent="yellow">
-          {c.governance.patch}
-        </Note>
-      </Band>
-
-      {/* 13 — NIST Framework */}
-      <Band bg="white">
-        <Head title={c.nist.eyebrow} subtitle={c.nist.intro} />
-        <div className="mt-12 grid gap-5 sm:grid-cols-2 lg:grid-cols-4">
-          {c.nist.steps.map((s, i) => (
-            <Reveal key={s.k} delay={i * 0.07}>
-              <article className="flex h-full flex-col rounded-2xl border border-line bg-white p-6">
-                <span className="font-display text-2xl font-bold text-teal/40">0{i + 1}</span>
-                <h3 className="mt-2 font-display text-lg font-bold tracking-wide text-navy">{s.k}</h3>
-                <p className={`mt-2 text-[0.93rem] leading-relaxed ${INK}`}>{s.v}</p>
-              </article>
-            </Reveal>
-          ))}
-        </div>
-        <Note label={c.nist.startLabel}>{c.nist.start}</Note>
-        <Note label={c.nist.tellLabel} accent="yellow">
-          {c.nist.tell}
-        </Note>
-      </Band>
-
-      {/* 15 — Hardware & Getting Started */}
-      <Band bg="sand">
-        <Head title={c.hardware.eyebrow} />
-        <div className="mt-12 grid gap-5 md:grid-cols-3">
-          {c.hardware.items.map((it) => (
-            <Reveal key={it.k}>
-              <article className="h-full rounded-2xl border border-line bg-white p-6">
-                <h3 className="font-display text-lg font-bold text-navy">{it.k}</h3>
-                <p className={`mt-2 text-[0.95rem] leading-relaxed ${INK}`}>{it.v}</p>
-              </article>
-            </Reveal>
-          ))}
-        </div>
-        <Note label={c.hardware.needLabel}>{c.hardware.need}</Note>
-        <Note label={c.hardware.secLabel} accent="red">
-          {c.hardware.sec}
-        </Note>
-      </Band>
-
-      {/* 16 — Success Stories */}
-      <Band bg="white">
-        <Head title={c.stories.eyebrow} />
-        <div className="mt-12 grid gap-6 md:grid-cols-2">
-          {c.stories.items.map((s, i) => (
-            <Reveal key={s.k} delay={i * 0.1}>
-              <article className="flex h-full flex-col rounded-2xl border border-line bg-cream p-7">
-                <h3 className="font-display text-lg font-bold text-navy">{s.k}</h3>
-                <p className={`mt-3 leading-relaxed ${INK}`}>{s.v}</p>
-              </article>
-            </Reveal>
-          ))}
-        </div>
-      </Band>
-
-      {/* 17 — Action Plan */}
-      <Band bg="sand">
-        <Head title={c.actionPlan.eyebrow} />
-        <div className="mt-12 grid gap-5 sm:grid-cols-2 lg:grid-cols-4">
-          {c.actionPlan.items.map((it) => (
-            <Reveal key={it.k}>
-              <article className="flex h-full flex-col rounded-2xl border border-line bg-white p-6">
-                <span className="text-xs font-bold uppercase tracking-[0.14em] text-teal">{it.k}</span>
-                <p className={`mt-3 text-[0.95rem] leading-relaxed ${INK}`}>{it.v}</p>
-              </article>
-            </Reveal>
-          ))}
-        </div>
-        <div className="mt-8 grid gap-6 md:grid-cols-2">
           <Reveal>
-            <article className="h-full rounded-2xl border border-line bg-white p-7">
-              <p className="text-[0.8rem] font-bold uppercase tracking-[0.16em] text-navy/60">
-                {c.actionPlan.confLabel}
+            <article className="h-full rounded-2xl border border-[#d6453b]/25 bg-white p-7">
+              <p className="text-[0.8rem] font-bold uppercase tracking-[0.16em] text-[#b23a30]">
+                {c.insurer.deniedLabel}
               </p>
-              <ul className="mt-4 space-y-3">
-                {c.actionPlan.conferences.map((cf) => (
-                  <li key={cf.k} className={`text-[0.95rem] ${INK}`}>
-                    <span className="font-bold text-navy">{cf.k}</span> — {cf.v}
+              <ul className="mt-5 space-y-3.5">
+                {c.insurer.denied.map((d) => (
+                  <li key={d} className={`flex items-start gap-3 text-[0.97rem] ${INK}`}>
+                    <span className="mt-1.5 h-1.5 w-1.5 shrink-0 rounded-full bg-[#d6453b]" />
+                    {d}
                   </li>
                 ))}
               </ul>
@@ -505,13 +286,13 @@ export default function Session3() {
           <Reveal delay={0.1}>
             <article className="h-full rounded-2xl border border-teal/30 bg-teal/[0.07] p-7">
               <p className="text-[0.8rem] font-bold uppercase tracking-[0.16em] text-teal">
-                {c.actionPlan.teamLabel}
+                {c.insurer.askLabel}
               </p>
-              <ul className="mt-4 space-y-3">
-                {c.actionPlan.team.map((x) => (
-                  <li key={x} className="flex items-start gap-2.5">
-                    <Check size={16} strokeWidth={3} className="mt-0.5 shrink-0 text-teal" />
-                    <span className={`text-[0.95rem] ${INK}`}>{x}</span>
+              <ul className="mt-5 space-y-3.5">
+                {c.insurer.ask.map((a) => (
+                  <li key={a} className="flex items-start gap-3">
+                    <Check size={17} strokeWidth={3} className="mt-0.5 shrink-0 text-teal" />
+                    <span className={`text-[0.97rem] font-medium ${INK}`}>{a}</span>
                   </li>
                 ))}
               </ul>
@@ -520,75 +301,72 @@ export default function Session3() {
         </div>
       </Band>
 
-      {/* 18 — Key Takeaways */}
+      {/* 7 — The risks leaders miss */}
+      <Band bg="sand">
+        <Head title={c.risks.eyebrow} subtitle={c.risks.subtitle} />
+        <div className="mt-12 grid gap-6 md:grid-cols-[1fr_2fr]">
+          <Reveal>
+            <div className="flex h-full flex-col items-center justify-center rounded-2xl border border-teal/30 bg-teal/[0.07] p-8 text-center">
+              <p className="font-display text-5xl font-bold text-navy">{c.risks.stat.v}</p>
+              <p className={`mt-2 text-sm font-semibold ${INK}`}>{c.risks.stat.k}</p>
+            </div>
+          </Reveal>
+          <Reveal delay={0.1}>
+            <article className="h-full rounded-2xl border border-line bg-white p-7">
+              <p className="text-[0.8rem] font-bold uppercase tracking-[0.16em] text-navy/60">
+                {c.risks.moversLabel}
+              </p>
+              <ul className="mt-5 space-y-3.5">
+                {c.risks.movers.map((m) => (
+                  <li key={m} className="flex items-start gap-3">
+                    <Check size={17} strokeWidth={3} className="mt-0.5 shrink-0 text-teal" />
+                    <span className={`text-[0.97rem] ${INK}`}>{m}</span>
+                  </li>
+                ))}
+              </ul>
+            </article>
+          </Reveal>
+        </div>
+      </Band>
+
+      {/* 8 — The five non-negotiables */}
       <Band bg="white">
-        <Head title={c.takeaways.eyebrow} />
-        <div className="mt-12 space-y-4">
-          {c.takeaways.items.map((t, i) => (
-            <Reveal key={t} delay={Math.min(i * 0.05, 0.25)}>
-              <div className="flex gap-5 rounded-2xl border border-line bg-cream p-6">
-                <span className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-navy font-display text-base font-bold text-white">
-                  {i + 1}
-                </span>
-                <p className={`self-center text-[1.02rem] leading-relaxed ${INK}`}>{t}</p>
-              </div>
+        <Head title={c.fiveControls.eyebrow} subtitle={c.fiveControls.subtitle} />
+        <div className="mt-12 grid gap-5 sm:grid-cols-2 lg:grid-cols-5">
+          {c.fiveControls.items.map((it, i) => (
+            <Reveal key={it} delay={Math.min(i * 0.06, 0.3)}>
+              <article className="flex h-full flex-col rounded-2xl border border-line bg-cream p-6">
+                <span className="font-display text-2xl font-bold text-navy/25">0{i + 1}</span>
+                <h3 className="mt-2 font-display text-base font-bold text-navy">{it}</h3>
+              </article>
             </Reveal>
           ))}
         </div>
-        <Reveal>
-          <figure className="mt-10 rounded-2xl border border-white/10 bg-hero-dark p-8 text-center sm:p-10">
-            <Quote className="mx-auto mb-4 text-yellow" size={30} />
-            <blockquote className="mx-auto max-w-3xl font-display text-xl font-semibold italic leading-snug text-white">
-              {c.takeaways.quote}
-            </blockquote>
-          </figure>
-        </Reveal>
       </Band>
 
-      {/* 19 — Next session (dark) */}
+      {/* Up next (dark) — Dec 10 open hours */}
       <Band bg="deep" glow>
         <Reveal>
           <span className="inline-flex items-center gap-2 rounded-full border border-white/15 bg-white/[0.07] px-4 py-1.5 text-[0.8rem] font-bold uppercase tracking-[0.18em] text-yellow">
             {c.next.eyebrow}
           </span>
           <p className="mt-6 max-w-2xl text-lg leading-relaxed text-white/80">{c.next.text}</p>
-        </Reveal>
-        <Reveal>
-          <div className="mt-8 rounded-2xl border border-white/12 bg-white/[0.05] p-6 backdrop-blur sm:p-7">
-            <p className="text-[0.8rem] font-bold uppercase tracking-[0.16em] text-yellow">
-              {c.next.beforeLabel}
-            </p>
-            <ul className="mt-4 space-y-3">
-              {c.next.before.map((b) => (
-                <li key={b} className="flex items-start gap-2.5 text-white/85">
-                  <Check size={16} strokeWidth={2.5} className="mt-1 shrink-0 text-teal" />
-                  {b}
-                </li>
-              ))}
-            </ul>
+          <div className="mt-6 flex items-center gap-1.5">
+            <span className="h-1 w-10 rounded-full bg-yellow" />
+            <span className="h-1 w-5 rounded-full bg-teal" />
           </div>
-          <p className="mt-8 font-display text-lg font-semibold italic text-yellow">
-            {c.next.caption}
-          </p>
         </Reveal>
       </Band>
 
-      {/* Session nav footer */}
+      {/* Session nav footer — Session 3 is the last workshop (no Next) */}
       <section className="border-t border-line bg-white py-10">
-        <div className="mx-auto flex max-w-[1100px] flex-col items-center justify-between gap-4 px-5 sm:flex-row sm:px-8">
+        <div className="mx-auto flex max-w-[1100px] items-center px-5 sm:px-8">
           <Link
             to="/workshops/session-2"
             className="group inline-flex items-center gap-2 text-sm font-semibold text-navy transition-colors hover:text-teal"
           >
             <ArrowLeft size={16} className="transition-transform group-hover:-translate-x-1" />
             Previous: Session 2
-          </Link>
-          <Link
-            to="/workshops/session-4"
-            className="group inline-flex items-center gap-2 rounded-full bg-navy px-6 py-3 text-sm font-semibold text-white shadow-lg shadow-navy/20 transition-all hover:-translate-y-0.5 hover:bg-navy-deep"
-          >
-            Next: Session 4
-            <ArrowRight size={16} className="transition-transform group-hover:translate-x-1" />
           </Link>
         </div>
       </section>
