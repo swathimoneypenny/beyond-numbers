@@ -1,5 +1,6 @@
 import { createContext, useCallback, useContext, useEffect, useRef, useState } from 'react'
 import * as api from '../lib/auth'
+import { clearExerciseData } from '../lib/exerciseStorage'
 
 /* Auth state for the whole app.
 
@@ -27,13 +28,21 @@ export function AuthProvider({ children }) {
 
     ;(async () => {
       try {
-        if (!api.getToken()) return // nothing to restore
+        if (!api.getToken()) {
+          // Logged out at app load (e.g. the tab was closed without logging
+          // out): hold no exercise data. A logged-in refresh still has its
+          // token, so it never reaches this branch and keeps its answers.
+          clearExerciseData()
+          return
+        }
         const payload = await api.me()
         setUser(api.normalizeUser(payload))
       } catch {
         // Expired/invalid token, or the backend is unreachable. Drop it and
-        // fall back to logged-out rather than trapping the user.
+        // fall back to logged-out rather than trapping the user. The token is
+        // gone either way, so the next step is a fresh login - clear now too.
         api.clearToken()
+        clearExerciseData()
         setUser(null)
       } finally {
         setBooting(false)
@@ -53,6 +62,10 @@ export function AuthProvider({ children }) {
   const login = useCallback(
     async (email, password) => {
       await api.login(email, password)
+      // Fresh start every login: no exercise answers carry over between
+      // sessions. Cleared only here/signup/logout - never mid-session - so the
+      // HW1 -> HW2 -> HW3 -> HW4 hand-off still works within a session.
+      clearExerciseData()
       return hydrate()
     },
     [hydrate],
@@ -64,6 +77,7 @@ export function AuthProvider({ children }) {
       // If signup didn't issue a token, log in with the same credentials so the
       // user still lands authenticated.
       if (!api.getToken()) await api.login(email, password)
+      clearExerciseData()
       return hydrate()
     },
     [hydrate],
@@ -71,6 +85,7 @@ export function AuthProvider({ children }) {
 
   const logout = useCallback(() => {
     api.logout()
+    clearExerciseData()
     setUser(null)
   }, [])
 
